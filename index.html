@@ -24,6 +24,13 @@
         .header-action { position: relative; color: #4a5368; }
         .ews-bell { border: 1px solid #f3d2d2; background: #fbefef; color: #c93632; }
         .ews-bell svg { width: 1.15rem; }
+        @media (prefers-reduced-motion: no-preference) {
+            .ews-bell svg { animation: ews-bell-pulse 1.8s ease-in-out infinite; }
+        }
+        @keyframes ews-bell-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .35; }
+        }
         .ews-bell::after { content: ''; position: absolute; top: .21rem; right: .21rem; width: .55rem; aspect-ratio: 1; border: 1px solid white; border-radius: 50%; background: #d9544e; }
         .profile { border: 2px solid #d1d7ed; background: #202c56; color: white; font-size: .8rem; font-weight: 700; }
         .site-header { position: relative; z-index: 1; }
