@@ -100,7 +100,7 @@
         .ledger-total dd { font-size: clamp(1rem, 4.3vw, 1.35rem); }
         .ledger-shares { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem .6rem; margin: .6rem 0 .25rem; font-size: .75rem; }
         .ledger-bar { display: flex; height: .9rem; overflow: hidden; border-radius: .35rem; background: #efb74d; }
-        .ledger-bar span { width: 79%; background: #363ebd; }
+        .ledger-bar span { width: 80.16%; background: #363ebd; }
         .ledger-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .4rem .8rem; margin-top: .55rem; font-size: .7rem; }
         .ledger-foot strong { display: block; font-size: .78rem; }
         .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: .65rem .8rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
@@ -158,7 +158,7 @@
         .donut-legend strong { grid-column: 2; font-variant-numeric: tabular-nums; }
         .sp2d { text-align: center; }
         .sp2d-chart { margin: 1.5rem auto; line-height: 1.2; }
-        .sp2d-chart::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: radial-gradient(circle closest-side, white 64%, transparent 65%), conic-gradient(white 0 .15%, #6358d9 .15% 94.22%, white 94.22% 94.52%, #c64338 94.52% 99.85%, white 99.85% 100%); }
+        .sp2d-chart::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: radial-gradient(circle closest-side, white 64%, transparent 65%), conic-gradient(white 0 .05%, #6358d9 .05% 99.45%, white 99.45% 99.55%, #c64338 99.55% 99.95%, white 99.95% 100%); }
         .sp2d-chart.is-rendered::before { display: none; }
         .sp2d-chart strong { display: block; font-size: 1.8rem; color: #111; }
         .sp2d table { width: 100%; border-spacing: .3rem; border-collapse: separate; font-size: clamp(.7rem, 1.2vw, 1rem); }
@@ -198,6 +198,8 @@
         .ews-tabs { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: .4rem; padding: .45rem .8rem; }
         .ews-tab { min-width: 0; min-height: 2.5rem; padding: .35rem .22rem; border: 1px solid var(--line); border-radius: .75rem; background: #f7f8fc; color: var(--ink); font-size: .76rem; font-weight: 700; line-height: 1.2; box-shadow: 0 2px 3px #202a5014; }
         .ews-tab[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: white; }
+        .ews-satker-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .55rem; padding: .15rem .8rem .55rem; font-size: .75rem; }
+        .ews-satker-filter select { flex: 1 1 12rem; min-width: 0; max-width: 100%; min-height: 2rem; padding: .25rem .45rem; }
         .ews-pane { flex: 1; min-height: 0; overflow-y: auto; padding: .55rem .8rem 1rem; }
         .ews-pane > * + * { margin-top: .8rem; }
         .ews-intro { display: flex; align-items: center; gap: .75rem; padding: .4rem .6rem .55rem; }
@@ -233,7 +235,7 @@
                     <img src="./myintress-logo.svg" alt="MyIntress">
                     <span>Kementerian Keuangan RI</span>
                 </a>
-                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS Financial Advisor KPPN Pangkalan Bun, 3 perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
+                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS Financial Advisor KPPN Mamuju, 6 satker perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0"/>
                     </svg>
@@ -305,7 +307,7 @@
                     </svg>
                 </span>
                 <div class="ews-alert-copy">
-                    <h2 id="ews-alert-title" class="ews-alert-title">EWS FA — KPPN Pangkalan Bun <span class="ews-count">3 Perlu Tindak Lanjut</span></h2>
+                    <h2 id="ews-alert-title" class="ews-alert-title">EWS FA — KPPN Mamuju <span class="ews-count">6 Satker Perlu Tindak Lanjut</span></h2>
                     <p>Prediksi penyerapan, deviasi Hal III DIPA, risiko IKPA, dan milestone FA</p>
                 </div>
                 <div class="ews-alert-actions">
@@ -327,17 +329,17 @@
             <section class="ledger" aria-labelledby="ledger-title">
                 <h2 id="ledger-title"><i class="fa-solid fa-server" aria-hidden="true"></i> General Ledger</h2>
                 <dl class="ledger-totals">
-                    <div class="ledger-total"><dt>Total Pagu</dt><dd>Rp 3.880.867.678.952.000</dd></div>
-                    <div class="ledger-spent"><dt>Realisasi Belanja</dt><dd>Rp 3.069.376.992.905.817</dd></div>
-                    <div class="ledger-remaining"><dt>Sisa Pagu</dt><dd>Rp 811.490.686.046.183</dd></div>
+                    <div class="ledger-total"><dt>Total Pagu</dt><dd>Rp 7.560.000.000.000</dd></div>
+                    <div class="ledger-spent"><dt>Realisasi Belanja</dt><dd>Rp 6.060.090.000.000</dd></div>
+                    <div class="ledger-remaining"><dt>Sisa Pagu</dt><dd>Rp 1.499.910.000.000</dd></div>
                 </dl>
                 <div class="ledger-shares">
-                    <span>Total Realisasi Belanja <strong>79%</strong></span>
-                    <span>Sisa Pagu <strong>21%</strong></span>
+                    <span>Total Realisasi Belanja <strong>80,16%</strong></span>
+                    <span>Sisa Pagu <strong>19,84%</strong></span>
                 </div>
                 <div class="ledger-bar" aria-hidden="true"><span></span></div>
                 <div class="ledger-foot">
-                    <p>Realisasi s.d. 4 November 2026 <strong>Rp 3.052.848.320.039.418</strong></p>
+                    <p>Lingkup KPPN Mamuju <strong>Belanja K/L dan Transfer ke Daerah</strong></p>
                     <p>Data ilustratif per 4 November 2026 pukul 21.08 WIB</p>
                 </div>
             </section>
@@ -349,18 +351,65 @@
                             <div class="todo-heading">
                                 <h2 id="todo-title">To-Do List</h2>
                                 <details id="todo-filter" class="todo-filter">
-                                    <summary class="control" aria-label="Filter Satker KPPN Pangkalan Bun">
+                                    <summary class="control" aria-label="Filter Satker KPPN Mamuju">
                                         <i class="fa-solid fa-filter" aria-hidden="true"></i>
                                         <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
                                     </summary>
                                     <form id="todo-filter-form" class="todo-filter-panel">
                                         <h3 class="font-bold">Filter Data</h3>
-                                        <label for="todo-satker" class="text-sm font-semibold">Satker KPPN Pangkalan Bun</label>
+                                        <label for="todo-satker" class="text-sm font-semibold">Satker KPPN Mamuju</label>
                                         <select id="todo-satker" class="control">
                                             <option value="">Semua Satker</option>
-                                            <option>Kantor Pertanahan Kab. Lamandau</option>
-                                            <option>Kejaksaan Negeri Kotawaringin Barat</option>
-                                            <option>BPS Kabupaten Kotawaringin Barat</option>
+                                            <optgroup label="Statistik">
+                                                <option data-satker-code="429052" value="BPS Kabupaten Mamuju">429052 · BPS Kabupaten Mamuju</option>
+                                                <option data-satker-code="690692" value="BPS Kabupaten Mamuju Tengah">690692 · BPS Kabupaten Mamuju Tengah</option>
+                                                <option data-satker-code="667062" value="BPS Provinsi Sulawesi Barat">667062 · BPS Provinsi Sulawesi Barat</option>
+                                            </optgroup>
+                                            <optgroup label="Penegakan hukum">
+                                                <option data-satker-code="008310" value="Kejaksaan Negeri Mamuju">008310 · Kejaksaan Negeri Mamuju</option>
+                                                <option data-satker-code="417025" value="Kejaksaan Tinggi Sulawesi Barat">417025 · Kejaksaan Tinggi Sulawesi Barat</option>
+                                                <option data-satker-code="677155" value="Kejaksaan Negeri Pasangkayu">677155 · Kejaksaan Negeri Pasangkayu</option>
+                                            </optgroup>
+                                            <optgroup label="Peradilan">
+                                                <option data-satker-code="099638" value="Pengadilan Negeri Mamuju">099638 · Pengadilan Negeri Mamuju</option>
+                                                <option data-satker-code="681422" value="Pengadilan Negeri Pasangkayu">681422 · Pengadilan Negeri Pasangkayu</option>
+                                            </optgroup>
+                                            <optgroup label="Transportasi udara">
+                                                <option data-satker-code="414191" value="Kantor UPBU Tampa Padang">414191 · Kantor UPBU Tampa Padang</option>
+                                            </optgroup>
+                                            <optgroup label="Transportasi laut">
+                                                <option data-satker-code="559374" value="Unit Penyelenggara Pelabuhan Belang-Belang">559374 · Unit Penyelenggara Pelabuhan Belang-Belang</option>
+                                            </optgroup>
+                                            <optgroup label="Meteorologi">
+                                                <option data-satker-code="690647" value="Stasiun Meteorologi Tampa Padang">690647 · Stasiun Meteorologi Tampa Padang</option>
+                                            </optgroup>
+                                            <optgroup label="Lingkungan hidup">
+                                                <option data-satker-code="693573" value="BPDAS Karama">693573 · BPDAS Karama</option>
+                                            </optgroup>
+                                            <optgroup label="Hukum">
+                                                <option data-satker-code="692037" value="Kanwil Kementerian Hukum Sulawesi Barat">692037 · Kanwil Kementerian Hukum Sulawesi Barat</option>
+                                            </optgroup>
+                                            <optgroup label="Pemasyarakatan">
+                                                <option data-satker-code="692127" value="Lembaga Pembinaan Khusus Anak Kelas II Mamuju">692127 · Lembaga Pembinaan Khusus Anak Kelas II Mamuju</option>
+                                                <option data-satker-code="692420" value="Rutan Kelas IIB Mamuju">692420 · Rutan Kelas IIB Mamuju</option>
+                                                <option data-satker-code="692761" value="Rutan Kelas IIB Pasangkayu">692761 · Rutan Kelas IIB Pasangkayu</option>
+                                            </optgroup>
+                                            <optgroup label="Penyiaran">
+                                                <option data-satker-code="700237" value="TVRI Sulawesi Barat">700237 · TVRI Sulawesi Barat</option>
+                                            </optgroup>
+                                            <optgroup label="Kepolisian">
+                                                <option data-satker-code="352660" value="Polres Mamuju Tengah">352660 · Polres Mamuju Tengah</option>
+                                                <option data-satker-code="665552" value="Polres Pasangkayu">665552 · Polres Pasangkayu</option>
+                                                <option data-satker-code="646552" value="Polresta Mamuju">646552 · Polresta Mamuju</option>
+                                                <option data-satker-code="418474" value="Ditlantas Polda Sulawesi Barat">418474 · Ditlantas Polda Sulawesi Barat</option>
+                                            </optgroup>
+                                            <optgroup label="Kesehatan">
+                                                <option data-satker-code="690533" value="Rumkit Bhayangkara Tk. IV Hoegeng Iman Santoso Mamuju">690533 · Rumkit Bhayangkara Tk. IV Hoegeng Iman Santoso Mamuju</option>
+                                            </optgroup>
+                                            <optgroup label="Pertahanan">
+                                                <option data-satker-code="344888" value="Korem 142/Tatag">344888 · Korem 142/Tatag</option>
+                                                <option data-satker-code="685072" value="Kodim Mamuju">685072 · Kodim Mamuju</option>
+                                            </optgroup>
                                         </select>
                                         <div class="todo-filter-actions">
                                             <button type="reset">Reset</button>
@@ -369,6 +418,7 @@
                                     </form>
                                 </details>
                             </div>
+                            <p class="text-xs text-slate-500 mb-2">Data ilustratif KPPN Mamuju</p>
                             <div class="tabs" aria-label="Kategori tugas">
                                 <button type="button" aria-pressed="true" data-category="Non-Pelaporan" aria-controls="todo-items">Non-Pelaporan</button>
                                 <button type="button" aria-pressed="false" data-category="Pelaporan" aria-controls="reporting-panel">Pelaporan</button>
@@ -378,17 +428,17 @@
                             <ul id="todo-items" class="task-list">
                                 <li class="task">
                                     <span class="task-icon" aria-hidden="true">KOM</span>
-                                    <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">67.371</span></div></div>
+                                    <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">348</span></div></div>
                                     <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                 </li>
                                 <li class="task">
                                     <span class="task-icon" aria-hidden="true">ANG</span>
-                                    <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">78</span></div></div>
+                                    <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">16</span></div></div>
                                     <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                 </li>
                                 <li class="task">
                                     <span class="task-icon" aria-hidden="true">PEM</span>
-                                    <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">82.337</span></div></div>
+                                    <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">217</span></div></div>
                                     <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                 </li>
                             </ul>
@@ -405,19 +455,19 @@
                                 <ul id="reporting-items" class="task-list reporting-items">
                                     <li class="task">
                                         <span class="task-icon" aria-hidden="true">MAT</span>
-                                        <div><span class="task-name">Aset Tetap</span><div class="task-summary">Total: <span class="task-total">105.415</span></div></div>
+                                        <div><span class="task-name">Aset Tetap</span><div class="task-summary">Total: <span class="task-total">96</span></div></div>
                                         <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                     </li>
                                     <li class="task">
                                         <span class="task-icon" aria-hidden="true">PER</span>
-                                        <div><span class="task-name">Persediaan</span><div class="task-summary">Total: <span class="task-total">157.558</span></div></div>
+                                        <div><span class="task-name">Persediaan</span><div class="task-summary">Total: <span class="task-total">112</span></div></div>
                                         <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                     </li>
                                 </ul>
                                 <p id="reporting-empty" class="mt-3 text-sm text-slate-600" role="status" hidden>Data contoh untuk periode ini belum tersedia.</p>
                                 <details id="reporting-more" class="reporting-more">
                                     <summary>Selengkapnya <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i></summary>
-                                    <p class="mt-2 text-sm text-slate-600">Data ilustratif bulanan mencakup 105.415 laporan Aset Tetap dan 157.558 laporan Persediaan, dengan total 262.973 laporan.</p>
+                                    <p class="mt-2 text-sm text-slate-600">Data ilustratif bulanan mencakup 96 laporan Aset Tetap dan 112 laporan Persediaan, dengan total 208 laporan.</p>
                                 </details>
                             </section>
                         </div>
@@ -429,16 +479,16 @@
                     <div class="gauge">
                         <svg viewBox="0 -8 220 123" aria-hidden="true">
                             <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#e5e5e5" stroke-width="21" stroke-linecap="round"/>
-                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="66.37 100"/>
+                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="93.72 100"/>
                             <circle cx="12" cy="103" r="10.5" fill="#4149cf"/>
                         </svg>
-                        <strong>66.37 %</strong>
+                        <strong>93,72 %</strong>
                         <div class="gauge-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
                     </div>
-                    <p class="month">November 2026</p>
+                    <p class="month">November 2026 · Simulasi</p>
                     <div class="metrics">
-                        <div class="metric"><strong>94.29%</strong> Kualitas Perencanaan Anggaran</div>
-                        <div class="metric"><strong>96.90%</strong> Kualitas Pelaksanaan Anggaran</div>
+                        <div class="metric"><strong>91,82%</strong> Kualitas Perencanaan Anggaran</div>
+                        <div class="metric"><strong>95,04%</strong> Kualitas Pelaksanaan Anggaran</div>
                     </div>
                 </section>
             </div>
@@ -451,7 +501,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h2 class="font-bold text-slate-800 text-base">Pagu vs Realisasi per Jenis Belanja</h2>
-                            <p class="text-xs text-slate-400">Perbandingan alokasi anggaran dan realisasi (dalam Miliar)</p>
+                            <p class="text-xs text-slate-400">Data ilustratif KPPN Mamuju dalam Rp miliar</p>
                         </div>
                         <button class="text-slate-400 hover:text-slate-600 text-xs">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -467,7 +517,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h2 class="font-bold text-slate-800 text-base">Realisasi Per Jenis Pengeluaran</h2>
-                            <p class="text-xs text-slate-400">Proporsi pembagian pengeluaran negara</p>
+                            <p class="text-xs text-slate-400">Proporsi realisasi belanja ilustratif KPPN Mamuju</p>
                         </div>
                         <button class="text-slate-400 hover:text-slate-600 text-xs">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -488,20 +538,20 @@
             <div class="card-grid">
                 <section class="panel sp2d" aria-labelledby="sp2d-title">
                     <h2 id="sp2d-title">Jumlah SP2D</h2>
-                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tanggal Data</p>
+                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tahun Berjalan</p>
                     <p class="timestamp">04 November 2026</p>
-                    <div class="donut-stage sp2d-chart" aria-label="33.000 SP2D: 31.141 berhasil (94,37%) dan 1.859 void (5,63%)" role="img">
+                    <div class="donut-stage sp2d-chart" aria-label="24.000 SP2D: 23.880 berhasil (99,50%) dan 120 void (0,50%)" role="img">
                         <canvas id="sp2d-ring" aria-hidden="true" hidden></canvas>
-                        <div class="donut-summary"><strong>33.000</strong><span>SP2D</span></div>
+                        <div class="donut-summary"><strong>24.000</strong><span>SP2D</span></div>
                     </div>
                     <table aria-label="Rincian SP2D">
                         <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
-                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>1.859</td><td>Rp 392.450.000.000</td></tr>
+                            <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>23.880</td><td>Rp 6.060.090.000.000</td></tr>
+                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>120</td><td>Rp 8.250.000.000</td></tr>
                         </tbody>
                     </table>
-                    <p class="timestamp">Data ilustratif per 4 November 2026 pukul 09.40 WIB</p>
+                    <p class="timestamp">Data ilustratif per 4 November 2026 pukul 21.08 WIB</p>
                 </section>
 
                 <section class="panel dipa" aria-labelledby="dipa-title">
@@ -511,9 +561,9 @@
                         <button type="submit" class="accent-button">Cari</button>
                     </form>
                     <div class="dipa-tabs" aria-label="Status revisi DIPA">
-                        <button type="button" aria-pressed="true" data-dipa-status="proses">Proses <b>2.654</b></button>
-                        <button type="button" aria-pressed="false" data-dipa-status="berhasil">Berhasil <b>174.533</b></button>
-                        <button type="button" aria-pressed="false" data-dipa-status="ditolak">Ditolak <b>46.849</b></button>
+                        <button type="button" aria-pressed="true" data-dipa-status="proses">Proses <b>12</b></button>
+                        <button type="button" aria-pressed="false" data-dipa-status="berhasil">Berhasil <b>286</b></button>
+                        <button type="button" aria-pressed="false" data-dipa-status="ditolak">Ditolak <b>24</b></button>
                     </div>
                     <div class="dipa-results" aria-live="polite">
                         <article class="dipa-entry" data-status="proses">
@@ -572,7 +622,7 @@
                         </article>
                         <p id="dipa-empty" class="text-slate-500" hidden></p>
                     </div>
-                    <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
+                    <p class="timestamp">Data ilustratif tahun berjalan per 4 November 2026</p>
                 </section>
             </div>
         </main>
@@ -593,7 +643,7 @@
                         <img src="./myintress-logo.svg" alt="MyIntress" class="w-20 h-auto shrink-0 object-contain">
                         <div>
                             <h3 id="ews-title" class="text-sm font-extrabold text-blue-950 leading-none">Early Warning System (EWS)</h3>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Monitoring & Tindak Lanjut Kepala KPPN Pangkalan Bun</p>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Monitoring & Tindak Lanjut Kepala KPPN Mamuju</p>
                         </div>
                     </div>
                     <button id="close-ews-btn" type="button" aria-label="Tutup EWS" class="p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
@@ -609,156 +659,243 @@
                 <button type="button" class="ews-tab" data-ews-tab aria-controls="ews-ikpa" aria-pressed="false">Prediksi IKPA</button>
             </div>
 
+            <div class="ews-satker-filter shrink-0">
+                <label for="ews-satker" class="font-semibold">Filter Satker</label>
+                <select id="ews-satker" class="control"></select>
+            </div>
+            <p id="ews-satker-empty" class="px-4 pb-3 text-xs text-slate-600" role="status" hidden>Belum ada peringatan ilustratif untuk satker ini pada tampilan yang dipilih.</p>
+
             <section id="ews-prediksi" class="ews-pane" aria-label="Prediksi Realisasi s.d. 31 Des 2026">
                 <div class="ews-intro">
                     <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
-                    <div><h4>Prediksi Realisasi s.d. 31 Des 2026</h4><p>Berdasarkan tren realisasi dan rencana belanja</p></div>
+                    <div><h4>Prediksi Realisasi s.d. 31 Des 2026</h4><p>Proyeksi penyerapan terhadap target per jenis belanja</p></div>
                 </div>
-                <article class="ews-risk critical">
-                    <div class="ews-risk-head"><span>Satker 418291</span><span class="ews-level">Kritis</span></div>
-                    <h4>Kantor Pertanahan Kab. Lamandau</h4>
+                <article class="ews-risk critical" data-ews-satker="414191">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 414191</span><span class="ews-level">Kritis</span></div>
+                    <h4>Kantor UPBU Tampa Padang</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">58,4%</dd></div>
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>68,0%</dd></div>
                         <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−31,6 poin</dd></div>
+                        <div><dt>Cakupan target</dt><dd>75,6%</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 681923</span><span class="ews-level">Tinggi</span></div>
-                    <h4>Dinas Pekerjaan Umum Kotawaringin Barat</h4>
+                <article class="ews-risk critical" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                    <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">62,1%</dd></div>
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>74,5%</dd></div>
                         <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−27,9 poin</dd></div>
+                        <div><dt>Cakupan target</dt><dd>82,8%</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 527118</span><span class="ews-level">Tinggi</span></div>
-                    <h4>BPS Kabupaten Kotawaringin Barat</h4>
+                <article class="ews-risk" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">81,5%</dd></div>
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>81,5%</dd></div>
                         <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−8,5 poin</dd></div>
+                        <div><dt>Cakupan target</dt><dd>90,6%</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju Tengah</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>84,0%</dd></div>
+                        <div><dt>Target</dt><dd>90,0%</dd></div>
+                        <div><dt>Cakupan target</dt><dd>93,3%</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                    <h4>Kejaksaan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>86,0%</dd></div>
+                        <div><dt>Target</dt><dd>90,0%</dd></div>
+                        <div><dt>Cakupan target</dt><dd>95,6%</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                    <h4>Pengadilan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Realisasi (Proyeksi)</dt><dd>87,0%</dd></div>
+                        <div><dt>Target</dt><dd>90,0%</dd></div>
+                        <div><dt>Cakupan target</dt><dd>96,7%</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
                 </article>
             </section>
 
-            <section id="ews-deviasi" class="ews-pane" aria-label="Deviasi terhadap Hal III DIPA" hidden>
+            <section id="ews-deviasi" class="ews-pane" aria-label="Prediksi Deviasi Halaman III DIPA" hidden>
                 <div class="ews-intro">
                     <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
-                    <div><h4>Deviasi terhadap Hal III DIPA</h4><p>Selisih proyeksi realisasi terhadap target pembanding ilustratif</p></div>
+                    <div><h4>Prediksi Deviasi Halaman III DIPA</h4><p>Proyeksi deviasi tertimbang terhadap rencana penarikan dana</p></div>
                 </div>
-                <article class="ews-risk critical">
-                    <div class="ews-risk-head"><span>Satker 418291</span><span class="ews-level">Kritis</span></div>
-                    <h4>Kantor Pertanahan Kab. Lamandau</h4>
+                <article class="ews-risk critical" data-ews-satker="414191">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 414191</span><span class="ews-level">Kritis</span></div>
+                    <h4>Kantor UPBU Tampa Padang</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−31,6 poin</dd></div>
-                        <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">58,4%</dd></div>
+                        <div><dt>Deviasi tertimbang</dt><dd>7,1%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 681923</span><span class="ews-level">Tinggi</span></div>
-                    <h4>Dinas Pekerjaan Umum Kotawaringin Barat</h4>
+                <article class="ews-risk critical" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                    <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−27,9 poin</dd></div>
-                        <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">62,1%</dd></div>
+                        <div><dt>Deviasi tertimbang</dt><dd>6,0%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 527118</span><span class="ews-level">Tinggi</span></div>
-                    <h4>BPS Kabupaten Kotawaringin Barat</h4>
+                <article class="ews-risk" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−8,5 poin</dd></div>
-                        <div><dt>Target</dt><dd>90,0%</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">81,5%</dd></div>
+                        <div><dt>Deviasi tertimbang</dt><dd>4,2%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju Tengah</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Deviasi tertimbang</dt><dd>3,6%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                    <h4>Kejaksaan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Deviasi tertimbang</dt><dd>3,3%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                    <h4>Pengadilan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Deviasi tertimbang</dt><dd>3,1%</dd></div>
+                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
                 </article>
             </section>
 
-            <section id="ews-ikpa" class="ews-pane" aria-label="Prediksi Risiko IKPA" hidden>
+            <section id="ews-ikpa" class="ews-pane" aria-label="Prediksi Perubahan IKPA" hidden>
                 <div class="ews-intro">
                     <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
-                    <div><h4>Prediksi Risiko IKPA</h4><p>Indikasi kualitatif dari selisih proyeksi dan target</p></div>
+                    <div><h4>Prediksi Perubahan IKPA</h4><p>Proksi skor dibandingkan dengan baseline yang sebanding</p></div>
                 </div>
-                <article class="ews-risk critical">
-                    <div class="ews-risk-head"><span>Satker 418291</span><span class="ews-level">Kritis</span></div>
-                    <h4>Kantor Pertanahan Kab. Lamandau</h4>
+                <article class="ews-risk critical" data-ews-satker="414191">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 414191</span><span class="ews-level">Kritis</span></div>
+                    <h4>Kantor UPBU Tampa Padang</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Risiko IKPA</dt><dd class="ews-negative">Kritis</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">58,4%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−31,6 poin</dd></div>
+                        <div><dt>Baseline</dt><dd>96</dd></div>
+                        <div><dt>Proyeksi</dt><dd>87</dd></div>
+                        <div><dt>Perubahan</dt><dd>−9 poin</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 681923</span><span class="ews-level">Tinggi</span></div>
-                    <h4>Dinas Pekerjaan Umum Kotawaringin Barat</h4>
+                <article class="ews-risk critical" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                    <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Risiko IKPA</dt><dd class="ews-negative">Tinggi</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">62,1%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−27,9 poin</dd></div>
+                        <div><dt>Baseline</dt><dd>95</dd></div>
+                        <div><dt>Proyeksi</dt><dd>88</dd></div>
+                        <div><dt>Perubahan</dt><dd>−7 poin</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head"><span>Satker 527118</span><span class="ews-level">Tinggi</span></div>
-                    <h4>BPS Kabupaten Kotawaringin Barat</h4>
+                <article class="ews-risk" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
-                        <div><dt>Risiko IKPA</dt><dd class="ews-negative">Tinggi</dd></div>
-                        <div><dt>Realisasi (Proyeksi)</dt><dd class="ews-negative">81,5%</dd></div>
-                        <div><dt>Deviasi Hal III DIPA</dt><dd class="ews-negative">−8,5 poin</dd></div>
+                        <div><dt>Baseline</dt><dd>96</dd></div>
+                        <div><dt>Proyeksi</dt><dd>92</dd></div>
+                        <div><dt>Perubahan</dt><dd>−4 poin</dd></div>
                     </dl>
-                    <p class="ews-note ews-ikpa-note"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Berpotensi turunkan IKPA</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPS Kabupaten Mamuju Tengah</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Baseline</dt><dd>97</dd></div>
+                        <div><dt>Proyeksi</dt><dd>94</dd></div>
+                        <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                    <h4>Kejaksaan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Baseline</dt><dd>96</dd></div>
+                        <div><dt>Proyeksi</dt><dd>93</dd></div>
+                        <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                </article>
+                <article class="ews-risk" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-28 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                    <h4>Pengadilan Negeri Mamuju</h4>
+                    <dl class="ews-metrics">
+                        <div><dt>Baseline</dt><dd>97</dd></div>
+                        <div><dt>Proyeksi</dt><dd>94</dd></div>
+                        <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
+                    </dl>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
                 </article>
             </section>
 
             <section id="ews-milestones" class="ews-pane" aria-label="Milestone Financial Advisor" hidden>
-                <article class="ews-risk critical">
-                    <div class="ews-risk-head">
-                        <span class="ews-fa-code">FA-08</span>
-                        <span class="ews-level"><i class="fa-solid fa-exclamation" aria-hidden="true"></i> Kritis</span>
-                    </div>
-                    <h4>Kantor Pertanahan Kab. Lamandau</h4>
-                    <p>Program Pendaftaran Tanah Sistematis Lengkap (PTSL)</p>
+                <article class="ews-risk" data-ews-satker="414191">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08</span><span class="ews-level">Waspada</span></div>
+                    <h4>Kantor UPBU Tampa Padang</h4>
+                    <p>Satker 414191 · Keterlambatan belanja modal</p>
                     <dl class="ews-metrics ews-milestone">
-                        <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i> Sisa waktu</dt><dd class="ews-negative">28 hari</dd></div>
-                        <div><dt><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Milestone</dt><dd>Penyelesaian output</dd></div>
+                        <div><dt>Proyeksi</dt><dd class="ews-negative">14 hari terlambat</dd></div>
+                        <div><dt>Milestone / output</dt><dd>Penyelesaian fasilitas transportasi udara</dd></div>
                     </dl>
-                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Alasan: Belanja 72% - Output 40%</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Penyelesaian pekerjaan diproyeksikan 14 hari setelah tenggat kontrak.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head">
-                        <span class="ews-fa-code">FA-09</span>
-                        <span class="ews-level"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Tinggi</span>
-                    </div>
-                    <h4>Kejaksaan Negeri Kotawaringin Barat</h4>
-                    <p>Program Penegakan dan Pelayanan Hukum</p>
+                <article class="ews-risk critical" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-09</span><span class="ews-level">Kritis</span></div>
+                    <h4>BPDAS Karama</h4>
+                    <p>Satker 693573 · Ketidakseimbangan belanja dan output</p>
                     <dl class="ews-metrics ews-milestone">
-                        <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i> Sisa waktu</dt><dd class="ews-negative">25 hari</dd></div>
-                        <div><dt><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Milestone</dt><dd>Kontrak &amp; pelaksanaan</dd></div>
+                        <div><dt>Proyeksi</dt><dd class="ews-negative">Selisih 32 poin</dd></div>
+                        <div><dt>Milestone / output</dt><dd>Capaian output kegiatan</dd></div>
                     </dl>
-                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Alasan: Kontrak terlambat 14 hari</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Realisasi belanja 72% dan capaian output 40% pada contoh output yang sebanding.</p>
                 </article>
-                <article class="ews-risk">
-                    <div class="ews-risk-head">
-                        <span class="ews-fa-code">FA-10</span>
-                        <span class="ews-level"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Tinggi</span>
-                    </div>
-                    <h4>Dinas Pekerjaan Umum Kotawaringin Barat</h4>
-                    <p>Program Dukungan Infrastruktur Daerah</p>
+                <article class="ews-risk" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-10</span><span class="ews-level">Waspada</span></div>
+                    <h4>BPDAS Karama</h4>
+                    <p>Satker 693573 · Keterlambatan program prioritas</p>
                     <dl class="ews-metrics ews-milestone">
-                        <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i> Sisa waktu</dt><dd class="ews-negative">30 hari</dd></div>
-                        <div><dt><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Milestone</dt><dd>Realisasi fisik ≥ 70%</dd></div>
+                        <div><dt>Proyeksi</dt><dd class="ews-negative">7 hari terlambat</dd></div>
+                        <div><dt>Milestone / output</dt><dd>Milestone rehabilitasi DAS</dd></div>
                     </dl>
-                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Alasan: Realisasi 62% - Output 55%</p>
+                    <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Milestone program prioritas diproyeksikan tercapai 7 hari setelah tanggal rencana.</p>
                 </article>
             </section>
 
@@ -801,21 +938,23 @@
 
         if (typeof Chart !== 'undefined') {
             // Bar Chart (Pagu vs Realisasi)
+            const budgetCategories = ['Belanja Pegawai', 'Belanja Barang', 'Belanja Modal', 'Bantuan Sosial', 'Transfer ke Daerah'];
+            const spendingByCategory = [630, 870, 1420, 0.09, 3140];
             const ctxBar = document.getElementById('barChart').getContext('2d');
             new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: ['Pegawai', 'Barang', 'Modal', 'Bansos'],
+                    labels: budgetCategories,
                     datasets: [
                         {
-                            label: 'Pagu (T)',
-                            data: [836.6, 586.4, 455.5, 191.3],
+                            label: 'Pagu (Rp miliar)',
+                            data: [709.88, 1090, 1990, 0.12, 3770],
                             backgroundColor: '#1e3a8a',
                             borderRadius: 6
                         },
                         {
-                            label: 'Realisasi (T)',
-                            data: [558.5, 239.2, 316.8, 88.4],
+                            label: 'Realisasi (Rp miliar)',
+                            data: spendingByCategory,
                             backgroundColor: '#f59e0b',
                             borderRadius: 6
                         }
@@ -841,10 +980,11 @@
             const donutValue = document.getElementById('donut-value');
             const donutLabel = document.getElementById('donut-label');
             const donutLegend = document.getElementById('donut-legend');
-            const donutLabels = ['Kualitas Perencanaan', 'Kualitas Pelaksanaan', 'Hasil Pelaksanaan', 'Lainnya'];
-            const donutShares = [50, 17.5, 17.5, 15];
-            const donutColors = ['#3947b8', '#793bd2', '#087f76', '#1989c7'];
-            const shareFormat = new Intl.NumberFormat('id-ID', { style: 'percent', maximumFractionDigits: 1 });
+            const donutLabels = budgetCategories;
+            const totalSpending = spendingByCategory.reduce((total, amount) => total + amount, 0);
+            const donutShares = spendingByCategory.map((amount) => 100 * amount / totalSpending);
+            const donutColors = ['#3947b8', '#793bd2', '#087f76', '#b56a13', '#1989c7'];
+            const shareFormat = new Intl.NumberFormat('id-ID', { style: 'percent', maximumFractionDigits: 3 });
             const formatShare = (value) => shareFormat.format(value / 100);
             let selectedSlice = null;
 
@@ -921,7 +1061,7 @@
                 data: {
                     labels: ['Berhasil', 'Void'],
                     datasets: [{
-                        data: [31141, 1859],
+                        data: [23880, 120],
                         backgroundColor: ['#6358d9', '#c64338'],
                         borderColor: '#ffffff',
                         borderWidth: 2,
@@ -978,12 +1118,33 @@
         document.getElementById('dismiss-ews-btn').addEventListener('click', closeModal);
 
         const ewsTabs = ewsModal.querySelectorAll('[data-ews-tab]');
+        const ewsSatker = document.getElementById('ews-satker');
+        const ewsSatkerEmpty = document.getElementById('ews-satker-empty');
+        const ewsPanes = ewsModal.querySelectorAll('.ews-pane');
+        ewsSatker.innerHTML = document.getElementById('todo-satker').innerHTML;
+        for (const option of ewsSatker.querySelectorAll('[data-satker-code]')) {
+            option.value = option.dataset.satkerCode;
+        }
+
+        function filterEwsSatker() {
+            const pane = [...ewsPanes].find((item) => !item.hidden);
+            let visible = 0;
+            pane.querySelectorAll('[data-ews-satker]').forEach((card) => {
+                card.hidden = Boolean(ewsSatker.value) && card.dataset.ewsSatker !== ewsSatker.value;
+                if (!card.hidden) visible += 1;
+            });
+            ewsSatkerEmpty.hidden = visible > 0;
+            pane.scrollTop = 0;
+        }
+
+        ewsSatker.addEventListener('change', filterEwsSatker);
         ewsTabs.forEach((tab) => tab.addEventListener('click', () => {
             ewsTabs.forEach((item) => {
                 const selected = item === tab;
                 item.setAttribute('aria-pressed', selected);
                 document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
             });
+            filterEwsSatker();
         }));
 
         const ewsViewSwitch = document.getElementById('ews-view-switch');
@@ -997,6 +1158,7 @@
             });
             ewsViewSwitch.setAttribute('aria-expanded', show);
             ewsViewSwitch.textContent = show ? 'Kembali ke Analisis' : 'Milestone FA';
+            filterEwsSatker();
         }
 
         ewsViewSwitch.addEventListener('click', () => {
