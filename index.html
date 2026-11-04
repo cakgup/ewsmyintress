@@ -126,7 +126,7 @@
 <body class="dashboard antialiased min-h-screen">
     <div class="phone">
         <div class="status-bar" aria-hidden="true">
-            <span>09:47</span>
+            <span data-wib-time>—</span>
             <span class="status-camera"></span>
             <span class="status-icons"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></span>
         </div>
@@ -149,7 +149,7 @@
                 <span class="profile" aria-label="Profil Mukh Gufron">MG</span>
             </div>
             <div class="header-meta">
-                <time class="header-date" datetime="2026-11-04"><i class="fa-regular fa-calendar" aria-hidden="true"></i> 4 Nov 2026</time>
+                <span class="header-date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="wib-header-date">—</span></span>
                 <label class="year">Tahun Anggaran:
                     <select class="font-bold">
                         <option selected>2026</option>
@@ -187,10 +187,10 @@
                     <div class="date-banner">
                         <div>
                             <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> HARI INI</span>
-                            <strong>4 November 2026</strong>
+                            <strong id="wib-today">—</strong>
                         </div>
                         <div class="banner-time">
-                            <strong>09:47</strong>
+                            <strong data-wib-time>—</strong>
                             <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
                         </div>
                     </div>
@@ -296,7 +296,7 @@
             <div class="card-grid">
                 <section class="panel sp2d" aria-labelledby="sp2d-title">
                     <h2 id="sp2d-title">Jumlah SP2D</h2>
-                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Hari Ini</p>
+                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tanggal Data</p>
                     <p class="timestamp">04 November 2026</p>
                     <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
                         <div><strong>31.141</strong>SP2D</div>
@@ -642,6 +642,30 @@
 
     <!-- Script Section -->
     <script>
+        const jakarta = { timeZone: 'Asia/Jakarta' };
+        const headerDate = new Intl.DateTimeFormat('id-ID', { ...jakarta, dateStyle: 'medium' });
+        const todayDate = new Intl.DateTimeFormat('id-ID', { ...jakarta, dateStyle: 'long' });
+        const clockTime = new Intl.DateTimeFormat('id-ID', {
+            ...jakarta, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+        });
+        const headerDateLabel = document.getElementById('wib-header-date');
+        const todayDateLabel = document.getElementById('wib-today');
+        const clockLabels = document.querySelectorAll('[data-wib-time]');
+
+        function updateJakartaClock(now = new Date()) {
+            const time = clockTime.format(now).replace('.', ':');
+            headerDateLabel.textContent = headerDate.format(now);
+            todayDateLabel.textContent = todayDate.format(now);
+            clockLabels.forEach((label) => { label.textContent = time; });
+        }
+
+        updateJakartaClock();
+        setInterval(updateJakartaClock, 1000);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) updateJakartaClock();
+        });
+
+
         if (typeof Chart !== 'undefined') {
             // Bar Chart (Pagu vs Realisasi)
             const ctxBar = document.getElementById('barChart').getContext('2d');
