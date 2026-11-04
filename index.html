@@ -82,12 +82,36 @@
         .card-grid { grid-template-columns: minmax(0, 1fr); }
         .panel { min-width: 0; border-radius: 1.1rem; padding: clamp(1rem, 1.5vw, 1.65rem); background: white; box-shadow: 0 .25rem .6rem #202a5020; }
         .panel h2 { font-size: clamp(1.2rem, 1.5vw, 1.7rem); font-weight: 700; }
-        .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: clamp(1rem, 2vw, 2rem); margin-bottom: 1.25rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
-        .date-banner strong { display: block; font-size: clamp(1.2rem, 2vw, 2.2rem); }
+        .ledger { min-width: 0; padding: .85rem; border-radius: 1rem; color: white; background: linear-gradient(110deg, #3a58c8, #247eb9 62%, #424fcd); }
+        .ledger h2 { display: table; margin-left: auto; padding: .2rem .55rem; border: 1px solid #ffffff80; border-radius: 1rem; background: #233c88; font-size: .75rem; font-weight: 700; }
+        .ledger-totals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; margin-top: .55rem; }
+        .ledger-totals > div { min-width: 0; border-radius: .55rem; padding: .5rem .55rem; }
+        .ledger-total { grid-column: 1 / -1; }
+        .ledger-spent { background: #304197; }
+        .ledger-remaining { background: #efb74d; color: #252047; }
+        .ledger dt { font-size: .72rem; }
+        .ledger dd { font-size: .85rem; font-weight: 800; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+        .ledger-total dd { font-size: clamp(1rem, 4.3vw, 1.35rem); }
+        .ledger-shares { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem .6rem; margin: .6rem 0 .25rem; font-size: .75rem; }
+        .ledger-bar { display: flex; height: .9rem; overflow: hidden; border-radius: .35rem; background: #efb74d; }
+        .ledger-bar span { width: 79%; background: #363ebd; }
+        .ledger-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .4rem .8rem; margin-top: .55rem; font-size: .7rem; }
+        .ledger-foot strong { display: block; font-size: .78rem; }
+        .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: .65rem .8rem; margin-bottom: .85rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
+        .date-banner strong { display: block; font-size: clamp(.95rem, 3.6vw, 1.25rem); line-height: 1.2; margin-top: .2rem; }
+        .date-banner span { font-size: .75rem; }
         .banner-time { text-align: right; white-space: nowrap; }
         .banner-time strong, .task-total { font-variant-numeric: tabular-nums; }
-        .todo-content { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+        .todo-content { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
         .todo-heading { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
+        .todo-filter summary { display: flex; align-items: center; gap: .35rem; min-height: 2.25rem; padding: .35rem .5rem; color: #55617a; cursor: pointer; list-style: none; }
+        .todo-filter summary::-webkit-details-marker { display: none; }
+        .todo-filter[open] summary .fa-chevron-down { transform: rotate(180deg); }
+        .todo-filter-panel { position: absolute; z-index: 2; top: 2.85rem; left: 0; width: min(100%, 20rem); display: grid; gap: .55rem; padding: .85rem; border: 1px solid var(--line); border-radius: .75rem; background: #f5f6fa; box-shadow: 0 .35rem .9rem #202a5026; }
+        .todo-filter-panel::before { content: ""; position: absolute; top: -.35rem; left: 6.8rem; width: .65rem; height: .65rem; transform: rotate(45deg); background: #f5f6fa; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+        .todo-filter-panel select { width: 100%; }
+        .todo-filter-actions { display: grid; grid-template-columns: 1fr 1.45fr; gap: .45rem; }
+        .todo-filter-actions button { border: 1px solid var(--accent); border-radius: .45rem; padding: .45rem; font-weight: 700; }
         .tabs { display: flex; background: #e4e7ef; border: 1px solid #cdd4e1; padding: .16rem; border-radius: .75rem; }
         .tabs button { flex: 1; padding: .45rem .15rem; font-weight: 600; border-radius: .6rem; }
         .tabs [aria-pressed="true"] { background: white; color: #161b2e; box-shadow: 0 .16rem .35rem #1f274a22; }
@@ -96,6 +120,14 @@
         .task-icon { display: grid; place-items: center; width: clamp(2.3rem, 4.1vw, 4rem); aspect-ratio: 1; border-radius: 50%; background: linear-gradient(135deg, #4c4bf0, #30329f); color: white; font-weight: 700; }
         .task:nth-child(2) .task-icon { background: linear-gradient(135deg, #ae39f3, #6321c8); }
         .task:nth-child(3) .task-icon { background: linear-gradient(135deg, #79def0, #489adf); }
+        .reporting-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+        .reporting-head select { min-width: min(100%, 10rem); font-weight: 700; }
+        .reporting-items .task-icon { color: #18220b; background: linear-gradient(135deg, #b6fa5e, #84c644); }
+        .reporting-items .task:nth-child(2) .task-icon { background: linear-gradient(135deg, #eefb61, #abc640); }
+        .reporting-more { margin-top: clamp(2rem, 9vw, 5rem); }
+        .reporting-more summary { list-style: none; cursor: pointer; text-align: center; padding: .42rem .75rem; border: 1px solid #cdd4e1; border-radius: 2rem; background: #e7eaf1; color: #252d41; font-weight: 600; }
+        .reporting-more summary::-webkit-details-marker { display: none; }
+        .reporting-more[open] summary i { transform: rotate(90deg); }
         .task-name { display: block; font-weight: 700; margin-bottom: .35rem; }
         .task-summary { display: flex; align-items: center; gap: .45rem; padding-top: .35rem; border-top: 1px solid var(--line); color: #4a5368; }
         .task-total { flex: 1; text-align: center; padding: .15rem .25rem; background: #e7e9f1; border-radius: .75rem; color: #171c30; font-weight: 700; }
@@ -119,7 +151,9 @@
         .donut-legend button::before { content: ""; width: .65rem; aspect-ratio: 1; border-radius: 50%; background: var(--slice-color); }
         .donut-legend strong { grid-column: 2; font-variant-numeric: tabular-nums; }
         .sp2d { text-align: center; }
-        .sp2d-chart { display: grid; place-items: center; width: min(100%, 14rem); aspect-ratio: 1; margin: 1.5rem auto; border-radius: 50%; background: radial-gradient(circle closest-side, white 78%, transparent 79%), conic-gradient(#6358d9 0 94.37%, #c64338 94.37% 100%); line-height: 1.2; }
+        .sp2d-chart { margin: 1.5rem auto; line-height: 1.2; }
+        .sp2d-chart::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: radial-gradient(circle closest-side, white 64%, transparent 65%), conic-gradient(white 0 .15%, #6358d9 .15% 94.22%, white 94.22% 94.52%, #c64338 94.52% 99.85%, white 99.85% 100%); }
+        .sp2d-chart.is-rendered::before { display: none; }
         .sp2d-chart strong { display: block; font-size: 1.8rem; color: #111; }
         .sp2d table { width: 100%; border-spacing: .3rem; border-collapse: separate; font-size: clamp(.7rem, 1.2vw, 1rem); }
         .sp2d td { background: #f1f1f3; border-radius: 1.5rem; padding: .45rem .2rem; }
@@ -139,6 +173,14 @@
         .dipa-entry { padding: .55rem 0 1rem; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
         .dipa-entry h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
         .dipa-entry mark { background: #faf0c4; color: inherit; margin: .4rem 0; }
+        .dipa-entry[data-status]:not([data-status="proses"]) { padding: .8rem .25rem 1rem; }
+        .dipa-entry[data-status]:not([data-status="proses"]) h3 { display: table; padding: .12rem .35rem; background: #f2f2f4; border-radius: .4rem; }
+        .dipa-row { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: .35rem .6rem; margin: .6rem 0; }
+        .dipa-tag { display: inline-block; padding: .18rem .35rem; border-radius: .4rem; background: #ececef; overflow-wrap: anywhere; }
+        .dipa-entry mark.dipa-approved { background: #d2ebe1; font-weight: 700; margin: 0; }
+        .dipa-entry mark.dipa-rejected, .dipa-reason { background: #f1d3d3; font-weight: 700; }
+        .dipa-entry mark.dipa-rejected { margin: 0; }
+        .dipa-reason { padding: .45rem .55rem; border-radius: .45rem; font-size: .8rem; }
         .dipa-budget { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
         .dipa .timestamp { text-align: right; }
         @media (min-width: 35rem) {
@@ -188,7 +230,7 @@
                     <img src="./myintress-logo.svg" alt="MyIntress">
                     <span>Kementerian Keuangan RI</span>
                 </a>
-                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS KPPN, 3 perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
+                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS Financial Advisor KPPN Pangkalan Bun, 3 perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0"/>
                     </svg>
@@ -260,11 +302,29 @@
                     </svg>
                 </span>
                 <div class="ews-alert-copy">
-                    <h2 id="ews-alert-title" class="ews-alert-title">EWS KPPN Dashboard <span class="ews-count">3 Perlu Tindak Lanjut</span></h2>
+                    <h2 id="ews-alert-title" class="ews-alert-title">EWS FA — KPPN Pangkalan Bun <span class="ews-count">3 Perlu Tindak Lanjut</span></h2>
                     <p>Prediksi penyerapan, deviasi Hal III DIPA, risiko IKPA, dan milestone FA</p>
                 </div>
                 <button type="button" class="ews-detail" data-ews-trigger aria-haspopup="dialog" aria-controls="ews-modal">Buka EWS</button>
             </section>
+            <section class="ledger" aria-labelledby="ledger-title">
+                <h2 id="ledger-title"><i class="fa-solid fa-server" aria-hidden="true"></i> General Ledger</h2>
+                <dl class="ledger-totals">
+                    <div class="ledger-total"><dt>Total Pagu</dt><dd>Rp 3.880.867.678.952.000</dd></div>
+                    <div class="ledger-spent"><dt>Realisasi Belanja</dt><dd>Rp 3.069.376.992.905.817</dd></div>
+                    <div class="ledger-remaining"><dt>Sisa Pagu</dt><dd>Rp 811.490.686.046.183</dd></div>
+                </dl>
+                <div class="ledger-shares">
+                    <span>Total Realisasi Belanja <strong>79%</strong></span>
+                    <span>Sisa Pagu <strong>21%</strong></span>
+                </div>
+                <div class="ledger-bar" aria-hidden="true"><span></span></div>
+                <div class="ledger-foot">
+                    <p>Realisasi s.d. 4 November 2026 <strong>Rp 3.052.848.320.039.418</strong></p>
+                    <p>Data ilustratif per 4 November 2026 pukul 21.08 WIB</p>
+                </div>
+            </section>
+
             <div class="overview">
                 <section class="panel" aria-labelledby="todo-title">
                     <div class="date-banner">
@@ -281,12 +341,32 @@
                         <div>
                             <div class="todo-heading">
                                 <h2 id="todo-title">To-Do List</h2>
-                                <span class="control" aria-hidden="true"><i class="fa-solid fa-filter"></i></span>
+                                <details id="todo-filter" class="todo-filter">
+                                    <summary class="control" aria-label="Filter Satker KPPN Pangkalan Bun">
+                                        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+                                        <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
+                                    </summary>
+                                    <form id="todo-filter-form" class="todo-filter-panel">
+                                        <h3 class="font-bold">Filter Data</h3>
+                                        <label for="todo-satker" class="text-sm font-semibold">Satker KPPN Pangkalan Bun</label>
+                                        <select id="todo-satker" class="control">
+                                            <option value="">Semua Satker</option>
+                                            <option>Kantor Pertanahan Kab. Lamandau</option>
+                                            <option>Kejaksaan Negeri Kotawaringin Barat</option>
+                                            <option>BPS Kabupaten Kotawaringin Barat</option>
+                                        </select>
+                                        <div class="todo-filter-actions">
+                                            <button type="reset">Reset</button>
+                                            <button type="submit" class="accent-button">Terapkan</button>
+                                        </div>
+                                    </form>
+                                </details>
                             </div>
                             <div class="tabs" aria-label="Kategori tugas">
-                                <button type="button" aria-pressed="true" data-category="Non-Pelaporan">Non-Pelaporan</button>
-                                <button type="button" aria-pressed="false" data-category="Pelaporan">Pelaporan</button>
+                                <button type="button" aria-pressed="true" data-category="Non-Pelaporan" aria-controls="todo-items">Non-Pelaporan</button>
+                                <button type="button" aria-pressed="false" data-category="Pelaporan" aria-controls="reporting-panel">Pelaporan</button>
                             </div>
+                            <p id="todo-filter-status" class="mt-3 text-sm text-slate-600" role="status" hidden></p>
                             <h3 id="todo-category" class="font-semibold text-lg mt-4">Non-Pelaporan</h3>
                             <ul id="todo-items" class="task-list">
                                 <li class="task">
@@ -305,7 +385,34 @@
                                     <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
                                 </li>
                             </ul>
-                            <p id="todo-empty" class="mt-3 text-slate-500" hidden>Data contoh pelaporan belum tersedia.</p>
+                            <section id="reporting-panel" aria-labelledby="reporting-title" hidden>
+                                <div class="reporting-head">
+                                    <h3 id="reporting-title" class="font-semibold text-lg">Pelaporan</h3>
+                                    <select id="reporting-period" class="control" aria-label="Periode pelaporan">
+                                        <option value="bulanan">BULANAN</option>
+                                        <option value="triwulanan">TRIWULANAN</option>
+                                        <option value="semesteran">SEMESTERAN</option>
+                                        <option value="tahunan">TAHUNAN</option>
+                                    </select>
+                                </div>
+                                <ul id="reporting-items" class="task-list reporting-items">
+                                    <li class="task">
+                                        <span class="task-icon" aria-hidden="true">MAT</span>
+                                        <div><span class="task-name">Aset Tetap</span><div class="task-summary">Total: <span class="task-total">105.415</span></div></div>
+                                        <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                    </li>
+                                    <li class="task">
+                                        <span class="task-icon" aria-hidden="true">PER</span>
+                                        <div><span class="task-name">Persediaan</span><div class="task-summary">Total: <span class="task-total">157.558</span></div></div>
+                                        <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                    </li>
+                                </ul>
+                                <p id="reporting-empty" class="mt-3 text-sm text-slate-600" role="status" hidden>Data contoh untuk periode ini belum tersedia.</p>
+                                <details id="reporting-more" class="reporting-more">
+                                    <summary>Selengkapnya <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i></summary>
+                                    <p class="mt-2 text-sm text-slate-600">Data ilustratif bulanan mencakup 105.415 laporan Aset Tetap dan 157.558 laporan Persediaan, dengan total 262.973 laporan.</p>
+                                </details>
+                            </section>
                         </div>
                     </div>
                 </section>
@@ -376,8 +483,9 @@
                     <h2 id="sp2d-title">Jumlah SP2D</h2>
                     <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tanggal Data</p>
                     <p class="timestamp">04 November 2026</p>
-                    <div class="sp2d-chart" aria-label="33.000 SP2D: 31.141 berhasil (94,37%) dan 1.859 void (5,63%)" role="img">
-                        <div><strong>33.000</strong>SP2D</div>
+                    <div class="donut-stage sp2d-chart" aria-label="33.000 SP2D: 31.141 berhasil (94,37%) dan 1.859 void (5,63%)" role="img">
+                        <canvas id="sp2d-ring" aria-hidden="true" hidden></canvas>
+                        <div class="donut-summary"><strong>33.000</strong><span>SP2D</span></div>
                     </div>
                     <table aria-label="Rincian SP2D">
                         <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
@@ -396,19 +504,65 @@
                         <button type="submit" class="accent-button">Cari</button>
                     </form>
                     <div class="dipa-tabs" aria-label="Status revisi DIPA">
-                        <button type="button" aria-pressed="true">Proses <b>3.164</b></button>
-                        <button type="button" aria-pressed="false">Berhasil <b>173.194</b></button>
-                        <button type="button" aria-pressed="false">Ditolak <b>46.844</b></button>
+                        <button type="button" aria-pressed="true" data-dipa-status="proses">Proses <b>2.654</b></button>
+                        <button type="button" aria-pressed="false" data-dipa-status="berhasil">Berhasil <b>174.533</b></button>
+                        <button type="button" aria-pressed="false" data-dipa-status="ditolak">Ditolak <b>46.849</b></button>
                     </div>
                     <div class="dipa-results" aria-live="polite">
-                        <article class="dipa-entry">
+                        <article class="dipa-entry" data-status="proses">
                             <h3>Satker : 689177</h3>
                             <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
                             <mark>Proses RUH Oleh Operator</mark>
                             <p><strong>Revisi ke: 2</strong> · C02</p>
                             <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.398.572.000</strong></p>
                         </article>
-                        <article class="dipa-entry"><h3>Satker : 420088</h3></article>
+                        <article class="dipa-entry" data-status="proses"><h3>Satker : 420088</h3></article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 690887</h3>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">DIPA-127.01.2.690887/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui <i class="fa-regular fa-circle-check" aria-hidden="true"></i></mark>
+                            </div>
+                            <p><strong>Revisi ke: 10</strong> <span class="dipa-tag text-xs font-semibold">A10</span></p>
+                            <div class="dipa-row">
+                                <span class="dipa-tag">2026.690887.009</span>
+                                <strong class="dipa-tag">Tujuan Revisi: Pemutakhiran KPA</strong>
+                            </div>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 14.085.581.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 690887</h3>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">DIPA-127.01.2.690887/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui <i class="fa-regular fa-circle-check" aria-hidden="true"></i></mark>
+                            </div>
+                            <p><strong>Revisi ke: 9</strong> <span class="dipa-tag text-xs font-semibold">A09</span></p>
+                            <div class="dipa-row">
+                                <span class="dipa-tag">2026.690887.008</span>
+                                <strong class="dipa-tag">Tujuan Revisi: Kanwil DJPb</strong>
+                            </div>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <h3>Satker : 690887</h3>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">DIPA-127.01.2.690887/2026</span></p>
+                                <mark class="dipa-rejected">Ditolak <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i></mark>
+                            </div>
+                            <p><strong>Revisi ke: 9</strong> <span class="dipa-tag text-xs font-semibold">A09</span></p>
+                            <div class="dipa-row">
+                                <span class="dipa-tag">2026.690887.007</span>
+                                <strong class="dipa-tag">Tujuan Revisi: Kanwil DJPb</strong>
+                            </div>
+                            <p><strong>Catatan Penolakan</strong></p>
+                            <ul class="dipa-reason list-disc list-inside"><li>Pada surat usulan revisi, hapus tata cara revisi “Pergeseran Anggaran Antarjenis Belanja”.</li><li>Saat pengajuan, jenis revisi “221 Pergeseran Anggaran Antarjenis Belanja” agar tidak dipilih.</li></ul>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 14.085.581.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <div class="dipa-row">
+                                <h3>Satker : 426029</h3>
+                                <mark class="dipa-rejected">Ditolak <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i></mark>
+                            </div>
+                        </article>
                         <p id="dipa-empty" class="text-slate-500" hidden></p>
                     </div>
                     <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
@@ -434,7 +588,7 @@
                         </div>
                         <div>
                             <h3 id="ews-title" class="text-sm font-extrabold text-blue-950 leading-none">Early Warning System (EWS)</h3>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Monitoring & Tindak Lanjut Kepala KPPN</p>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Monitoring & Tindak Lanjut Kepala KPPN Pangkalan Bun</p>
                         </div>
                     </div>
                     <button id="close-ews-btn" type="button" aria-label="Tutup EWS" class="p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
@@ -760,6 +914,31 @@
 
             donutCanvas.addEventListener('pointerleave', () => showDonutSummary(selectedSlice));
             showDonutSummary(null);
+
+            const sp2dRing = document.getElementById('sp2d-ring');
+            sp2dRing.hidden = false;
+            new Chart(sp2dRing, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Berhasil', 'Void'],
+                    datasets: [{
+                        data: [31141, 1859],
+                        backgroundColor: ['#6358d9', '#c64338'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '64%',
+                    layout: { padding: 9 },
+                    animation: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } }
+                }
+            });
+            sp2dRing.parentElement.classList.add('is-rendered');
         }
 
         // Modal Interactive Logic
@@ -906,29 +1085,76 @@
         });
 
         const todoTabs = document.querySelectorAll('[data-category]');
-        todoTabs.forEach((tab) => tab.addEventListener('click', () => {
-            const showTasks = tab.dataset.category === 'Non-Pelaporan';
-            todoTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
-            document.getElementById('todo-category').textContent = tab.dataset.category;
+        const todoFilter = document.getElementById('todo-filter');
+        const todoFilterForm = document.getElementById('todo-filter-form');
+        const todoSatker = document.getElementById('todo-satker');
+        const todoFilterStatus = document.getElementById('todo-filter-status');
+        let appliedSatker = '';
+
+        function updateTodoView() {
+            const nonReporting = todoTabs[0].getAttribute('aria-pressed') === 'true';
+            const showTasks = !appliedSatker && nonReporting;
+            document.getElementById('todo-category').hidden = !showTasks;
             document.getElementById('todo-items').hidden = !showTasks;
-            document.getElementById('todo-empty').hidden = showTasks;
+            document.getElementById('reporting-panel').hidden = Boolean(appliedSatker) || nonReporting;
+            todoFilterStatus.hidden = !appliedSatker;
+            todoFilterStatus.textContent = appliedSatker
+                ? 'Data contoh To-Do List belum tersedia untuk ' + appliedSatker + '.'
+                : '';
+        }
+
+        todoTabs.forEach((tab) => tab.addEventListener('click', () => {
+            todoTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
+            updateTodoView();
         }));
+
+        function applyTodoFilter(satker) {
+            appliedSatker = satker;
+            updateTodoView();
+            todoFilter.open = false;
+            todoFilter.querySelector('summary').focus();
+        }
+
+        todoFilterForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            applyTodoFilter(todoSatker.value);
+        });
+        todoFilterForm.addEventListener('reset', () => applyTodoFilter(''));
+        todoFilter.addEventListener('toggle', () => {
+            if (todoFilter.open) todoSatker.value = appliedSatker;
+        });
+        todoFilter.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && todoFilter.open) {
+                todoFilter.open = false;
+                todoFilter.querySelector('summary').focus();
+            }
+        });
+        document.addEventListener('click', (event) => {
+            if (todoFilter.open && !todoFilter.contains(event.target)) todoFilter.open = false;
+        });
+
+        document.getElementById('reporting-period').addEventListener('change', (event) => {
+            const monthly = event.currentTarget.value === 'bulanan';
+            document.getElementById('reporting-items').hidden = !monthly;
+            document.getElementById('reporting-more').hidden = !monthly;
+            document.getElementById('reporting-empty').hidden = monthly;
+        });
 
         const dipaForm = document.getElementById('dipa-search');
         const dipaTabs = document.querySelectorAll('.dipa-tabs button');
         const dipaEntries = document.querySelectorAll('.dipa-entry');
         const dipaEmpty = document.getElementById('dipa-empty');
+        const dipaResults = dipaEmpty.parentElement;
 
         function filterDipa() {
             const query = dipaForm.querySelector('input').value.trim().toLowerCase();
-            const showProcess = dipaTabs[0].getAttribute('aria-pressed') === 'true';
+            const status = document.querySelector('.dipa-tabs [aria-pressed="true"]').dataset.dipaStatus;
             dipaEntries.forEach((entry) => {
-                entry.hidden = !showProcess || !entry.textContent.toLowerCase().includes(query);
+                entry.hidden = entry.dataset.status !== status || !entry.textContent.toLowerCase().includes(query);
             });
             dipaEmpty.hidden = Array.from(dipaEntries).some((entry) => !entry.hidden);
-            dipaEmpty.textContent = showProcess
-                ? 'Satker atau nomor DIPA tidak ditemukan.'
-                : 'Data contoh untuk status ini belum tersedia.';
+            dipaEmpty.textContent = 'Satker atau nomor DIPA tidak ditemukan.';
+            dipaResults.scrollTop = 0;
         }
 
         dipaForm.addEventListener('submit', (event) => {
