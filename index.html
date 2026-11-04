@@ -13,29 +13,52 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         :root { --ink: #222959; --accent: #424db8; --line: #dce1eb; }
-        body.dashboard { color: var(--ink); background: #edf0f5; font-family: Inter, Arial, sans-serif; }
-        .site-header { background: white; }
-        .header-row, .menu { display: flex; align-items: center; gap: clamp(.65rem, 2vw, 1.75rem); padding: .75rem clamp(1rem, 2.6vw, 3rem); }
-        .brand { flex: none; width: clamp(8rem, 12vw, 13rem); }
-        .brand img { display: block; width: 100%; }
-        .menu-search { flex: 0 1 35%; min-width: 0; }
+        body.dashboard { margin: 0; color: var(--ink); background: #141827; font-family: Inter, Arial, sans-serif; }
+        .phone { max-width: 34rem; min-height: 100vh; margin: 0 auto; border-inline: .45rem solid #232838; background: #f5f6fa; }
+        .status-bar { display: flex; position: relative; align-items: center; justify-content: space-between; min-height: 2.65rem; padding: .4rem 1.45rem; background: #141827; color: white; font-weight: 600; }
+        .status-camera { position: absolute; inset-inline-start: 50%; transform: translateX(-50%); width: 4.1rem; height: 1rem; border-radius: 1rem; background: #030405; }
+        .status-camera::after { content: ''; display: block; width: .5rem; aspect-ratio: 1; margin: .25rem auto; border-radius: 50%; background: #262c40; }
+        .status-icons { display: flex; align-items: center; gap: .4rem; font-size: .7rem; }
+        .site-header { padding: .8rem clamp(.65rem, 3vw, 1.1rem); background: white; border-bottom: 1px solid var(--line); }
+        .header-row { display: flex; align-items: center; gap: clamp(.35rem, 2vw, .8rem); }
+        .brand { flex: 1; min-width: 0; text-decoration: none; color: inherit; }
+        .brand img { display: block; width: min(100%, 9.25rem); }
+        .brand span { display: block; margin-top: .1rem; color: #64718d; font-size: clamp(.63rem, 2.4vw, .77rem); line-height: 1.2; }
+        .header-action, .profile { flex: none; display: grid; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: .78rem; }
+        .header-action { position: relative; color: #4a5368; }
+        .ews-bell { border: 1px solid #f3d2d2; background: #fbefef; color: #c93632; }
+        .ews-bell svg { width: 1.15rem; }
+        .ews-bell::after { content: ''; position: absolute; top: .21rem; right: .21rem; width: .55rem; aspect-ratio: 1; border: 1px solid white; border-radius: 50%; background: #d9544e; }
+        .profile { border: 2px solid #d1d7ed; background: #202c56; color: white; font-size: .8rem; font-weight: 700; }
+        .header-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; padding: .4rem; border-radius: .8rem; background: #f1f2f7; font-size: clamp(.7rem, 2.6vw, .9rem); }
+        .header-date { padding: .25rem .55rem; border-radius: .5rem; background: white; color: #354056; font-weight: 600; }
+        .header-date i { color: var(--accent); }
+        .year { color: #56627a; }
+        .year select { background: transparent; color: var(--ink); }
+        .menu-search { width: 100%; margin-top: .65rem; }
+        .menu { display: flex; gap: .45rem .75rem; flex-wrap: wrap; margin-top: .5rem; font-size: .83rem; }
+        .menu a { padding: .25rem 0; }
         .control { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid #cbd0da; border-radius: .5rem; background: white; }
-        .year { margin-left: auto; white-space: nowrap; }
-        .profile { display: flex; align-items: center; gap: .8rem; line-height: 1.3; white-space: nowrap; }
-        .menu { justify-content: space-between; overflow-x: auto; font-weight: 600; white-space: nowrap; }
-        .menu a { padding: .35rem .2rem; }
-        .menu a:hover { color: var(--accent); }
-        .dashboard-main { padding: clamp(.85rem, 1.75vw, 2rem); display: grid; gap: 1rem; }
+        .dashboard-main { padding: 1rem clamp(.65rem, 3vw, 1.1rem); display: grid; gap: 1rem; }
+        .ews-alert { display: flex; align-items: center; gap: .55rem; padding: .7rem; border: 1px solid #f1d97e; border-radius: 1rem; background: linear-gradient(105deg, #faf2e7, #f4e8ec 55%, #f7f7fa); }
+        .ews-alert-icon { display: grid; place-items: center; flex: none; width: 2rem; aspect-ratio: 1; border-radius: .75rem; color: #9e4d13; background: #f3e1c4; }
+        .ews-alert-icon svg { width: 1rem; }
+        .ews-alert-copy { flex: 1; min-width: 0; }
+        .ews-alert-title { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .35rem; font-size: clamp(.78rem, 2.7vw, .98rem); font-weight: 700; color: #182237; }
+        .ews-count { padding: .03rem .36rem; border-radius: 1rem; background: #bf403a; color: white; font-size: .65rem; white-space: nowrap; }
+        .ews-alert-copy p { color: #536480; font-size: clamp(.68rem, 2.45vw, .88rem); line-height: 1.3; margin-top: .15rem; }
+        .ews-detail { flex: none; padding: .4rem .55rem; border: 1px solid #dce1eb; border-radius: .55rem; background: white; color: #3439a8; box-shadow: 0 1px 3px #202a501a; font-size: clamp(.7rem, 2.5vw, .9rem); font-weight: 700; white-space: nowrap; }
+        .ews-detail:hover, .ews-bell:hover { border-color: currentColor; }
         .overview, .card-grid { display: grid; gap: 1rem; align-items: stretch; }
-        .overview { grid-template-columns: minmax(0, 3.1fr) minmax(0, 1fr); }
-        .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .overview { grid-template-columns: minmax(0, 1fr); }
+        .card-grid { grid-template-columns: minmax(0, 1fr); }
         .panel { min-width: 0; border-radius: 1.1rem; padding: clamp(1rem, 1.5vw, 1.65rem); background: white; box-shadow: 0 .25rem .6rem #202a5020; }
         .panel h2 { font-size: clamp(1.2rem, 1.5vw, 1.7rem); font-weight: 700; }
         .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: clamp(1rem, 2vw, 2rem); margin-bottom: 1.25rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
         .date-banner strong { display: block; font-size: clamp(1.2rem, 2vw, 2.2rem); }
         .banner-time { text-align: right; white-space: nowrap; }
         .banner-time strong, .task-total { font-variant-numeric: tabular-nums; }
-        .todo-content { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1rem; }
+        .todo-content { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
         .todo-heading { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
         .tabs { display: flex; background: #e4e7ef; border: 1px solid #cdd4e1; padding: .16rem; border-radius: .75rem; }
         .tabs button { flex: 1; padding: .45rem .15rem; font-weight: 600; border-radius: .6rem; }
@@ -88,220 +111,235 @@
         .dipa-entry mark { background: #faf0c4; color: inherit; margin: .4rem 0; }
         .dipa-budget { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
         .dipa .timestamp { text-align: right; }
-        .ews-trigger { justify-self: start; border-radius: 2rem; margin-bottom: .5rem; }
-        @media (max-width: 940px) {
-            .overview { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); }
-            .todo-content { grid-template-columns: minmax(0, 1fr); }
+        @media (min-width: 35rem) {
+            .phone { margin-block: 1rem; border: .45rem solid #232838; border-radius: 2rem; overflow: hidden; }
         }
-        @media (max-width: 700px) {
-            .header-row { flex-wrap: wrap; }
-            .menu-search { order: 1; flex: 1 0 100%; }
-            .profile-name { display: none; }
-            .menu { justify-content: flex-start; padding-top: 0; }
-            .overview, .card-grid { grid-template-columns: minmax(0, 1fr); }
-            .ikpa { padding-block: 1.5rem; }
-        }
-        @media (max-width: 380px) {
-            .header-row { gap: .4rem; padding-inline: .65rem; }
-            .brand { width: 6.5rem; }
-            .year { font-size: .75rem; padding-inline: .4rem; }
+        @media (max-width: 35rem) {
+            .phone { border: 0; }
         }
         [hidden] { display: none !important; }
     </style>
 </head>
 <body class="dashboard antialiased min-h-screen">
-    <header class="site-header">
-        <div class="header-row">
-            <a class="brand" href="./" aria-label="Dasbor MyIntress">
-                <img src="./myintress-logo.svg" alt="MyIntress">
-            </a>
-            <input class="control menu-search" type="search" aria-label="Cari menu" placeholder="Cari Menu, contoh: Referensi Mapping Kode Barang Pada …">
-            <label class="control year">
-                <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                Tahun Anggaran:
-                <select aria-label="Tahun anggaran" class="font-bold">
-                    <option selected>2026</option>
-                    <option>2025</option>
-                </select>
-            </label>
-            <div class="control profile">
-                <div class="profile-name"><strong>MUKH GUFRON</strong><br>ADMIN-SITP</div>
-                <i class="fa-solid fa-gear" aria-hidden="true"></i>
-            </div>
+    <div class="phone">
+        <div class="status-bar" aria-hidden="true">
+            <span>09:47</span>
+            <span class="status-camera"></span>
+            <span class="status-icons"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></span>
         </div>
-        <nav class="menu" aria-label="Menu utama">
-            <a href="#">Admin</a><a href="#">Anggaran</a><a href="#">Komitmen</a>
-            <a href="#">Bendahara</a><a href="#">Pembayaran</a><a href="#">Persediaan</a>
-            <a href="#">Aset Tetap</a><a href="#">Piutang</a><a href="#">Rekonsiliasi</a>
-            <a href="#">Tematik</a><a href="#">Lainnya</a>
-        </nav>
-    </header>
-
-    <main class="dashboard-main">
-        <h1 class="sr-only">Dasbor MyIntress</h1>
-        <div class="overview">
-            <section class="panel" aria-labelledby="todo-title">
-                <div class="date-banner">
-                    <div>
-                        <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> HARI INI</span>
-                        <strong>4 November 2026</strong>
-                    </div>
-                    <div class="banner-time">
-                        <strong>09:47</strong>
-                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
-                    </div>
-                </div>
-                <div class="todo-content">
-                    <div>
-                        <div class="todo-heading">
-                            <h2 id="todo-title">To-Do List</h2>
-                            <span class="control" aria-hidden="true"><i class="fa-solid fa-filter"></i></span>
-                        </div>
-                        <div class="tabs" aria-label="Kategori tugas">
-                            <button type="button" aria-pressed="true" data-category="Non-Pelaporan">Non-Pelaporan</button>
-                            <button type="button" aria-pressed="false" data-category="Pelaporan">Pelaporan</button>
-                        </div>
-                        <h3 id="todo-category" class="font-semibold text-lg mt-4">Non-Pelaporan</h3>
-                        <ul id="todo-items" class="task-list">
-                            <li class="task">
-                                <span class="task-icon" aria-hidden="true">KOM</span>
-                                <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">67.371</span></div></div>
-                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
-                            </li>
-                            <li class="task">
-                                <span class="task-icon" aria-hidden="true">ANG</span>
-                                <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">78</span></div></div>
-                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
-                            </li>
-                            <li class="task">
-                                <span class="task-icon" aria-hidden="true">PEM</span>
-                                <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">82.337</span></div></div>
-                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
-                            </li>
-                        </ul>
-                        <p id="todo-empty" class="mt-3 text-slate-500" hidden>Data contoh pelaporan belum tersedia.</p>
-                    </div>
-                    <aside class="deadline">
-                        <h3>Bendahara Pengeluaran</h3>
-                        <p>Persediaan &amp; KKP · Akhir Tahun</p>
-                        <ul>
-                            <li>Ajuan persetujuan UP/TUP KKP ke KPPN</li>
-                            <li>SPM-UP Tunai, TUP KKP &amp; GUP diterima KPPN</li>
-                            <li>Hari terakhir transaksi KKP / KKP Domestik</li>
-                            <li>SPM-GUP/PTUP KKP diterima KPPN</li>
-                        </ul>
-                    </aside>
-                </div>
-            </section>
-
-            <section class="panel ikpa" aria-labelledby="ikpa-title">
-                <h2 id="ikpa-title">Capaian IKPA</h2>
-                <div class="gauge">
-                    <svg viewBox="0 0 220 115" aria-hidden="true">
-                        <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#e5e5e5" stroke-width="21" stroke-linecap="round"/>
-                        <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="66.37 100"/>
-                        <circle cx="12" cy="103" r="10.5" fill="#4149cf"/>
+        <header class="site-header">
+            <div class="header-row">
+                <a class="brand" href="./" aria-label="Dasbor MyIntress">
+                    <img src="./myintress-logo.svg" alt="MyIntress">
+                    <span>Kementerian Keuangan RI</span>
+                </a>
+                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka peringatan EWS untuk 1 satker" aria-haspopup="dialog" aria-controls="ews-modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0"/>
                     </svg>
-                    <strong>66.37 %</strong>
-                    <div class="gauge-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+                </button>
+                <button id="menu-toggle" type="button" class="header-action" aria-label="Cari menu" aria-expanded="false" aria-controls="menu-panel">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+                    </svg>
+                </button>
+                <span class="profile" aria-label="Profil Mukh Gufron">MG</span>
+            </div>
+            <div class="header-meta">
+                <time class="header-date" datetime="2026-11-04"><i class="fa-regular fa-calendar" aria-hidden="true"></i> 4 Nov 2026</time>
+                <label class="year">Tahun Anggaran:
+                    <select class="font-bold">
+                        <option selected>2026</option>
+                        <option>2025</option>
+                    </select>
+                </label>
+            </div>
+            <div id="menu-panel" hidden>
+                <input id="menu-search" class="control menu-search" type="search" aria-label="Cari menu" placeholder="Cari menu…">
+                <nav class="menu" aria-label="Menu utama">
+                    <a href="#">Admin</a><a href="#">Anggaran</a><a href="#">Komitmen</a>
+                    <a href="#">Bendahara</a><a href="#">Pembayaran</a><a href="#">Persediaan</a>
+                    <a href="#">Aset Tetap</a><a href="#">Piutang</a><a href="#">Rekonsiliasi</a>
+                    <a href="#">Tematik</a><a href="#">Lainnya</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <h1 class="sr-only">Dasbor MyIntress</h1>
+            <section class="ews-alert" aria-labelledby="ews-alert-title">
+                <span class="ews-alert-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.3 4.5 2.6 18a1.5 1.5 0 0 0 1.3 2.2h16.2a1.5 1.5 0 0 0 1.3-2.2L13.7 4.5a2 2 0 0 0-3.4 0ZM12 9v4m0 3.5h.01"/>
+                    </svg>
+                </span>
+                <div class="ews-alert-copy">
+                    <h2 id="ews-alert-title" class="ews-alert-title">Early Warning Active <span class="ews-count">1 Satker</span></h2>
+                    <p>Kemenag Pangkalan Bun mendekati deadline</p>
                 </div>
-                <p class="month">November 2026</p>
-                <div class="metrics">
-                    <div class="metric"><strong>94.29%</strong> Kualitas Perencanaan Anggaran</div>
-                    <div class="metric"><strong>96.90%</strong> Kualitas Pelaksanaan Anggaran</div>
-                </div>
+                <button type="button" class="ews-detail" data-ews-trigger aria-haspopup="dialog" aria-controls="ews-modal">Buka Detail</button>
             </section>
-        </div>
-
-        <!-- Charts Section (Proportional & Responsive Layout) -->
-        <div class="card-grid">
-
-            <!-- Bar Chart Card -->
-            <div class="panel flex flex-col">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="font-bold text-slate-800 text-base">Pagu vs Realisasi per Jenis Belanja</h2>
-                        <p class="text-xs text-slate-400">Perbandingan alokasi anggaran dan realisasi (dalam Miliar)</p>
+            <div class="overview">
+                <section class="panel" aria-labelledby="todo-title">
+                    <div class="date-banner">
+                        <div>
+                            <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> HARI INI</span>
+                            <strong>4 November 2026</strong>
+                        </div>
+                        <div class="banner-time">
+                            <strong>09:47</strong>
+                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
+                        </div>
                     </div>
-                    <button class="text-slate-400 hover:text-slate-600 text-xs">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                </div>
-                <div class="relative h-[280px] min-w-0">
-                    <canvas id="barChart"></canvas>
-                </div>
+                    <div class="todo-content">
+                        <div>
+                            <div class="todo-heading">
+                                <h2 id="todo-title">To-Do List</h2>
+                                <span class="control" aria-hidden="true"><i class="fa-solid fa-filter"></i></span>
+                            </div>
+                            <div class="tabs" aria-label="Kategori tugas">
+                                <button type="button" aria-pressed="true" data-category="Non-Pelaporan">Non-Pelaporan</button>
+                                <button type="button" aria-pressed="false" data-category="Pelaporan">Pelaporan</button>
+                            </div>
+                            <h3 id="todo-category" class="font-semibold text-lg mt-4">Non-Pelaporan</h3>
+                            <ul id="todo-items" class="task-list">
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">KOM</span>
+                                    <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">67.371</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">ANG</span>
+                                    <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">78</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">PEM</span>
+                                    <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">82.337</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                            </ul>
+                            <p id="todo-empty" class="mt-3 text-slate-500" hidden>Data contoh pelaporan belum tersedia.</p>
+                        </div>
+                        <aside class="deadline">
+                            <h3>Bendahara Pengeluaran</h3>
+                            <p>Persediaan &amp; KKP · Akhir Tahun</p>
+                            <ul>
+                                <li>Ajuan persetujuan UP/TUP KKP ke KPPN</li>
+                                <li>SPM-UP Tunai, TUP KKP &amp; GUP diterima KPPN</li>
+                                <li>Hari terakhir transaksi KKP / KKP Domestik</li>
+                                <li>SPM-GUP/PTUP KKP diterima KPPN</li>
+                            </ul>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="panel ikpa" aria-labelledby="ikpa-title">
+                    <h2 id="ikpa-title">Capaian IKPA</h2>
+                    <div class="gauge">
+                        <svg viewBox="0 0 220 115" aria-hidden="true">
+                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#e5e5e5" stroke-width="21" stroke-linecap="round"/>
+                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="66.37 100"/>
+                            <circle cx="12" cy="103" r="10.5" fill="#4149cf"/>
+                        </svg>
+                        <strong>66.37 %</strong>
+                        <div class="gauge-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+                    </div>
+                    <p class="month">November 2026</p>
+                    <div class="metrics">
+                        <div class="metric"><strong>94.29%</strong> Kualitas Perencanaan Anggaran</div>
+                        <div class="metric"><strong>96.90%</strong> Kualitas Pelaksanaan Anggaran</div>
+                    </div>
+                </section>
             </div>
 
-            <!-- Donut Chart Card -->
-            <div class="panel flex flex-col">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="font-bold text-slate-800 text-base">Realisasi Per Jenis Pengeluaran</h2>
-                        <p class="text-xs text-slate-400">Proporsi pembagian pengeluaran negara</p>
+            <!-- Charts Section (Proportional & Responsive Layout) -->
+            <div class="card-grid">
+
+                <!-- Bar Chart Card -->
+                <div class="panel flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="font-bold text-slate-800 text-base">Pagu vs Realisasi per Jenis Belanja</h2>
+                            <p class="text-xs text-slate-400">Perbandingan alokasi anggaran dan realisasi (dalam Miliar)</p>
+                        </div>
+                        <button class="text-slate-400 hover:text-slate-600 text-xs">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
                     </div>
-                    <button class="text-slate-400 hover:text-slate-600 text-xs">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
+                    <div class="relative h-[280px] min-w-0">
+                        <canvas id="barChart"></canvas>
+                    </div>
                 </div>
-                <div class="relative h-[280px] min-w-0">
-                    <canvas id="donutChart"></canvas>
+
+                <!-- Donut Chart Card -->
+                <div class="panel flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="font-bold text-slate-800 text-base">Realisasi Per Jenis Pengeluaran</h2>
+                            <p class="text-xs text-slate-400">Proporsi pembagian pengeluaran negara</p>
+                        </div>
+                        <button class="text-slate-400 hover:text-slate-600 text-xs">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="relative h-[280px] min-w-0">
+                        <canvas id="donutChart"></canvas>
+                    </div>
                 </div>
+
             </div>
 
-        </div>
+            <div class="card-grid">
+                <section class="panel sp2d" aria-labelledby="sp2d-title">
+                    <h2 id="sp2d-title">Jumlah SP2D</h2>
+                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Hari Ini</p>
+                    <p class="timestamp">04 November 2026</p>
+                    <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
+                        <div><strong>31.141</strong>SP2D</div>
+                    </div>
+                    <table aria-label="Rincian SP2D">
+                        <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
+                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>0</td><td>Rp 0</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="timestamp">Data per 4 November 2026 pukul 09.40 WIB</p>
+                </section>
 
-        <div class="card-grid">
-            <section class="panel sp2d" aria-labelledby="sp2d-title">
-                <h2 id="sp2d-title">Jumlah SP2D</h2>
-                <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Hari Ini</p>
-                <p class="timestamp">04 November 2026</p>
-                <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
-                    <div><strong>31.141</strong>SP2D</div>
-                </div>
-                <table aria-label="Rincian SP2D">
-                    <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
-                        <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>0</td><td>Rp 0</td></tr>
-                    </tbody>
-                </table>
-                <p class="timestamp">Data per 4 November 2026 pukul 09.40 WIB</p>
-            </section>
-
-            <section class="panel dipa" aria-labelledby="dipa-title">
-                <h2 id="dipa-title">Revisi DIPA</h2>
-                <form id="dipa-search" class="dipa-form" role="search">
-                    <input class="control" type="search" aria-label="Cari nomor DIPA atau satker" placeholder="Pencarian...">
-                    <button type="submit" class="accent-button">Cari</button>
-                </form>
-                <div class="dipa-tabs" aria-label="Status revisi DIPA">
-                    <button type="button" aria-pressed="true">Proses <b>3.164</b></button>
-                    <button type="button" aria-pressed="false">Berhasil <b>173.194</b></button>
-                    <button type="button" aria-pressed="false">Ditolak <b>46.844</b></button>
-                </div>
-                <div class="dipa-results" aria-live="polite">
-                    <article class="dipa-entry">
-                        <h3>Satker : 689177</h3>
-                        <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
-                        <mark>Proses RUH Oleh Operator</mark>
-                        <p><strong>Revisi ke: 2</strong> · C02</p>
-                        <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.398.572.000</strong></p>
-                    </article>
-                    <article class="dipa-entry"><h3>Satker : 420088</h3></article>
-                    <p id="dipa-empty" class="text-slate-500" hidden></p>
-                </div>
-                <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
-            </section>
-        </div>
-        <button id="trigger-ews-btn" type="button" class="accent-button ews-trigger">
-            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Simulasi Alert EWS
-        </button>
-    </main>
+                <section class="panel dipa" aria-labelledby="dipa-title">
+                    <h2 id="dipa-title">Revisi DIPA</h2>
+                    <form id="dipa-search" class="dipa-form" role="search">
+                        <input class="control" type="search" aria-label="Cari nomor DIPA atau satker" placeholder="Pencarian...">
+                        <button type="submit" class="accent-button">Cari</button>
+                    </form>
+                    <div class="dipa-tabs" aria-label="Status revisi DIPA">
+                        <button type="button" aria-pressed="true">Proses <b>3.164</b></button>
+                        <button type="button" aria-pressed="false">Berhasil <b>173.194</b></button>
+                        <button type="button" aria-pressed="false">Ditolak <b>46.844</b></button>
+                    </div>
+                    <div class="dipa-results" aria-live="polite">
+                        <article class="dipa-entry">
+                            <h3>Satker : 689177</h3>
+                            <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
+                            <mark>Proses RUH Oleh Operator</mark>
+                            <p><strong>Revisi ke: 2</strong> · C02</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.398.572.000</strong></p>
+                        </article>
+                        <article class="dipa-entry"><h3>Satker : 420088</h3></article>
+                        <p id="dipa-empty" class="text-slate-500" hidden></p>
+                    </div>
+                    <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
+                </section>
+            </div>
+        </main>
+    </div>
 
     <!-- Seamless Native EWS Modal Overlay -->
     <div id="ews-modal" role="dialog" aria-modal="true" aria-labelledby="ews-title" inert class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         
-        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform scale-95 transition-all duration-300" id="ews-modal-content">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-full shadow-2xl overflow-y-auto border border-slate-100 transform scale-95 transition-all duration-300" id="ews-modal-content">
             
             <!-- Modal Header (Red/Amber Border Accent) -->
             <div class="bg-rose-50 border-b border-rose-100 p-5 flex items-start justify-between">
@@ -439,10 +477,13 @@
         // Modal Interactive Logic
         const ewsModal = document.getElementById('ews-modal');
         const ewsModalContent = document.getElementById('ews-modal-content');
-        const triggerBtn = document.getElementById('trigger-ews-btn');
+        const ewsTriggers = document.querySelectorAll('[data-ews-trigger]');
+        let activeEwsTrigger;
         const closeBtn = document.getElementById('close-ews-btn');
 
-        function openModal() {
+        function openModal(event) {
+            activeEwsTrigger = event.currentTarget;
+            document.querySelector('.phone').inert = true;
             ewsModal.inert = false;
             closeBtn.focus();
             ewsModal.classList.remove('opacity-0', 'pointer-events-none');
@@ -453,16 +494,34 @@
         function closeModal() {
             if (ewsModal.inert) return;
             ewsModal.inert = true;
-            triggerBtn.focus();
+            document.querySelector('.phone').inert = false;
+            activeEwsTrigger.focus();
             ewsModal.classList.add('opacity-0', 'pointer-events-none');
             ewsModalContent.classList.remove('scale-100');
             ewsModalContent.classList.add('scale-95');
         }
 
-        triggerBtn.addEventListener('click', openModal);
+        ewsTriggers.forEach((button) => button.addEventListener('click', openModal));
         closeBtn.addEventListener('click', closeModal);
         ewsModal.addEventListener('click', (e) => {
             if (e.target === ewsModal) closeModal();
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuPanel = document.getElementById('menu-panel');
+        const menuSearch = document.getElementById('menu-search');
+
+        menuToggle.addEventListener('click', () => {
+            menuPanel.hidden = !menuPanel.hidden;
+            menuToggle.setAttribute('aria-expanded', !menuPanel.hidden);
+            if (!menuPanel.hidden) menuSearch.focus();
+        });
+
+        menuSearch.addEventListener('input', () => {
+            const query = menuSearch.value.trim().toLowerCase();
+            menuPanel.querySelectorAll('a').forEach((link) => {
+                link.hidden = !link.textContent.toLowerCase().includes(query);
+            });
         });
 
         const todoTabs = document.querySelectorAll('[data-category]');
