@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyIntress - Kementerian Keuangan RI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root { --ink: #222959; --accent: #424db8; --line: #dce1eb; }
+        body.dashboard { color: var(--ink); background: #edf0f5; font-family: Inter, Arial, sans-serif; }
+        .site-header { background: white; }
+        .header-row, .menu { display: flex; align-items: center; gap: clamp(.65rem, 2vw, 1.75rem); padding: .75rem clamp(1rem, 2.6vw, 3rem); }
+        .brand { flex: none; width: clamp(8rem, 12vw, 13rem); }
+        .brand img { display: block; width: 100%; }
+        .menu-search { flex: 0 1 35%; min-width: 0; }
+        .control { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid #cbd0da; border-radius: .5rem; background: white; }
+        .year { margin-left: auto; white-space: nowrap; }
+        .profile { display: flex; align-items: center; gap: .8rem; line-height: 1.3; white-space: nowrap; }
+        .menu { justify-content: space-between; overflow-x: auto; font-weight: 600; white-space: nowrap; }
+        .menu a { padding: .35rem .2rem; }
+        .menu a:hover { color: var(--accent); }
+        .dashboard-main { padding: clamp(.85rem, 1.75vw, 2rem); display: grid; gap: 1rem; }
+        .overview, .card-grid { display: grid; gap: 1rem; align-items: stretch; }
+        .overview { grid-template-columns: minmax(0, 3.1fr) minmax(0, 1fr); }
+        .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .panel { min-width: 0; border-radius: 1.1rem; padding: clamp(1rem, 1.5vw, 1.65rem); background: white; box-shadow: 0 .25rem .6rem #202a5020; }
+        .panel h2 { font-size: clamp(1.2rem, 1.5vw, 1.7rem); font-weight: 700; }
+        .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: clamp(1rem, 2vw, 2rem); margin-bottom: 1.25rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
+        .date-banner strong { display: block; font-size: clamp(1.2rem, 2vw, 2.2rem); }
+        .banner-time { text-align: right; white-space: nowrap; }
+        .banner-time strong, .task-total { font-variant-numeric: tabular-nums; }
+        .todo-content { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1rem; }
+        .todo-heading { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
+        .tabs { display: flex; background: #e4e7ef; border: 1px solid #cdd4e1; padding: .16rem; border-radius: .75rem; }
+        .tabs button { flex: 1; padding: .45rem .15rem; font-weight: 600; border-radius: .6rem; }
+        .tabs [aria-pressed="true"] { background: white; color: #161b2e; box-shadow: 0 .16rem .35rem #1f274a22; }
+        .task-list { display: grid; gap: .5rem; margin-top: .75rem; }
+        .task { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .55rem; padding: .65rem; border: 1px solid #e1e5ef; border-radius: 1.35rem; color: #171c30; }
+        .task-icon { display: grid; place-items: center; width: clamp(2.3rem, 4.1vw, 4rem); aspect-ratio: 1; border-radius: 50%; background: linear-gradient(135deg, #4c4bf0, #30329f); color: white; font-weight: 700; }
+        .task:nth-child(2) .task-icon { background: linear-gradient(135deg, #ae39f3, #6321c8); }
+        .task:nth-child(3) .task-icon { background: linear-gradient(135deg, #79def0, #489adf); }
+        .task-name { display: block; font-weight: 700; margin-bottom: .35rem; }
+        .task-summary { display: flex; align-items: center; gap: .45rem; padding-top: .35rem; border-top: 1px solid var(--line); color: #4a5368; }
+        .task-total { flex: 1; text-align: center; padding: .15rem .25rem; background: #e7e9f1; border-radius: .75rem; color: #171c30; font-weight: 700; }
+        .task-arrow { display: grid; place-items: center; width: 1.9rem; aspect-ratio: 1; border: 2px solid #9aa3b9; border-radius: 50%; }
+        .deadline { border-radius: 1rem; overflow: hidden; border: 1px solid #dce2ef; border-top: .65rem solid #171e35; background: linear-gradient(145deg, #d8ebfa, #e9d2df); }
+        .deadline h3 { padding: 1.2rem .85rem .5rem; font-size: clamp(1rem, 2vw, 2rem); line-height: 1.1; font-weight: 800; text-transform: uppercase; overflow-wrap: anywhere; }
+        .deadline p { padding: 0 .85rem 1rem; font-weight: 600; }
+        .deadline li { padding: .85rem; background: #337db6; color: white; font-size: .9rem; }
+        .deadline li:nth-child(2) { background: #5740c4; }
+        .deadline li:nth-child(3) { background: #b83248; }
+        .deadline li:nth-child(4) { background: #e2a43e; color: #242134; }
+        .ikpa { display: flex; flex-direction: column; justify-content: space-evenly; gap: 1.15rem; text-align: center; }
+        .gauge { width: 100%; max-width: 20rem; margin-inline: auto; }
+        .gauge svg { width: 100%; display: block; }
+        .gauge strong { font-size: clamp(1.65rem, 2.2vw, 2.4rem); }
+        .gauge-scale { display: flex; justify-content: space-between; color: #60636c; font-size: .8rem; }
+        .month, .metric { background: #f0f1f5; border-radius: 2rem; padding: .55rem; font-weight: 600; }
+        .metrics { display: grid; gap: .55rem; }
+        .metric { display: flex; align-items: center; gap: .45rem; font-size: .75rem; text-align: left; }
+        .metric strong { border-radius: 1rem; padding: .15rem .35rem; background: #486ac0; color: white; white-space: nowrap; }
+        .sp2d { text-align: center; }
+        .sp2d-chart { display: grid; place-items: center; width: min(100%, 14rem); aspect-ratio: 1; margin: 1.5rem auto; border: clamp(1.5rem, 3vw, 2.65rem) solid #9b9ff5; border-radius: 50%; line-height: 1.2; }
+        .sp2d-chart strong { display: block; font-size: 1.8rem; color: #111; }
+        .sp2d table { width: 100%; border-spacing: .3rem; border-collapse: separate; font-size: clamp(.7rem, 1.2vw, 1rem); }
+        .sp2d td { background: #f1f1f3; border-radius: 1.5rem; padding: .45rem .2rem; }
+        .timestamp { margin-top: .6rem; color: #666; font-size: .8rem; font-style: italic; }
+        .dipa-form { display: flex; margin-top: 1rem; }
+        .dipa-form input { flex: 1; min-width: 0; border-radius: .5rem 0 0 .5rem; }
+        .accent-button { padding: .5rem .9rem; background: var(--accent); color: white; font-weight: 700; }
+        .dipa-form button { border-radius: 0 .5rem .5rem 0; }
+        .dipa-tabs { display: flex; flex-wrap: wrap; border-bottom: 2px solid var(--line); }
+        .dipa-tabs button { padding: .65rem .45rem; font-size: .85rem; font-weight: 600; }
+        .dipa-tabs [aria-pressed="true"] { color: var(--accent); background: #f4f5f9; box-shadow: 0 2px var(--accent); }
+        .dipa-tabs b, .dipa-entry mark { display: inline-block; padding: .2rem .45rem; border-radius: .7rem; }
+        .dipa-tabs b { background: #a26715; color: white; }
+        .dipa-tabs button:nth-child(2) b { background: #368144; }
+        .dipa-tabs button:nth-child(3) b { background: #b73c36; }
+        .dipa-results { max-height: 15rem; overflow-y: auto; padding: .65rem .25rem; }
+        .dipa-entry { padding: .55rem 0 1rem; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+        .dipa-entry h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
+        .dipa-entry mark { background: #faf0c4; color: inherit; margin: .4rem 0; }
+        .dipa-budget { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+        .dipa .timestamp { text-align: right; }
+        .ews-trigger { justify-self: start; border-radius: 2rem; margin-bottom: .5rem; }
+        @media (max-width: 940px) {
+            .overview { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); }
+            .todo-content { grid-template-columns: minmax(0, 1fr); }
+        }
+        @media (max-width: 700px) {
+            .header-row { flex-wrap: wrap; }
+            .menu-search { order: 1; flex: 1 0 100%; }
+            .profile-name { display: none; }
+            .menu { justify-content: flex-start; padding-top: 0; }
+            .overview, .card-grid { grid-template-columns: minmax(0, 1fr); }
+            .ikpa { padding-block: 1.5rem; }
+        }
+        @media (max-width: 380px) {
+            .header-row { gap: .4rem; padding-inline: .65rem; }
+            .brand { width: 6.5rem; }
+            .year { font-size: .75rem; padding-inline: .4rem; }
+        }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body class="dashboard antialiased min-h-screen">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="./" aria-label="Dasbor MyIntress">
+                <img src="./myintress-logo.svg" alt="MyIntress">
+            </a>
+            <input class="control menu-search" type="search" aria-label="Cari menu" placeholder="Cari Menu, contoh: Referensi Mapping Kode Barang Pada …">
+            <label class="control year">
+                <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                Tahun Anggaran:
+                <select aria-label="Tahun anggaran" class="font-bold">
+                    <option selected>2026</option>
+                    <option>2025</option>
+                </select>
+            </label>
+            <div class="control profile">
+                <div class="profile-name"><strong>MUKH GUFRON</strong><br>ADMIN-SITP</div>
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            </div>
+        </div>
+        <nav class="menu" aria-label="Menu utama">
+            <a href="#">Admin</a><a href="#">Anggaran</a><a href="#">Komitmen</a>
+            <a href="#">Bendahara</a><a href="#">Pembayaran</a><a href="#">Persediaan</a>
+            <a href="#">Aset Tetap</a><a href="#">Piutang</a><a href="#">Rekonsiliasi</a>
+            <a href="#">Tematik</a><a href="#">Lainnya</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <h1 class="sr-only">Dasbor MyIntress</h1>
+        <div class="overview">
+            <section class="panel" aria-labelledby="todo-title">
+                <div class="date-banner">
+                    <div>
+                        <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> HARI INI</span>
+                        <strong>4 November 2026</strong>
+                    </div>
+                    <div class="banner-time">
+                        <strong>09:47</strong>
+                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
+                    </div>
+                </div>
+                <div class="todo-content">
+                    <div>
+                        <div class="todo-heading">
+                            <h2 id="todo-title">To-Do List</h2>
+                            <span class="control" aria-hidden="true"><i class="fa-solid fa-filter"></i></span>
+                        </div>
+                        <div class="tabs" aria-label="Kategori tugas">
+                            <button type="button" aria-pressed="true" data-category="Non-Pelaporan">Non-Pelaporan</button>
+                            <button type="button" aria-pressed="false" data-category="Pelaporan">Pelaporan</button>
+                        </div>
+                        <h3 id="todo-category" class="font-semibold text-lg mt-4">Non-Pelaporan</h3>
+                        <ul id="todo-items" class="task-list">
+                            <li class="task">
+                                <span class="task-icon" aria-hidden="true">KOM</span>
+                                <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">67.371</span></div></div>
+                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                            </li>
+                            <li class="task">
+                                <span class="task-icon" aria-hidden="true">ANG</span>
+                                <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">78</span></div></div>
+                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                            </li>
+                            <li class="task">
+                                <span class="task-icon" aria-hidden="true">PEM</span>
+                                <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">82.337</span></div></div>
+                                <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                            </li>
+                        </ul>
+                        <p id="todo-empty" class="mt-3 text-slate-500" hidden>Data contoh pelaporan belum tersedia.</p>
+                    </div>
+                    <aside class="deadline">
+                        <h3>Bendahara Pengeluaran</h3>
+                        <p>Persediaan &amp; KKP · Akhir Tahun</p>
+                        <ul>
+                            <li>Ajuan persetujuan UP/TUP KKP ke KPPN</li>
+                            <li>SPM-UP Tunai, TUP KKP &amp; GUP diterima KPPN</li>
+                            <li>Hari terakhir transaksi KKP / KKP Domestik</li>
+                            <li>SPM-GUP/PTUP KKP diterima KPPN</li>
+                        </ul>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="panel ikpa" aria-labelledby="ikpa-title">
+                <h2 id="ikpa-title">Capaian IKPA</h2>
+                <div class="gauge">
+                    <svg viewBox="0 0 220 115" aria-hidden="true">
+                        <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#e5e5e5" stroke-width="21" stroke-linecap="round"/>
+                        <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="66.37 100"/>
+                        <circle cx="12" cy="103" r="10.5" fill="#4149cf"/>
+                    </svg>
+                    <strong>66.37 %</strong>
+                    <div class="gauge-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+                </div>
+                <p class="month">November 2026</p>
+                <div class="metrics">
+                    <div class="metric"><strong>94.29%</strong> Kualitas Perencanaan Anggaran</div>
+                    <div class="metric"><strong>96.90%</strong> Kualitas Pelaksanaan Anggaran</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Charts Section (Proportional & Responsive Layout) -->
+        <div class="card-grid">
+
+            <!-- Bar Chart Card -->
+            <div class="panel flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="font-bold text-slate-800 text-base">Pagu vs Realisasi per Jenis Belanja</h2>
+                        <p class="text-xs text-slate-400">Perbandingan alokasi anggaran dan realisasi (dalam Miliar)</p>
+                    </div>
+                    <button class="text-slate-400 hover:text-slate-600 text-xs">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                </div>
+                <div class="relative h-[280px] min-w-0">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Donut Chart Card -->
+            <div class="panel flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="font-bold text-slate-800 text-base">Realisasi Per Jenis Pengeluaran</h2>
+                        <p class="text-xs text-slate-400">Proporsi pembagian pengeluaran negara</p>
+                    </div>
+                    <button class="text-slate-400 hover:text-slate-600 text-xs">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                </div>
+                <div class="relative h-[280px] min-w-0">
+                    <canvas id="donutChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-grid">
+            <section class="panel sp2d" aria-labelledby="sp2d-title">
+                <h2 id="sp2d-title">Jumlah SP2D</h2>
+                <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Hari Ini</p>
+                <p class="timestamp">04 November 2026</p>
+                <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
+                    <div><strong>31.141</strong>SP2D</div>
+                </div>
+                <table aria-label="Rincian SP2D">
+                    <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
+                        <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>0</td><td>Rp 0</td></tr>
+                    </tbody>
+                </table>
+                <p class="timestamp">Data per 4 November 2026 pukul 09.40 WIB</p>
+            </section>
+
+            <section class="panel dipa" aria-labelledby="dipa-title">
+                <h2 id="dipa-title">Revisi DIPA</h2>
+                <form id="dipa-search" class="dipa-form" role="search">
+                    <input class="control" type="search" aria-label="Cari nomor DIPA atau satker" placeholder="Pencarian...">
+                    <button type="submit" class="accent-button">Cari</button>
+                </form>
+                <div class="dipa-tabs" aria-label="Status revisi DIPA">
+                    <button type="button" aria-pressed="true">Proses <b>3.164</b></button>
+                    <button type="button" aria-pressed="false">Berhasil <b>173.194</b></button>
+                    <button type="button" aria-pressed="false">Ditolak <b>46.844</b></button>
+                </div>
+                <div class="dipa-results" aria-live="polite">
+                    <article class="dipa-entry">
+                        <h3>Satker : 689177</h3>
+                        <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
+                        <mark>Proses RUH Oleh Operator</mark>
+                        <p><strong>Revisi ke: 2</strong> · C02</p>
+                        <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.398.572.000</strong></p>
+                    </article>
+                    <article class="dipa-entry"><h3>Satker : 420088</h3></article>
+                    <p id="dipa-empty" class="text-slate-500" hidden></p>
+                </div>
+                <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
+            </section>
+        </div>
+        <button id="trigger-ews-btn" type="button" class="accent-button ews-trigger">
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Simulasi Alert EWS
+        </button>
+    </main>
+
+    <!-- Seamless Native EWS Modal Overlay -->
+    <div id="ews-modal" role="dialog" aria-modal="true" aria-labelledby="ews-title" inert class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform scale-95 transition-all duration-300" id="ews-modal-content">
+            
+            <!-- Modal Header (Red/Amber Border Accent) -->
+            <div class="bg-rose-50 border-b border-rose-100 p-5 flex items-start justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-rose-200">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Early Warning System</span>
+                            <span class="bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Penting</span>
+                        </div>
+                        <h3 id="ews-title" class="font-bold text-slate-900 text-base mt-0.5">Peringatan Batas Proyek</h3>
+                    </div>
+                </div>
+                <button id="close-ews-btn" aria-label="Tutup peringatan" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-200/50 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-5 space-y-4 text-xs sm:text-sm">
+                
+                <!-- Target Satker Info Box -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                    <div class="text-xs text-slate-500">Satuan Kerja Terdeteksi:</div>
+                    <div class="font-bold text-slate-800 text-sm flex items-center justify-between">
+                        <span>Satker Kemenag Pangkalan Bun</span>
+                        <span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Kode: 401021</span>
+                    </div>
+                    <div class="text-xs text-slate-600">
+                        Proyek pembangunan infrastruktur telah mendekati batas akhir pengerjaan.
+                    </div>
+                </div>
+
+                <!-- Deadline Countdown Card -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-amber-900 text-xs sm:text-sm">Sisa Waktu: 3 Hari Lagi</div>
+                        <div class="text-xs text-amber-700">Jatuh Tempo: <b>7 November 2026</b></div>
+                    </div>
+                </div>
+
+                <!-- Action Requirement -->
+                <p class="text-slate-600 text-xs leading-relaxed">
+                    Mohon segera koordinasikan dengan PPK setempat untuk melakukan akselerasi realisasi anggaran dan penyelesaian berkas administrasi sebelum sistem terkunci.
+                </p>
+
+            </div>
+
+            <!-- Modal Footer Controls -->
+            <div class="bg-slate-50 px-5 py-4 border-t border-slate-100 flex flex-col sm:flex-row gap-2 justify-end">
+                <button id="contact-satker-btn" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs transition">
+                    <i class="fa-solid fa-phone text-xs mr-1.5"></i> Hubungi Satker
+                </button>
+                <button id="view-detail-btn" class="w-full sm:w-auto px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold rounded-xl text-xs shadow-md transition">
+                    Lihat Detail Proyek &rarr;
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        if (typeof Chart !== 'undefined') {
+            // Bar Chart (Pagu vs Realisasi)
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Pegawai', 'Barang', 'Modal', 'Bansos'],
+                    datasets: [
+                        {
+                            label: 'Pagu (T)',
+                            data: [836.6, 586.4, 455.5, 191.3],
+                            backgroundColor: '#1e3a8a',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Realisasi (T)',
+                            data: [558.5, 239.2, 316.8, 88.4],
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 11, family: 'Inter' } }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Donut Chart (Realisasi Per Jenis Pengeluaran)
+            const ctxDonut = document.getElementById('donutChart').getContext('2d');
+            new Chart(ctxDonut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Kualitas Perencanaan', 'Kualitas Pelaksanaan', 'Hasil Pelaksanaan', 'Lainnya'],
+                    datasets: [{
+                        data: [50, 17.5, 17.5, 15],
+                        backgroundColor: ['#1e3a8a', '#7c3aed', '#0d9488', '#38bdf8'],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, padding: 12, font: { size: 11, family: 'Inter' } }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Modal Interactive Logic
+        const ewsModal = document.getElementById('ews-modal');
+        const ewsModalContent = document.getElementById('ews-modal-content');
+        const triggerBtn = document.getElementById('trigger-ews-btn');
+        const closeBtn = document.getElementById('close-ews-btn');
+
+        function openModal() {
+            ewsModal.inert = false;
+            closeBtn.focus();
+            ewsModal.classList.remove('opacity-0', 'pointer-events-none');
+            ewsModalContent.classList.remove('scale-95');
+            ewsModalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            if (ewsModal.inert) return;
+            ewsModal.inert = true;
+            triggerBtn.focus();
+            ewsModal.classList.add('opacity-0', 'pointer-events-none');
+            ewsModalContent.classList.remove('scale-100');
+            ewsModalContent.classList.add('scale-95');
+        }
+
+        triggerBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        ewsModal.addEventListener('click', (e) => {
+            if (e.target === ewsModal) closeModal();
+        });
+
+        const todoTabs = document.querySelectorAll('[data-category]');
+        todoTabs.forEach((tab) => tab.addEventListener('click', () => {
+            const showTasks = tab.dataset.category === 'Non-Pelaporan';
+            todoTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
+            document.getElementById('todo-category').textContent = tab.dataset.category;
+            document.getElementById('todo-items').hidden = !showTasks;
+            document.getElementById('todo-empty').hidden = showTasks;
+        }));
+
+        const dipaForm = document.getElementById('dipa-search');
+        const dipaTabs = document.querySelectorAll('.dipa-tabs button');
+        const dipaEntries = document.querySelectorAll('.dipa-entry');
+        const dipaEmpty = document.getElementById('dipa-empty');
+
+        function filterDipa() {
+            const query = dipaForm.querySelector('input').value.trim().toLowerCase();
+            const showProcess = dipaTabs[0].getAttribute('aria-pressed') === 'true';
+            dipaEntries.forEach((entry) => {
+                entry.hidden = !showProcess || !entry.textContent.toLowerCase().includes(query);
+            });
+            dipaEmpty.hidden = Array.from(dipaEntries).some((entry) => !entry.hidden);
+            dipaEmpty.textContent = showProcess
+                ? 'Satker atau nomor DIPA tidak ditemukan.'
+                : 'Data contoh untuk status ini belum tersedia.';
+        }
+
+        dipaForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            filterDipa();
+        });
+        dipaTabs.forEach((tab) => tab.addEventListener('click', () => {
+            dipaTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
+            filterDipa();
+        }));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
