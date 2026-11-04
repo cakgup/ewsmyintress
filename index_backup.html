@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyIntress - Kementerian Keuangan RI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root { --ink: #222959; --accent: #424db8; --line: #dce1eb; }
+        body.dashboard { margin: 0; color: var(--ink); background: #141827; font-family: Inter, Arial, sans-serif; }
+        .phone { max-width: 34rem; min-height: 100vh; margin: 0 auto; border-inline: .45rem solid #232838; background: #f5f6fa; }
+        .status-bar { display: flex; position: relative; align-items: center; justify-content: space-between; min-height: 2.65rem; padding: .4rem 1.45rem; background: #141827; color: white; font-weight: 600; }
+        .status-camera { position: absolute; inset-inline-start: 50%; transform: translateX(-50%); width: 4.1rem; height: 1rem; border-radius: 1rem; background: #030405; }
+        .status-camera::after { content: ''; display: block; width: .5rem; aspect-ratio: 1; margin: .25rem auto; border-radius: 50%; background: #262c40; }
+        .status-icons { display: flex; align-items: center; gap: .4rem; font-size: .7rem; }
+        .site-header { padding: .8rem clamp(.65rem, 3vw, 1.1rem); background: white; border-bottom: 1px solid var(--line); }
+        .header-row { display: flex; align-items: center; gap: clamp(.35rem, 2vw, .8rem); }
+        .brand { flex: 1; min-width: 0; text-decoration: none; color: inherit; }
+        .brand img { display: block; width: min(100%, 9.25rem); }
+        .brand span { display: block; margin-top: .1rem; color: #64718d; font-size: clamp(.63rem, 2.4vw, .77rem); line-height: 1.2; }
+        .header-action, .profile { flex: none; display: grid; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: .78rem; }
+        .header-action { position: relative; color: #4a5368; }
+        .ews-bell { border: 1px solid #f3d2d2; background: #fbefef; color: #c93632; }
+        .ews-bell svg { width: 1.15rem; }
+        .ews-bell::after { content: ''; position: absolute; top: .21rem; right: .21rem; width: .55rem; aspect-ratio: 1; border: 1px solid white; border-radius: 50%; background: #d9544e; }
+        .profile { border: 2px solid #d1d7ed; background: #202c56; color: white; font-size: .8rem; font-weight: 700; }
+        .header-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; padding: .4rem; border-radius: .8rem; background: #f1f2f7; font-size: clamp(.7rem, 2.6vw, .9rem); }
+        .header-date { padding: .25rem .55rem; border-radius: .5rem; background: white; color: #354056; font-weight: 600; }
+        .header-date i { color: var(--accent); }
+        .year { color: #56627a; }
+        .year select { background: transparent; color: var(--ink); }
+        .menu-search { width: 100%; margin-top: .65rem; }
+        .menu { display: flex; gap: .45rem .75rem; flex-wrap: wrap; margin-top: .5rem; font-size: .83rem; }
+        .menu a { padding: .25rem 0; }
+        .control { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid #cbd0da; border-radius: .5rem; background: white; }
+        .dashboard-main { padding: 1rem clamp(.65rem, 3vw, 1.1rem); display: grid; gap: 1rem; }
+        .ews-alert { display: flex; align-items: center; gap: .55rem; padding: .7rem; border: 1px solid #f4c8c6; border-radius: 1rem; background: linear-gradient(105deg, #fce8e7, #faf0df 55%, #f7f7fa); }
+        .ews-alert-icon { display: grid; place-items: center; flex: none; width: 2rem; aspect-ratio: 1; border-radius: .75rem; color: white; background: #be3432; }
+        .ews-alert-icon svg { width: 1rem; }
+        .ews-alert-copy { flex: 1; min-width: 0; }
+        .ews-alert-title { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .35rem; font-size: clamp(.78rem, 2.7vw, .98rem); font-weight: 700; color: #182237; }
+        .ews-count { padding: .03rem .36rem; border-radius: 1rem; background: #bf403a; color: white; font-size: .65rem; white-space: nowrap; }
+        .ews-alert-copy p { color: #536480; font-size: clamp(.68rem, 2.45vw, .88rem); line-height: 1.3; margin-top: .15rem; }
+        .ews-detail { flex: none; padding: .4rem .55rem; border: 1px solid #dce1eb; border-radius: .55rem; background: #1e3a8a; color: white; box-shadow: 0 1px 3px #202a501a; font-size: clamp(.7rem, 2.5vw, .9rem); font-weight: 700; white-space: nowrap; }
+        .ews-detail:hover, .ews-bell:hover { border-color: currentColor; }
+        .overview, .card-grid { display: grid; gap: 1rem; align-items: stretch; }
+        .overview { grid-template-columns: minmax(0, 1fr); }
+        .card-grid { grid-template-columns: minmax(0, 1fr); }
+        .panel { min-width: 0; border-radius: 1.1rem; padding: clamp(1rem, 1.5vw, 1.65rem); background: white; box-shadow: 0 .25rem .6rem #202a5020; }
+        .panel h2 { font-size: clamp(1.2rem, 1.5vw, 1.7rem); font-weight: 700; }
+        .date-banner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: white; border-radius: 1rem; padding: clamp(1rem, 2vw, 2rem); margin-bottom: 1.25rem; background: linear-gradient(115deg, #4450c9, #a6b7a0 35%, #d6a16b 64%, #b27191); box-shadow: 0 .2rem .45rem #202a5020; }
+        .date-banner strong { display: block; font-size: clamp(1.2rem, 2vw, 2.2rem); }
+        .banner-time { text-align: right; white-space: nowrap; }
+        .banner-time strong, .task-total { font-variant-numeric: tabular-nums; }
+        .todo-content { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+        .todo-heading { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
+        .tabs { display: flex; background: #e4e7ef; border: 1px solid #cdd4e1; padding: .16rem; border-radius: .75rem; }
+        .tabs button { flex: 1; padding: .45rem .15rem; font-weight: 600; border-radius: .6rem; }
+        .tabs [aria-pressed="true"] { background: white; color: #161b2e; box-shadow: 0 .16rem .35rem #1f274a22; }
+        .task-list { display: grid; gap: .5rem; margin-top: .75rem; }
+        .task { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .55rem; padding: .65rem; border: 1px solid #e1e5ef; border-radius: 1.35rem; color: #171c30; }
+        .task-icon { display: grid; place-items: center; width: clamp(2.3rem, 4.1vw, 4rem); aspect-ratio: 1; border-radius: 50%; background: linear-gradient(135deg, #4c4bf0, #30329f); color: white; font-weight: 700; }
+        .task:nth-child(2) .task-icon { background: linear-gradient(135deg, #ae39f3, #6321c8); }
+        .task:nth-child(3) .task-icon { background: linear-gradient(135deg, #79def0, #489adf); }
+        .task-name { display: block; font-weight: 700; margin-bottom: .35rem; }
+        .task-summary { display: flex; align-items: center; gap: .45rem; padding-top: .35rem; border-top: 1px solid var(--line); color: #4a5368; }
+        .task-total { flex: 1; text-align: center; padding: .15rem .25rem; background: #e7e9f1; border-radius: .75rem; color: #171c30; font-weight: 700; }
+        .task-arrow { display: grid; place-items: center; width: 1.9rem; aspect-ratio: 1; border: 2px solid #9aa3b9; border-radius: 50%; }
+        .deadline { border-radius: 1rem; overflow: hidden; border: 1px solid #dce2ef; border-top: .65rem solid #171e35; background: linear-gradient(145deg, #d8ebfa, #e9d2df); }
+        .deadline h3 { padding: 1.2rem .85rem .5rem; font-size: clamp(1rem, 2vw, 2rem); line-height: 1.1; font-weight: 800; text-transform: uppercase; overflow-wrap: anywhere; }
+        .deadline p { padding: 0 .85rem 1rem; font-weight: 600; }
+        .deadline li { padding: .85rem; background: #337db6; color: white; font-size: .9rem; }
+        .deadline li:nth-child(2) { background: #5740c4; }
+        .deadline li:nth-child(3) { background: #b83248; }
+        .deadline li:nth-child(4) { background: #e2a43e; color: #242134; }
+        .ikpa { display: flex; flex-direction: column; justify-content: space-evenly; gap: 1.15rem; text-align: center; }
+        .gauge { width: 100%; max-width: 20rem; margin-inline: auto; }
+        .gauge svg { width: 100%; display: block; }
+        .gauge strong { font-size: clamp(1.65rem, 2.2vw, 2.4rem); }
+        .gauge-scale { display: flex; justify-content: space-between; color: #60636c; font-size: .8rem; }
+        .month, .metric { background: #f0f1f5; border-radius: 2rem; padding: .55rem; font-weight: 600; }
+        .metrics { display: grid; gap: .55rem; }
+        .metric { display: flex; align-items: center; gap: .45rem; font-size: .75rem; text-align: left; }
+        .metric strong { border-radius: 1rem; padding: .15rem .35rem; background: #486ac0; color: white; white-space: nowrap; }
+        .sp2d { text-align: center; }
+        .sp2d-chart { display: grid; place-items: center; width: min(100%, 14rem); aspect-ratio: 1; margin: 1.5rem auto; border: clamp(1.5rem, 3vw, 2.65rem) solid #9b9ff5; border-radius: 50%; line-height: 1.2; }
+        .sp2d-chart strong { display: block; font-size: 1.8rem; color: #111; }
+        .sp2d table { width: 100%; border-spacing: .3rem; border-collapse: separate; font-size: clamp(.7rem, 1.2vw, 1rem); }
+        .sp2d td { background: #f1f1f3; border-radius: 1.5rem; padding: .45rem .2rem; }
+        .timestamp { margin-top: .6rem; color: #666; font-size: .8rem; font-style: italic; }
+        .dipa-form { display: flex; margin-top: 1rem; }
+        .dipa-form input { flex: 1; min-width: 0; border-radius: .5rem 0 0 .5rem; }
+        .accent-button { padding: .5rem .9rem; background: var(--accent); color: white; font-weight: 700; }
+        .dipa-form button { border-radius: 0 .5rem .5rem 0; }
+        .dipa-tabs { display: flex; flex-wrap: wrap; border-bottom: 2px solid var(--line); }
+        .dipa-tabs button { padding: .65rem .45rem; font-size: .85rem; font-weight: 600; }
+        .dipa-tabs [aria-pressed="true"] { color: var(--accent); background: #f4f5f9; box-shadow: 0 2px var(--accent); }
+        .dipa-tabs b, .dipa-entry mark { display: inline-block; padding: .2rem .45rem; border-radius: .7rem; }
+        .dipa-tabs b { background: #a26715; color: white; }
+        .dipa-tabs button:nth-child(2) b { background: #368144; }
+        .dipa-tabs button:nth-child(3) b { background: #b73c36; }
+        .dipa-results { max-height: 15rem; overflow-y: auto; padding: .65rem .25rem; }
+        .dipa-entry { padding: .55rem 0 1rem; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+        .dipa-entry h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
+        .dipa-entry mark { background: #faf0c4; color: inherit; margin: .4rem 0; }
+        .dipa-budget { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+        .dipa .timestamp { text-align: right; }
+        @media (min-width: 35rem) {
+            .phone { margin-block: 1rem; border: .45rem solid #232838; border-radius: 2rem; overflow: hidden; }
+        }
+        @media (max-width: 35rem) {
+            .phone { border: 0; }
+        }
+        .ews-tab { display: flex; justify-content: center; align-items: center; gap: .35rem; min-width: 0; padding: .45rem .2rem; border-radius: .55rem; color: #475569; }
+        .ews-tab[aria-pressed="true"] { background: white; color: #172554; box-shadow: 0 1px 3px #202a5020; }
+        #ews-modal button:disabled { cursor: default; opacity: .55; }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body class="dashboard antialiased min-h-screen">
+    <div class="phone">
+        <div class="status-bar" aria-hidden="true">
+            <span data-wib-time>—</span>
+            <span class="status-camera"></span>
+            <span class="status-icons"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></span>
+        </div>
+        <header class="site-header">
+            <div class="header-row">
+                <a class="brand" href="./" aria-label="Dasbor MyIntress">
+                    <img src="./myintress-logo.svg" alt="MyIntress">
+                    <span>Kementerian Keuangan RI</span>
+                </a>
+                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS KPPN, 3 perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0"/>
+                    </svg>
+                </button>
+                <button id="menu-toggle" type="button" class="header-action" aria-label="Cari menu" aria-expanded="false" aria-controls="menu-panel">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+                    </svg>
+                </button>
+                <span class="profile" aria-label="Profil Mukh Gufron">MG</span>
+            </div>
+            <div class="header-meta">
+                <span class="header-date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="wib-header-date">—</span></span>
+                <label class="year">Tahun Anggaran:
+                    <select class="font-bold">
+                        <option selected>2026</option>
+                        <option>2025</option>
+                    </select>
+                </label>
+            </div>
+            <div id="menu-panel" hidden>
+                <input id="menu-search" class="control menu-search" type="search" aria-label="Cari menu" placeholder="Cari menu…">
+                <nav class="menu" aria-label="Menu utama">
+                    <a href="#">Admin</a><a href="#">Anggaran</a><a href="#">Komitmen</a>
+                    <a href="#">Bendahara</a><a href="#">Pembayaran</a><a href="#">Persediaan</a>
+                    <a href="#">Aset Tetap</a><a href="#">Piutang</a><a href="#">Rekonsiliasi</a>
+                    <a href="#">Tematik</a><a href="#">Lainnya</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <h1 class="sr-only">Dasbor MyIntress</h1>
+            <section class="ews-alert" aria-labelledby="ews-alert-title">
+                <span class="ews-alert-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0M3 3 1.5 5.5M21 3l1.5 2.5"/>
+                    </svg>
+                </span>
+                <div class="ews-alert-copy">
+                    <h2 id="ews-alert-title" class="ews-alert-title">EWS KPPN Dashboard <span class="ews-count">3 Perlu Tindak Lanjut</span></h2>
+                    <p>2 satker merah untuk penyerapan dan 1 satker H-2 GU UP</p>
+                </div>
+                <button type="button" class="ews-detail" data-ews-trigger aria-haspopup="dialog" aria-controls="ews-modal">Buka EWS</button>
+            </section>
+            <div class="overview">
+                <section class="panel" aria-labelledby="todo-title">
+                    <div class="date-banner">
+                        <div>
+                            <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> HARI INI</span>
+                            <strong id="wib-today">—</strong>
+                        </div>
+                        <div class="banner-time">
+                            <strong data-wib-time>—</strong>
+                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
+                        </div>
+                    </div>
+                    <div class="todo-content">
+                        <div>
+                            <div class="todo-heading">
+                                <h2 id="todo-title">To-Do List</h2>
+                                <span class="control" aria-hidden="true"><i class="fa-solid fa-filter"></i></span>
+                            </div>
+                            <div class="tabs" aria-label="Kategori tugas">
+                                <button type="button" aria-pressed="true" data-category="Non-Pelaporan">Non-Pelaporan</button>
+                                <button type="button" aria-pressed="false" data-category="Pelaporan">Pelaporan</button>
+                            </div>
+                            <h3 id="todo-category" class="font-semibold text-lg mt-4">Non-Pelaporan</h3>
+                            <ul id="todo-items" class="task-list">
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">KOM</span>
+                                    <div><span class="task-name">Komitmen</span><div class="task-summary">Total: <span class="task-total">67.371</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">ANG</span>
+                                    <div><span class="task-name">Penganggaran</span><div class="task-summary">Total: <span class="task-total">78</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                                <li class="task">
+                                    <span class="task-icon" aria-hidden="true">PEM</span>
+                                    <div><span class="task-name">Pembayaran</span><div class="task-summary">Total: <span class="task-total">82.337</span></div></div>
+                                    <span class="task-arrow" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                                </li>
+                            </ul>
+                            <p id="todo-empty" class="mt-3 text-slate-500" hidden>Data contoh pelaporan belum tersedia.</p>
+                        </div>
+                        <aside class="deadline">
+                            <h3>Bendahara Pengeluaran</h3>
+                            <p>Persediaan &amp; KKP · Akhir Tahun</p>
+                            <ul>
+                                <li>Ajuan persetujuan UP/TUP KKP ke KPPN</li>
+                                <li>SPM-UP Tunai, TUP KKP &amp; GUP diterima KPPN</li>
+                                <li>Hari terakhir transaksi KKP / KKP Domestik</li>
+                                <li>SPM-GUP/PTUP KKP diterima KPPN</li>
+                            </ul>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="panel ikpa" aria-labelledby="ikpa-title">
+                    <h2 id="ikpa-title">Capaian IKPA</h2>
+                    <div class="gauge">
+                        <svg viewBox="0 0 220 115" aria-hidden="true">
+                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#e5e5e5" stroke-width="21" stroke-linecap="round"/>
+                            <path d="M 12 103 A 98 98 0 0 1 208 103" fill="none" stroke="#4149cf" stroke-width="21" pathLength="100" stroke-dasharray="66.37 100"/>
+                            <circle cx="12" cy="103" r="10.5" fill="#4149cf"/>
+                        </svg>
+                        <strong>66.37 %</strong>
+                        <div class="gauge-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+                    </div>
+                    <p class="month">November 2026</p>
+                    <div class="metrics">
+                        <div class="metric"><strong>94.29%</strong> Kualitas Perencanaan Anggaran</div>
+                        <div class="metric"><strong>96.90%</strong> Kualitas Pelaksanaan Anggaran</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Charts Section (Proportional & Responsive Layout) -->
+            <div class="card-grid">
+
+                <!-- Bar Chart Card -->
+                <div class="panel flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="font-bold text-slate-800 text-base">Pagu vs Realisasi per Jenis Belanja</h2>
+                            <p class="text-xs text-slate-400">Perbandingan alokasi anggaran dan realisasi (dalam Miliar)</p>
+                        </div>
+                        <button class="text-slate-400 hover:text-slate-600 text-xs">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="relative h-[280px] min-w-0">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Donut Chart Card -->
+                <div class="panel flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="font-bold text-slate-800 text-base">Realisasi Per Jenis Pengeluaran</h2>
+                            <p class="text-xs text-slate-400">Proporsi pembagian pengeluaran negara</p>
+                        </div>
+                        <button class="text-slate-400 hover:text-slate-600 text-xs">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="relative h-[280px] min-w-0">
+                        <canvas id="donutChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-grid">
+                <section class="panel sp2d" aria-labelledby="sp2d-title">
+                    <h2 id="sp2d-title">Jumlah SP2D</h2>
+                    <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tanggal Data</p>
+                    <p class="timestamp">04 November 2026</p>
+                    <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
+                        <div><strong>31.141</strong>SP2D</div>
+                    </div>
+                    <table aria-label="Rincian SP2D">
+                        <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
+                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>0</td><td>Rp 0</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="timestamp">Data per 4 November 2026 pukul 09.40 WIB</p>
+                </section>
+
+                <section class="panel dipa" aria-labelledby="dipa-title">
+                    <h2 id="dipa-title">Revisi DIPA</h2>
+                    <form id="dipa-search" class="dipa-form" role="search">
+                        <input class="control" type="search" aria-label="Cari nomor DIPA atau satker" placeholder="Pencarian...">
+                        <button type="submit" class="accent-button">Cari</button>
+                    </form>
+                    <div class="dipa-tabs" aria-label="Status revisi DIPA">
+                        <button type="button" aria-pressed="true">Proses <b>3.164</b></button>
+                        <button type="button" aria-pressed="false">Berhasil <b>173.194</b></button>
+                        <button type="button" aria-pressed="false">Ditolak <b>46.844</b></button>
+                    </div>
+                    <div class="dipa-results" aria-live="polite">
+                        <article class="dipa-entry">
+                            <h3>Satker : 689177</h3>
+                            <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
+                            <mark>Proses RUH Oleh Operator</mark>
+                            <p><strong>Revisi ke: 2</strong> · C02</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.398.572.000</strong></p>
+                        </article>
+                        <article class="dipa-entry"><h3>Satker : 420088</h3></article>
+                        <p id="dipa-empty" class="text-slate-500" hidden></p>
+                    </div>
+                    <p class="timestamp">Data per 6 Januari 2026 pukul 09.00 WIB</p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div id="ews-modal" role="dialog" aria-modal="true" aria-labelledby="ews-title" inert class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
+
+        <!-- Modal Card Container -->
+        <div id="ews-modal-content" class="w-full max-w-lg max-h-full bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden transition-transform duration-300 scale-95 flex flex-col">
+
+            <!-- Modal Top Header Accent -->
+            <div class="h-1.5 w-full shrink-0 bg-gradient-to-r from-red-600 via-amber-500 to-blue-900"></div>
+
+            <!-- Modal Header -->
+            <div class="shrink-0 px-4 pt-3.5 pb-3 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-xl bg-blue-950 text-white flex items-center justify-center font-bold shrink-0 shadow-sm">
+                            <i aria-hidden="true" class="fa-solid fa-shield-halved w-4 h-4 text-amber-400"></i>
+                        </div>
+                        <div>
+                            <h3 id="ews-title" class="text-sm font-extrabold text-blue-950 leading-none">Early Warning System (EWS)</h3>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Monitoring & Tindak Lanjut Kepala KPPN</p>
+                        </div>
+                    </div>
+                    <button id="close-ews-btn" type="button" aria-label="Tutup EWS" class="p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
+                        <i aria-hidden="true" class="fa-solid fa-xmark w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- EWS Navigation Tabs -->
+                <div class="grid grid-cols-2 gap-1 bg-slate-200/70 p-1 rounded-xl text-xs font-bold">
+                    <button type="button" data-ews-tab aria-controls="ews-target" aria-pressed="true" class="ews-tab">
+                        <i aria-hidden="true" class="fa-solid fa-arrow-trend-down w-3.5 h-3.5 text-red-600"></i>
+                        <span class="leading-tight">Target Penyerapan</span>
+                        <span class="bg-red-500 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">2</span>
+                    </button>
+                    <button type="button" data-ews-tab aria-controls="ews-gu" aria-pressed="false" class="ews-tab">
+                        <i aria-hidden="true" class="fa-solid fa-clock w-3.5 h-3.5 text-amber-500"></i>
+                        <span class="leading-tight">Tenggat GU UP/TUP</span>
+                        <span class="bg-amber-500 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">1</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 1 CONTENT: TARGET PENYERAPAN SATKER (INDEX-BASED) -->
+            <div id="ews-target" class="flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
+
+                <!-- Month Target Info Pill -->
+                <div class="bg-blue-50/70 border border-blue-200/80 p-2.5 rounded-xl flex flex-wrap gap-2 items-center justify-between text-xs">
+                    <div class="flex items-center space-x-2">
+                        <i aria-hidden="true" class="fa-solid fa-calendar-check w-4 h-4 text-blue-800"></i>
+                        <div>
+                            <span class="font-bold text-slate-800">Target TW IV (November 2026)</span>
+                            <p class="text-[10px] text-slate-500">Standar Target Minimal Belanja: <strong class="text-blue-900">90%</strong></p>
+                        </div>
+                    </div>
+                    <div class="text-right text-[10px]">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">≥90%</span>
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold ml-0.5">70–&lt;90%</span>
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-red-100 text-red-800 font-bold ml-0.5">&lt;70%</span>
+                    </div>
+                </div>
+
+                <!-- Quick Filter & Action Header -->
+                <div class="flex flex-wrap gap-2 justify-between items-center text-xs pt-1">
+                    <span class="font-bold text-slate-700 text-[11px]">Satker di Bawah Target (3)</span>
+                    <button id="invite-red-satker" type="button" class="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-[10px] shadow-sm flex items-center space-x-1 transition">
+                        <i aria-hidden="true" class="fa-solid fa-users w-3 h-3"></i>
+                        <span>Undang Satker Merah (2)</span>
+                    </button>
+                </div>
+
+                <p id="ews-action-status" class="text-xs font-semibold text-blue-900" role="status" hidden></p>
+
+                <!-- SATKER ITEM 1 (MERAH - SANGAT RENDAH) -->
+                <div class="bg-white rounded-2xl p-3.5 border border-red-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600"></div>
+                    <div class="flex justify-between items-start pl-1 mb-2">
+                        <div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="bg-red-100 text-red-700 font-black text-[9px] px-1.5 py-0.5 rounded">MERAH (&lt;70%)</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Satker 418291</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-900 mt-1">Kemenag Pangkalan Bun</h4>
+                            <p class="text-[10px] text-slate-500">Belanja Barang (5211) • TW IV</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-base font-black text-red-600">58.4%</span>
+                            <span class="text-[9px] text-slate-400 block">Target: 90%</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar vs Target -->
+                    <div class="space-y-1 pl-1">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden relative">
+                            <div class="bg-red-500 h-full rounded-full" style="width: 58.4%"></div>
+                            <!-- Target Marker (90%) -->
+                            <div class="absolute top-0 bottom-0 w-0.5 bg-slate-800" style="left: 90%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
+                            <span>Realisasi: Rp 1,2 M / Rp 2,1 M</span>
+                            <span class="font-bold text-red-600">Deviasi: −31,6 poin</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Action -->
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex justify-between items-center pl-1">
+                        <span class="text-[10px] text-slate-500 flex items-center gap-1">
+                            <i aria-hidden="true" class="fa-solid fa-circle-exclamation w-3 h-3 text-red-500"></i> Berpotensi Turunkan IKPA
+                        </span>
+                        <div class="flex space-x-1.5">
+                            <button type="button" disabled class="px-2.5 py-1 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 rounded-lg text-[10px] font-bold transition flex items-center space-x-1">
+                                <i aria-hidden="true" class="fa-solid fa-envelope w-3 h-3"></i>
+                                <span>Peringatan</span>
+                            </button>
+                            <button type="button" disabled class="px-2.5 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-[10px] font-bold transition">
+                                Detail
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SATKER ITEM 2 (MERAH) -->
+                <div class="bg-white rounded-2xl p-3.5 border border-red-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600"></div>
+                    <div class="flex justify-between items-start pl-1 mb-2">
+                        <div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="bg-red-100 text-red-700 font-black text-[9px] px-1.5 py-0.5 rounded">MERAH (&lt;70%)</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Satker 601923</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-900 mt-1">Dinas Pekerjaan Umum Kotawaringin Barat</h4>
+                            <p class="text-[10px] text-slate-500">Belanja Modal (5321) • TW IV</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-base font-black text-red-600">62.1%</span>
+                            <span class="text-[9px] text-slate-400 block">Target: 90%</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 pl-1">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden relative">
+                            <div class="bg-red-500 h-full rounded-full" style="width: 62.1%"></div>
+                            <div class="absolute top-0 bottom-0 w-0.5 bg-slate-800" style="left: 90%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
+                            <span>Realisasi: Rp 4.5 M / Rp 7.2 M</span>
+                            <span class="font-bold text-red-600">Deviasi: −27,9 poin</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex justify-end space-x-1.5 pl-1">
+                        <button type="button" disabled class="px-2.5 py-1 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 rounded-lg text-[10px] font-bold transition flex items-center space-x-1">
+                            <i aria-hidden="true" class="fa-solid fa-envelope w-3 h-3"></i>
+                            <span>Peringatan</span>
+                        </button>
+                        <button type="button" disabled class="px-2.5 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg text-[10px] font-bold transition">
+                            Detail
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SATKER ITEM 3 (KUNING - WASPADA) -->
+                <div class="bg-white rounded-2xl p-3.5 border border-amber-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
+                    <div class="flex justify-between items-start pl-1 mb-2">
+                        <div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="bg-amber-100 text-amber-800 font-black text-[9px] px-1.5 py-0.5 rounded">KUNING (70–&lt;90%)</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Satker 527110</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-900 mt-1">BPS Kabupaten Kotawaringin Barat</h4>
+                            <p class="text-[10px] text-slate-500">Belanja Barang Operasional • TW IV</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-base font-black text-amber-600">81.5%</span>
+                            <span class="text-[9px] text-slate-400 block">Target: 90%</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 pl-1">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden relative">
+                            <div class="bg-amber-500 h-full rounded-full" style="width: 81.5%"></div>
+                            <div class="absolute top-0 bottom-0 w-0.5 bg-slate-800" style="left: 90%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
+                            <span>Realisasi: Rp 815 Juta / Rp 1 M</span>
+                            <span class="font-bold text-amber-600">Mendekati Target</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2 CONTENT: MONITORING TENGGAT GU (UP/TUP) -->
+            <div id="ews-gu" class="flex-1 min-h-0 overflow-y-auto p-4 space-y-3" hidden>
+
+                <!-- Rule Info Header -->
+                <div class="bg-amber-50/80 border border-amber-200 p-3 rounded-2xl flex items-start space-x-2.5">
+                    <i aria-hidden="true" class="fa-solid fa-shield-halved w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+                    <div class="text-xs">
+                        <span class="font-bold text-slate-800">Ketentuan Revolving UP (1x / Bulan)</span>
+                        <p class="text-[11px] text-slate-600 mt-0.5">
+                            Satker wajib mengajukan Ganti Uang (GU) minimal 1 kali dalam 30 hari agar nilai <strong>IKPA Komponen UP/TUP</strong> tetap 100%.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 justify-between items-center text-xs pt-1">
+                    <span class="font-bold text-slate-700 text-[11px]">Satker Mendekati Tenggat GU</span>
+                    <span class="text-[10px] text-slate-400">Total: 2 Satker</span>
+                </div>
+
+                <!-- GU ITEM 1: CRITICAL (H-2 JATUH TEMPO) -->
+                <div class="bg-white rounded-2xl p-3.5 border border-red-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600"></div>
+                    <div class="flex justify-between items-start pl-1 mb-1.5">
+                        <div>
+                            <span class="bg-red-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded flex items-center w-max gap-1">
+                                <i aria-hidden="true" class="fa-solid fa-clock w-3 h-3"></i> SISA 2 HARI (H-2)
+                            </span>
+                            <h4 class="text-xs font-bold text-slate-900 mt-1.5">Kantor Pertanahan Kab. Lamandau</h4>
+                            <p class="text-[10px] text-slate-500">Nilai UP: <strong>Rp 100.000.000</strong></p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] text-slate-400 block">Terakhir GU</span>
+                            <span class="text-xs font-bold text-slate-700">6 Okt 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Days Bar -->
+                    <div class="bg-slate-50 p-2 rounded-xl border border-slate-100 my-2 text-[11px] space-y-1 pl-2">
+                        <div class="flex justify-between text-slate-600">
+                            <span>Masa Uang Pertanggungjawaban:</span>
+                            <strong class="text-red-600">28 dari 30 Hari</strong>
+                        </div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-red-600 h-full rounded-full" style="width: 93.3%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Contact Buttons for Ka. KPPN -->
+                    <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-2 justify-between items-center pl-1">
+                        <span class="text-[10px] text-slate-500">Bendahara: <strong>Budi Santoso</strong></span>
+                        <div class="flex space-x-1.5">
+                            <button type="button" disabled class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-bold shadow-sm transition flex items-center space-x-1">
+                                <i aria-hidden="true" class="fa-solid fa-phone w-3 h-3"></i>
+                                <span>Hubungi Satker</span>
+                            </button>
+                            <button type="button" disabled class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] font-bold transition">
+                                Kirim Surat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GU ITEM 2: WARNING (H-5 JATUH TEMPO) -->
+                <div class="bg-white rounded-2xl p-3.5 border border-amber-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
+                    <div class="flex justify-between items-start pl-1 mb-1.5">
+                        <div>
+                            <span class="bg-amber-100 text-amber-800 font-bold text-[9px] px-1.5 py-0.5 rounded flex items-center w-max gap-1">
+                                <i aria-hidden="true" class="fa-solid fa-clock w-3 h-3"></i> SISA 5 HARI (H-5)
+                            </span>
+                            <h4 class="text-xs font-bold text-slate-900 mt-1.5">Kejaksaan Negeri Kotawaringin Barat</h4>
+                            <p class="text-[10px] text-slate-500">Nilai UP: <strong>Rp 75.000.000</strong></p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] text-slate-400 block">Terakhir GU</span>
+                            <span class="text-xs font-bold text-slate-700">9 Okt 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-2 rounded-xl border border-slate-100 my-2 text-[11px] space-y-1 pl-2">
+                        <div class="flex justify-between text-slate-600">
+                            <span>Masa Uang Pertanggungjawaban:</span>
+                            <strong class="text-amber-600">25 dari 30 Hari</strong>
+                        </div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-amber-500 h-full rounded-full" style="width: 83.3%"></div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-2 justify-between items-center pl-1">
+                        <span class="text-[10px] text-slate-500">Bendahara: <strong>Siti Rahma</strong></span>
+                        <button type="button" disabled class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] font-bold transition flex items-center space-x-1">
+                            <i aria-hidden="true" class="fa-solid fa-bell w-3 h-3"></i>
+                            <span>Ingatkan GU</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex justify-between items-center shrink-0">
+                <span class="text-[10px] text-slate-400">Data contoh • 3 November 2026, 07.49 WIB</span>
+                <button id="dismiss-ews-btn" type="button" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold text-xs transition">
+                    Tutup
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        const jakarta = { timeZone: 'Asia/Jakarta' };
+        const headerDate = new Intl.DateTimeFormat('id-ID', { ...jakarta, dateStyle: 'medium' });
+        const todayDate = new Intl.DateTimeFormat('id-ID', { ...jakarta, dateStyle: 'long' });
+        const clockTime = new Intl.DateTimeFormat('id-ID', {
+            ...jakarta, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+        });
+        const headerDateLabel = document.getElementById('wib-header-date');
+        const todayDateLabel = document.getElementById('wib-today');
+        const clockLabels = document.querySelectorAll('[data-wib-time]');
+
+        function updateJakartaClock(now = new Date()) {
+            const time = clockTime.format(now).replace('.', ':');
+            headerDateLabel.textContent = headerDate.format(now);
+            todayDateLabel.textContent = todayDate.format(now);
+            clockLabels.forEach((label) => { label.textContent = time; });
+        }
+
+        updateJakartaClock();
+        setInterval(updateJakartaClock, 1000);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) updateJakartaClock();
+        });
+
+
+        if (typeof Chart !== 'undefined') {
+            // Bar Chart (Pagu vs Realisasi)
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Pegawai', 'Barang', 'Modal', 'Bansos'],
+                    datasets: [
+                        {
+                            label: 'Pagu (T)',
+                            data: [836.6, 586.4, 455.5, 191.3],
+                            backgroundColor: '#1e3a8a',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Realisasi (T)',
+                            data: [558.5, 239.2, 316.8, 88.4],
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 11, family: 'Inter' } }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Donut Chart (Realisasi Per Jenis Pengeluaran)
+            const ctxDonut = document.getElementById('donutChart').getContext('2d');
+            new Chart(ctxDonut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Kualitas Perencanaan', 'Kualitas Pelaksanaan', 'Hasil Pelaksanaan', 'Lainnya'],
+                    datasets: [{
+                        data: [50, 17.5, 17.5, 15],
+                        backgroundColor: ['#1e3a8a', '#7c3aed', '#0d9488', '#38bdf8'],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, padding: 12, font: { size: 11, family: 'Inter' } }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Modal Interactive Logic
+        const ewsModal = document.getElementById('ews-modal');
+        const ewsModalContent = document.getElementById('ews-modal-content');
+        const ewsTriggers = document.querySelectorAll('[data-ews-trigger]');
+        let activeEwsTrigger;
+        const closeBtn = document.getElementById('close-ews-btn');
+
+        function openModal(event) {
+            activeEwsTrigger = event.currentTarget;
+            document.querySelector('.phone').inert = true;
+            ewsModal.inert = false;
+            closeBtn.focus();
+            ewsModal.classList.remove('opacity-0', 'pointer-events-none');
+            ewsModalContent.classList.remove('scale-95');
+            ewsModalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            if (ewsModal.inert) return;
+            ewsModal.inert = true;
+            document.querySelector('.phone').inert = false;
+            activeEwsTrigger.focus();
+            ewsModal.classList.add('opacity-0', 'pointer-events-none');
+            ewsModalContent.classList.remove('scale-100');
+            ewsModalContent.classList.add('scale-95');
+        }
+
+        ewsTriggers.forEach((button) => button.addEventListener('click', openModal));
+        closeBtn.addEventListener('click', closeModal);
+        document.getElementById('dismiss-ews-btn').addEventListener('click', closeModal);
+
+        const ewsTabs = ewsModal.querySelectorAll('[data-ews-tab]');
+        ewsTabs.forEach((tab) => tab.addEventListener('click', () => {
+            ewsTabs.forEach((item) => {
+                const selected = item === tab;
+                item.setAttribute('aria-pressed', selected);
+                document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
+            });
+        }));
+
+        document.getElementById('invite-red-satker').addEventListener('click', () => {
+            const status = document.getElementById('ews-action-status');
+            status.hidden = false;
+            status.textContent = 'Simulasi undangan pendampingan untuk 2 satker kategori merah.';
+        });
+        ewsModal.addEventListener('click', (e) => {
+            if (e.target === ewsModal) closeModal();
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuPanel = document.getElementById('menu-panel');
+        const menuSearch = document.getElementById('menu-search');
+
+        menuToggle.addEventListener('click', () => {
+            menuPanel.hidden = !menuPanel.hidden;
+            menuToggle.setAttribute('aria-expanded', !menuPanel.hidden);
+            if (!menuPanel.hidden) menuSearch.focus();
+        });
+
+        menuSearch.addEventListener('input', () => {
+            const query = menuSearch.value.trim().toLowerCase();
+            menuPanel.querySelectorAll('a').forEach((link) => {
+                link.hidden = !link.textContent.toLowerCase().includes(query);
+            });
+        });
+
+        const todoTabs = document.querySelectorAll('[data-category]');
+        todoTabs.forEach((tab) => tab.addEventListener('click', () => {
+            const showTasks = tab.dataset.category === 'Non-Pelaporan';
+            todoTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
+            document.getElementById('todo-category').textContent = tab.dataset.category;
+            document.getElementById('todo-items').hidden = !showTasks;
+            document.getElementById('todo-empty').hidden = showTasks;
+        }));
+
+        const dipaForm = document.getElementById('dipa-search');
+        const dipaTabs = document.querySelectorAll('.dipa-tabs button');
+        const dipaEntries = document.querySelectorAll('.dipa-entry');
+        const dipaEmpty = document.getElementById('dipa-empty');
+
+        function filterDipa() {
+            const query = dipaForm.querySelector('input').value.trim().toLowerCase();
+            const showProcess = dipaTabs[0].getAttribute('aria-pressed') === 'true';
+            dipaEntries.forEach((entry) => {
+                entry.hidden = !showProcess || !entry.textContent.toLowerCase().includes(query);
+            });
+            dipaEmpty.hidden = Array.from(dipaEntries).some((entry) => !entry.hidden);
+            dipaEmpty.textContent = showProcess
+                ? 'Satker atau nomor DIPA tidak ditemukan.'
+                : 'Data contoh untuk status ini belum tersedia.';
+        }
+
+        dipaForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            filterDipa();
+        });
+        dipaTabs.forEach((tab) => tab.addEventListener('click', () => {
+            dipaTabs.forEach((item) => item.setAttribute('aria-pressed', item === tab));
+            filterDipa();
+        }));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

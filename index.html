@@ -30,6 +30,20 @@
         .ews-bell svg { width: 1.15rem; }
         .ews-bell::after { content: ''; position: absolute; top: .21rem; right: .21rem; width: .55rem; aspect-ratio: 1; border: 1px solid white; border-radius: 50%; background: #d9544e; }
         .profile { border: 2px solid #d1d7ed; background: #202c56; color: white; font-size: .8rem; font-weight: 700; }
+        .site-header { position: relative; z-index: 1; }
+        .profile-menu summary { cursor: pointer; list-style: none; }
+        .profile-menu summary::-webkit-details-marker { display: none; }
+        .notification-settings { position: absolute; z-index: 2; top: 3.35rem; right: clamp(.65rem, 3vw, 1.1rem); width: min(22rem, calc(100% - 1.3rem)); max-height: min(34rem, calc(100dvh - 6rem)); overflow-y: auto; padding: .9rem; border: 1px solid var(--line); border-radius: .9rem; background: white; box-shadow: 0 .65rem 1.8rem #202a5026; }
+        .notification-settings h2 { font-size: .95rem; font-weight: 700; }
+        .notification-settings p, .notification-channel small { color: #536480; font-size: .75rem; }
+        .notification-settings form { display: grid; gap: .6rem; margin-top: .65rem; }
+        .notification-channel { display: flex; align-items: flex-start; gap: .55rem; padding: .55rem; border: 1px solid var(--line); border-radius: .65rem; font-size: .83rem; }
+        .notification-channel input { flex: none; margin-top: .2rem; accent-color: var(--accent); }
+        .notification-channel small { display: block; margin-top: .1rem; }
+        .notification-email { display: grid; gap: .25rem; font-size: .8rem; }
+        .notification-email input { width: 100%; }
+        .notification-status { min-height: 1.1rem; }
+        .notification-save { justify-self: end; border-radius: .55rem; font-size: .8rem; }
         .header-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; padding: .4rem; border-radius: .8rem; background: #f1f2f7; font-size: clamp(.7rem, 2.6vw, .9rem); }
         .header-date { padding: .25rem .55rem; border-radius: .5rem; background: white; color: #354056; font-weight: 600; }
         .header-date i { color: var(--accent); }
@@ -146,7 +160,38 @@
                         <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
                     </svg>
                 </button>
-                <span class="profile" aria-label="Profil Mukh Gufron">MG</span>
+                <details id="profile-menu" class="profile-menu">
+                    <summary class="profile" aria-label="Profil Mukh Gufron dan pengaturan notifikasi EWS">MG</summary>
+                    <section class="notification-settings" aria-labelledby="notification-title">
+                        <h2 id="notification-title">Pengaturan Notifikasi EWS</h2>
+                        <p>Penerima: Kepala KPPN. Berlaku untuk peringatan EWS yang perlu ditindaklanjuti.</p>
+                        <form id="notification-form">
+                            <label class="notification-channel">
+                                <input id="notify-myintress" type="checkbox" checked>
+                                <span><strong>Notifikasi MyIntress</strong><small>Tampilkan peringatan pada akun Kepala KPPN.</small></span>
+                            </label>
+                            <label class="notification-channel">
+                                <input id="notify-email" type="checkbox">
+                                <span><strong>Email kedinasan</strong><small>Kirim ringkasan peringatan ke alamat kedinasan.</small></span>
+                            </label>
+                            <label id="notification-email-field" class="notification-email" hidden>
+                                <strong>Alamat email kedinasan</strong>
+                                <input id="notification-email" class="control" type="email" autocomplete="email" placeholder="nama@instansi.go.id" disabled>
+                            </label>
+                            <label class="notification-channel">
+                                <input id="notify-whatsapp" type="checkbox">
+                                <span><strong>WhatsApp resmi</strong><small>Terima ringkasan alert EWS melalui WhatsApp dalam simulasi.</small></span>
+                            </label>
+                            <div id="notification-whatsapp-field" class="notification-email" hidden>
+                                <label for="notification-whatsapp"><strong>Nomor WhatsApp</strong></label>
+                                <input id="notification-whatsapp" class="control" type="tel" autocomplete="tel" placeholder="Contoh: 081234567890" pattern="[+]?[0-9]{8,15}" aria-describedby="whatsapp-help" disabled>
+                                <p id="whatsapp-help">Masukkan 8–15 angka tanpa spasi. Awalan + diperbolehkan.</p>
+                            </div>
+                            <button class="accent-button notification-save" type="submit">Simpan Pengaturan</button>
+                            <p id="notification-status" class="notification-status" role="status"></p>
+                        </form>
+                    </section>
+                </details>
             </div>
             <div class="header-meta">
                 <span class="header-date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="wib-header-date">—</span></span>
@@ -778,6 +823,71 @@
         });
         ewsModal.addEventListener('click', (e) => {
             if (e.target === ewsModal) closeModal();
+        });
+
+        const profileMenu = document.getElementById('profile-menu');
+        const notificationForm = document.getElementById('notification-form');
+        const notifyMyIntress = document.getElementById('notify-myintress');
+        const notifyEmail = document.getElementById('notify-email');
+        const emailField = document.getElementById('notification-email-field');
+        const emailAddress = document.getElementById('notification-email');
+        const notifyWhatsApp = document.getElementById('notify-whatsapp');
+        const whatsAppField = document.getElementById('notification-whatsapp-field');
+        const whatsAppNumber = document.getElementById('notification-whatsapp');
+        const notificationStatus = document.getElementById('notification-status');
+        const notificationKey = 'myintress.ews.notifications';
+
+        function updateNotificationFields() {
+            emailField.hidden = !notifyEmail.checked;
+            emailAddress.disabled = !notifyEmail.checked;
+            emailAddress.required = notifyEmail.checked;
+            whatsAppField.hidden = !notifyWhatsApp.checked;
+            whatsAppNumber.disabled = !notifyWhatsApp.checked;
+            whatsAppNumber.required = notifyWhatsApp.checked;
+        }
+
+        try {
+            const saved = JSON.parse(localStorage.getItem(notificationKey));
+            if (saved) {
+                notifyMyIntress.checked = saved.myintress === true;
+                notifyEmail.checked = saved.email === true;
+                emailAddress.value = typeof saved.address === 'string' ? saved.address : '';
+                notifyWhatsApp.checked = saved.whatsapp === true;
+                whatsAppNumber.value = typeof saved.whatsappNumber === 'string' ? saved.whatsappNumber : '';
+            }
+        } catch {
+            notificationStatus.textContent = 'Pengaturan tersimpan tidak dapat dimuat.';
+        }
+        updateNotificationFields();
+
+        notificationForm.addEventListener('change', () => {
+            updateNotificationFields();
+            notificationStatus.textContent = '';
+        });
+        notificationForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            try {
+                localStorage.setItem(notificationKey, JSON.stringify({
+                    myintress: notifyMyIntress.checked,
+                    email: notifyEmail.checked,
+                    address: notifyEmail.checked ? emailAddress.value.trim() : '',
+                    whatsapp: notifyWhatsApp.checked,
+                    whatsappNumber: notifyWhatsApp.checked ? whatsAppNumber.value : ''
+                }));
+                notificationStatus.textContent = 'Pengaturan disimpan di browser ini.';
+            } catch {
+                notificationStatus.textContent = 'Pengaturan gagal disimpan di browser ini.';
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (profileMenu.open && !profileMenu.contains(event.target)) profileMenu.open = false;
+        });
+        profileMenu.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && profileMenu.open) {
+                profileMenu.open = false;
+                profileMenu.querySelector('summary').focus();
+            }
         });
 
         const menuToggle = document.getElementById('menu-toggle');
