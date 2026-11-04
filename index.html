@@ -109,8 +109,17 @@
         .metrics { display: grid; gap: .55rem; }
         .metric { display: flex; align-items: center; gap: .45rem; font-size: .75rem; text-align: left; }
         .metric strong { border-radius: 1rem; padding: .15rem .35rem; background: #486ac0; color: white; white-space: nowrap; }
+        .donut-stage { position: relative; width: min(100%, 17rem); aspect-ratio: 1; margin: 0 auto; }
+        .donut-summary { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; pointer-events: none; }
+        .donut-summary strong { color: var(--ink); font-size: clamp(1.35rem, 6vw, 2rem); line-height: 1.12; font-variant-numeric: tabular-nums; }
+        .donut-summary span { max-width: 8rem; padding-inline: .25rem; color: #465675; font-size: .72rem; line-height: 1.2; }
+        .donut-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; margin-top: .9rem; }
+        .donut-legend button { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .2rem .4rem; align-items: center; padding: .4rem; border: 1px solid var(--line); border-radius: .65rem; background: #f8f9fc; text-align: left; font-size: .72rem; line-height: 1.2; }
+        .donut-legend button:hover, .donut-legend button[aria-pressed="true"] { border-color: var(--slice-color); background: white; }
+        .donut-legend button::before { content: ""; width: .65rem; aspect-ratio: 1; border-radius: 50%; background: var(--slice-color); }
+        .donut-legend strong { grid-column: 2; font-variant-numeric: tabular-nums; }
         .sp2d { text-align: center; }
-        .sp2d-chart { display: grid; place-items: center; width: min(100%, 14rem); aspect-ratio: 1; margin: 1.5rem auto; border: clamp(1.5rem, 3vw, 2.65rem) solid #9b9ff5; border-radius: 50%; line-height: 1.2; }
+        .sp2d-chart { display: grid; place-items: center; width: min(100%, 14rem); aspect-ratio: 1; margin: 1.5rem auto; border-radius: 50%; background: radial-gradient(circle closest-side, white 78%, transparent 79%), conic-gradient(#6358d9 0 94.37%, #c64338 94.37% 100%); line-height: 1.2; }
         .sp2d-chart strong { display: block; font-size: 1.8rem; color: #111; }
         .sp2d table { width: 100%; border-spacing: .3rem; border-collapse: separate; font-size: clamp(.7rem, 1.2vw, 1rem); }
         .sp2d td { background: #f1f1f3; border-radius: 1.5rem; padding: .45rem .2rem; }
@@ -264,7 +273,7 @@
                             <strong id="wib-today">—</strong>
                         </div>
                         <div class="banner-time">
-                            <strong data-wib-time>—</strong>
+                            <strong data-wib-time="seconds">—</strong>
                             <span><i class="fa-regular fa-clock" aria-hidden="true"></i> WIB</span>
                         </div>
                     </div>
@@ -350,9 +359,14 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                     </div>
-                    <div class="relative h-[280px] min-w-0">
-                        <canvas id="donutChart"></canvas>
+                    <div class="donut-stage">
+                        <canvas id="donutChart" role="img" aria-label="Grafik donat proporsi pengeluaran. Rincian tersedia di legenda."></canvas>
+                        <div class="donut-summary" aria-hidden="true">
+                            <strong id="donut-value"></strong>
+                            <span id="donut-label"></span>
+                        </div>
                     </div>
+                    <div id="donut-legend" class="donut-legend" role="group" aria-label="Pilih kategori pengeluaran"></div>
                 </div>
 
             </div>
@@ -362,17 +376,17 @@
                     <h2 id="sp2d-title">Jumlah SP2D</h2>
                     <p class="control inline-block mt-2"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Tanggal Data</p>
                     <p class="timestamp">04 November 2026</p>
-                    <div class="sp2d-chart" aria-label="31.141 SP2D, 100% berhasil" role="img">
-                        <div><strong>31.141</strong>SP2D</div>
+                    <div class="sp2d-chart" aria-label="33.000 SP2D: 31.141 berhasil (94,37%) dan 1.859 void (5,63%)" role="img">
+                        <div><strong>33.000</strong>SP2D</div>
                     </div>
                     <table aria-label="Rincian SP2D">
                         <thead><tr><th scope="col">Status</th><th scope="col">Dokumen</th><th scope="col">Total</th></tr></thead>
                         <tbody>
                             <tr><td><span class="text-indigo-600" aria-hidden="true">●</span> Berhasil</td><td>31.141</td><td>Rp 6.603.236.220.910</td></tr>
-                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>0</td><td>Rp 0</td></tr>
+                            <tr><td><span class="text-red-600" aria-hidden="true">●</span> Void</td><td>1.859</td><td>Rp 392.450.000.000</td></tr>
                         </tbody>
                     </table>
-                    <p class="timestamp">Data per 4 November 2026 pukul 09.40 WIB</p>
+                    <p class="timestamp">Data ilustratif per 4 November 2026 pukul 09.40 WIB</p>
                 </section>
 
                 <section class="panel dipa" aria-labelledby="dipa-title">
@@ -609,15 +623,20 @@
         const clockTime = new Intl.DateTimeFormat('id-ID', {
             ...jakarta, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
         });
+        const clockTimeWithSeconds = new Intl.DateTimeFormat('id-ID', {
+            ...jakarta, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+        });
         const headerDateLabel = document.getElementById('wib-header-date');
         const todayDateLabel = document.getElementById('wib-today');
         const clockLabels = document.querySelectorAll('[data-wib-time]');
 
         function updateJakartaClock(now = new Date()) {
-            const time = clockTime.format(now).replace('.', ':');
             headerDateLabel.textContent = headerDate.format(now);
             todayDateLabel.textContent = todayDate.format(now);
-            clockLabels.forEach((label) => { label.textContent = time; });
+            clockLabels.forEach((label) => {
+                const formatter = label.dataset.wibTime === 'seconds' ? clockTimeWithSeconds : clockTime;
+                label.textContent = formatter.format(now).replaceAll('.', ':');
+            });
         }
 
         updateJakartaClock();
@@ -665,31 +684,82 @@
                 }
             });
 
-            // Donut Chart (Realisasi Per Jenis Pengeluaran)
-            const ctxDonut = document.getElementById('donutChart').getContext('2d');
-            new Chart(ctxDonut, {
+            const donutCanvas = document.getElementById('donutChart');
+            const donutValue = document.getElementById('donut-value');
+            const donutLabel = document.getElementById('donut-label');
+            const donutLegend = document.getElementById('donut-legend');
+            const donutLabels = ['Kualitas Perencanaan', 'Kualitas Pelaksanaan', 'Hasil Pelaksanaan', 'Lainnya'];
+            const donutShares = [50, 17.5, 17.5, 15];
+            const donutColors = ['#3947b8', '#793bd2', '#087f76', '#1989c7'];
+            const shareFormat = new Intl.NumberFormat('id-ID', { style: 'percent', maximumFractionDigits: 1 });
+            const formatShare = (value) => shareFormat.format(value / 100);
+            let selectedSlice = null;
+
+            function showDonutSummary(index) {
+                donutValue.textContent = formatShare(index == null
+                    ? donutShares.reduce((total, share) => total + share, 0)
+                    : donutShares[index]);
+                donutLabel.textContent = index == null ? 'Total proporsi' : donutLabels[index];
+                donutValue.style.color = index == null ? '' : donutColors[index];
+            }
+
+            const donut = new Chart(donutCanvas, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Kualitas Perencanaan', 'Kualitas Pelaksanaan', 'Hasil Pelaksanaan', 'Lainnya'],
+                    labels: donutLabels,
                     datasets: [{
-                        data: [50, 17.5, 17.5, 15],
-                        backgroundColor: ['#1e3a8a', '#7c3aed', '#0d9488', '#38bdf8'],
-                        borderWidth: 3,
-                        borderColor: '#ffffff'
+                        data: donutShares,
+                        backgroundColor: donutColors,
+                        borderWidth: 2,
+                        borderRadius: 5,
+                        borderColor: '#ffffff',
+                        hoverOffset: 7
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { boxWidth: 12, padding: 12, font: { size: 11, family: 'Inter' } }
-                        }
+                    cutout: '64%',
+                    layout: { padding: 9 },
+                    animation: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                        ? false : { duration: 650, animateRotate: true },
+                    onHover(event, segments) {
+                        donutCanvas.style.cursor = segments.length ? 'pointer' : '';
+                        showDonutSummary(segments[0]?.index ?? selectedSlice);
                     },
-                    cutout: '65%'
+                    onClick(event, segments) {
+                        selectDonutSlice(segments[0]?.index ?? null);
+                    },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } }
                 }
             });
+
+            const donutButtons = donutLabels.map((label, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.style.setProperty('--slice-color', donutColors[index]);
+                button.setAttribute('aria-pressed', 'false');
+                button.append(label);
+                const percent = document.createElement('strong');
+                percent.textContent = formatShare(donutShares[index]);
+                button.append(percent);
+                button.addEventListener('click', () => selectDonutSlice(index));
+                donutLegend.append(button);
+                return button;
+            });
+
+            function selectDonutSlice(index) {
+                selectedSlice = selectedSlice === index ? null : index;
+                donutButtons.forEach((button, position) => {
+                    button.setAttribute('aria-pressed', position === selectedSlice);
+                });
+                donut.setActiveElements(selectedSlice == null ? [] : [{ datasetIndex: 0, index: selectedSlice }]);
+                donut.update('none');
+                showDonutSummary(selectedSlice);
+            }
+
+            donutCanvas.addEventListener('pointerleave', () => showDonutSummary(selectedSlice));
+            showDonutSummary(null);
         }
 
         // Modal Interactive Logic
