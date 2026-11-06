@@ -68,7 +68,21 @@
         .year select { background: transparent; color: var(--ink); }
         .menu-search { width: 100%; margin-top: .65rem; }
         .menu { display: flex; gap: .45rem .75rem; flex-wrap: wrap; margin-top: .5rem; font-size: .83rem; }
-        .menu a { padding: .25rem 0; }
+        .desktop-menu-item, .desktop-profile { display: none; }
+        .menu { position: relative; }
+        .menu-group summary { display: flex; align-items: center; gap: .25rem; padding: .25rem 0; cursor: pointer; list-style: none; }
+        .menu-group summary::-webkit-details-marker { display: none; }
+        .menu-group summary::after { content: ""; width: .35rem; height: .35rem; border: solid currentColor; border-width: 0 1px 1px 0; transform: translateY(-1px) rotate(45deg); opacity: .7; }
+        .menu-group[open] summary { color: var(--accent); }
+        .menu-group[open] summary::after { transform: translateY(1px) rotate(225deg); }
+        .menu-dropdown { position: absolute; z-index: 3; top: 100%; left: 0; width: min(100%, 21rem); max-height: min(24rem, 48vh); overflow-y: auto; overscroll-behavior: contain; padding: .35rem .6rem; border: 1px solid var(--line); border-radius: .65rem; background: white; box-shadow: 0 .45rem 1.2rem #202a5026; color: var(--ink); font-size: .8rem; font-weight: 500; }
+        .menu-dropdown li { padding: .45rem .15rem; }
+        .menu-dropdown li + li { border-top: 1px solid #eef0f5; }
+        @media (min-width: 80rem) and (min-aspect-ratio: 8/5) {
+            .menu-group { position: relative; }
+            .menu-dropdown { width: 20rem; }
+            .menu-group-end .menu-dropdown { right: 0; left: auto; }
+        }
         .control { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid #cbd0da; border-radius: .5rem; background: white; }
         .dashboard-main { padding: 1rem clamp(.65rem, 3vw, 1.1rem); display: grid; gap: 1rem; }
         .ews-alert { display: flex; align-items: center; gap: .55rem; padding: .7rem; border: 1px solid #f4c8c6; border-radius: 1rem; background: linear-gradient(105deg, #fce8e7, #faf0df 55%, #f7f7fa); }
@@ -175,7 +189,7 @@
         .dipa-tabs b { background: #a26715; color: white; }
         .dipa-tabs button:nth-child(2) b { background: #368144; }
         .dipa-tabs button:nth-child(3) b { background: #b73c36; }
-        .dipa-results { max-height: 15rem; overflow-y: auto; padding: .65rem .25rem; }
+        .dipa-results { max-height: 15rem; overflow-y: auto; scrollbar-gutter: stable; padding: .65rem .25rem; }
         .dipa-entry { padding: .55rem 0 1rem; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
         .dipa-entry h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
         .dipa-entry mark { background: #faf0c4; color: inherit; margin: .4rem 0; }
@@ -194,6 +208,41 @@
         }
         @media (max-width: 35rem) {
             .phone { border: 0; }
+        }
+        @media (min-width: 64rem) and (min-aspect-ratio: 8/5) {
+            body.dashboard { background: #f5f6fa; }
+            .phone { max-width: none; margin: 0; border: 0; border-radius: 0; overflow: visible; }
+            .site-header { display: grid; grid-template-columns: 7rem minmax(0, 20rem) minmax(0, 1fr) auto auto; align-items: center; gap: 0 clamp(.75rem, 1.5vw, 1.4rem); padding: .5rem clamp(.75rem, 1.6vw, 1.5rem) 0; }
+            .header-row, #menu-panel { display: contents; }
+            .site-header .brand { grid-area: 1 / 1; }
+            .brand img { width: 100%; }
+            .brand span, .header-date, #menu-toggle, .mobile-menu-item, .mobile-profile { display: none; }
+            .site-header .menu-search { grid-area: 1 / 2; margin: 0; min-width: 0; min-height: 2rem; padding: .3rem .55rem; font-size: .75rem; }
+            .site-header .menu-search::placeholder { color: #737b87; opacity: 1; }
+            .header-meta { grid-area: 1 / 4; min-width: 12rem; margin: 0; padding: .35rem .55rem; background: white; border: 1px solid #cbd0da; border-radius: .35rem; font-size: .75rem; }
+            .header-meta .year { display: flex; align-items: center; gap: .32rem; width: 100%; color: var(--ink); }
+            .header-meta select { flex: 1; }
+            .site-header .ews-bell { grid-area: 2 / 5; justify-self: end; z-index: 1; width: 1.6rem; border-radius: .5rem; }
+            .site-header .ews-bell svg { width: .9rem; }
+            .profile-menu { grid-area: 1 / 5; }
+            .profile-menu .profile { width: 8rem; min-height: 2rem; aspect-ratio: auto; padding: .22rem .55rem; border: 1px solid #cbd0da; border-radius: .35rem; background: white; color: var(--ink); text-align: left; }
+            .desktop-profile { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: .4rem; font-size: .61rem; line-height: 1.35; }
+            .desktop-profile small { display: block; font-size: inherit; font-weight: 500; }
+            .notification-settings { top: 2.8rem; }
+            .menu { grid-area: 2 / 1 / 3 / -1; min-height: 2.5rem; margin: 0; padding-right: 2.1rem; align-items: center; gap: .1rem clamp(.65rem, 2.25vw, 2.1rem); font-size: .75rem; font-weight: 700; }
+            .desktop-menu-item { display: inline; }
+            .menu-group summary { padding: .42rem 0; }
+            .menu-group summary:hover { color: var(--accent); }
+            .dashboard-main { grid-template-columns: minmax(1.5rem, 1fr) minmax(0, 87rem) minmax(1.5rem, 1fr); column-gap: 0; padding: 0 0 1rem; }
+            .dashboard-main > * { grid-column: 2; min-width: 0; }
+            .dashboard-main > .ledger { grid-column: 1 / -1; order: -1; border-radius: 0; padding: .45rem clamp(1.5rem, 8vw, 12rem) 1rem; background: linear-gradient(110deg, #426fda, #3297df 47%, #3199d4 74%, #6454e8); }
+            .overview { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+            .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .ledger-totals { grid-template-columns: 1.7fr 1fr 1fr; align-items: stretch; }
+            .ledger-totals > div { padding: .75rem; }
+            .ledger-spent, .ledger-remaining { text-align: right; }
+            .ledger-total { grid-column: auto; align-content: center; }
+            .ledger dd { font-size: clamp(1rem, 1.4vw, 1.55rem); }
         }
         .ews-tabs { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: .4rem; padding: .45rem .8rem; }
         .ews-tab { min-width: 0; min-height: 2.5rem; padding: .35rem .22rem; border: 1px solid var(--line); border-radius: .75rem; background: #f7f8fc; color: var(--ink); font-size: .76rem; font-weight: 700; line-height: 1.2; box-shadow: 0 2px 3px #202a5014; }
@@ -246,7 +295,7 @@
                     </svg>
                 </button>
                 <details id="profile-menu" class="profile-menu">
-                    <summary class="profile" aria-label="Profil FTS dan pengaturan notifikasi EWS">FTS</summary>
+                    <summary class="profile" aria-label="Profil dan pengaturan notifikasi EWS"><span class="mobile-profile">FTS</span><span class="desktop-profile"><span>FERRY TAUFIK<small>KEPALA KANTOR</small></span><i class="fa-solid fa-gear" aria-hidden="true"></i></span></summary>
                     <section class="notification-settings" aria-labelledby="notification-title">
                         <h2 id="notification-title">Pengaturan Notifikasi EWS</h2>
                         <p>Penerima: Kepala KPPN. Berlaku untuk peringatan EWS yang perlu ditindaklanjuti.</p>
@@ -280,7 +329,7 @@
             </div>
             <div class="header-meta">
                 <span class="header-date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="wib-header-date">—</span></span>
-                <label class="year">Tahun Anggaran:
+                <label class="year"><i class="desktop-menu-item fa-regular fa-calendar mr-1" aria-hidden="true"></i>Tahun Anggaran:
                     <select class="font-bold">
                         <option selected>2026</option>
                         <option>2025</option>
@@ -290,10 +339,159 @@
             <div id="menu-panel" hidden>
                 <input id="menu-search" class="control menu-search" type="search" aria-label="Cari menu" placeholder="Cari menu…">
                 <nav class="menu" aria-label="Menu utama">
-                    <a href="#">Admin</a><a href="#">Anggaran</a><a href="#">Komitmen</a>
-                    <a href="#">Bendahara</a><a href="#">Pembayaran</a><a href="#">Persediaan</a>
-                    <a href="#">Aset Tetap</a><a href="#">Piutang</a><a href="#">Rekonsiliasi</a>
-                    <a href="#">Tematik</a><a href="#">Lainnya</a>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Admin</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Admin">
+                            <li>Monitoring Login SAKTI</li>
+                            <li>Monitoring Pejabat dengan Transaksi Berjalan</li>
+                            <li>Monitoring Pengguna Aplikasi SAKTI</li>
+                            <li>Monitoring Status Pejabat Perbendaharaan</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Anggaran</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Anggaran">
+                            <li>Download Data Detil</li>
+                            <li>Ketersediaan Pagu</li>
+                            <li>Monitoring Status Revisi DIPA</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Komitmen</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Komitmen">
+                            <li>Cari Data Supplier</li>
+                            <li>Monitoring Capaian Kinerja</li>
+                            <li>Monitoring Data Kontrak</li>
+                            <li>Monitoring Transaksi BAST</li>
+                            <li>Monitoring Transaksi Belum Detil P3DN</li>
+                            <li>Monitoring Transaksi P3DN</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Bendahara</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Bendahara">
+                            <li>Karwas TUP Per Satker</li>
+                            <li>Karwas UP Per Satker</li>
+                            <li>Monitoring DRPP</li>
+                            <li>Monitoring Kuitansi Belum SPJ</li>
+                            <li>Monitoring Perhitungan Pihak Ketiga (PFK)</li>
+                            <li>Monitoring Potongan SPM</li>
+                            <li>Monitoring Setoran Pengembalian Belanja</li>
+                            <li>Monitoring Uang Muka</li>
+                            <li>Pungutan Pajak Belum Disetor</li>
+                            <li>Rekapitulasi LPJ Tingkat KPPN</li>
+                            <li>Rekapitulasi LPJ Tingkat Kanwil</li>
+                            <li>Rekapitulasi LPJ Tingkat Nasional</li>
+                            <li>SP2D LS Bendahara Belum Dibukukan</li>
+                            <li>SPBy yang Belum Divalidasi oleh PPK</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Pembayaran</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Pembayaran">
+                            <li>Daftar Penolakan PMRT</li>
+                            <li>Durasi Penyelesaian SP2D</li>
+                            <li>History SPM</li>
+                            <li>Indikator Pelaksanaan Anggaran</li>
+                            <li>Monitoring MP PNBP</li>
+                            <li>Monitoring Posisi Invoice Dalam Proses</li>
+                            <li>Monitoring Realisasi Pengesahan Hibah</li>
+                            <li>Monitoring Realisasi SBSN</li>
+                            <li>Monitoring SPP/SPM/SP2D</li>
+                            <li>Pengawasan Kartu Kredit Pemerintah</li>
+                            <li>Perencanaan Kas</li>
+                            <li>Realisasi Belanja</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Persediaan</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Persediaan">
+                            <li>Daftar Persediaan Diserahkan Ke Masyarakat</li>
+                            <li>Daftar Transaksi Persediaan</li>
+                            <li>Monitoring Likuidasi Keluar dan Likuidasi Masuk Persediaan</li>
+                            <li>Monitoring Persediaan Diserahkan ke Masyarakat</li>
+                            <li>Monitoring Saldo Barang Persediaan</li>
+                            <li>Monitoring Selisih Waktu Tanggal Buku dengan Tanggal Approve</li>
+                            <li>Rincian Belanja Persediaan vs Pembelian</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Aset Tetap</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Aset Tetap">
+                            <li>Daftar BMN Henti Guna</li>
+                            <li>Daftar Barang Hilang</li>
+                            <li>Daftar Barang Usul RB ke Pengelola</li>
+                            <li>Daftar Transaksi BMN</li>
+                            <li>Laporan BMN</li>
+                            <li>Monitoring Mapping Aset TKTM</li>
+                            <li>Monitoring Belanja Modal vs Aset</li>
+                            <li>Monitoring Likuidasi Keluar – Likuidasi Masuk</li>
+                            <li>Monitoring Mapping Aset TK Internal TM Internal</li>
+                            <li>Monitoring Rekonsiliasi Internal TAB</li>
+                            <li>Monitoring Saldo KDB</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Piutang</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Piutang">
+                            <li>Daftar Saldo Piutang Menurut Neraca</li>
+                            <li>Daftar Transaksi Piutang</li>
+                            <li>Monitoring Likuidasi Keluar dan Likuidasi Masuk Piutang</li>
+                            <li>Monitoring Piutang Diserahkan ke DJKN/PUPN</li>
+                            <li>Monitoring Piutang Macet</li>
+                            <li>Monitoring Saldo Piutang Per KL/Eselon I/Satker Per Kualitas</li>
+                            <li>Piutang Jatuh Tempo</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group" name="myintress-menu">
+                        <summary>Rekonsiliasi</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Rekonsiliasi">
+                            <li>Menampilkan Data Rekonsiliasi Satker Inaktif</li>
+                            <li>Rekap Rekonsiliasi SAKTI vs SPAN</li>
+                            <li>Rekonsiliasi Internal</li>
+                            <li>Rekonsiliasi SAKTI – SPAN</li>
+                            <li>Rekonsiliasi per Nomor Dokumen</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group menu-group-end" name="myintress-menu">
+                        <summary>Akuntansi dan Pelaporan</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Akuntansi dan Pelaporan">
+                            <li>Daftar Buku Besar</li>
+                            <li>Monitoring Transaksi Resiprokal</li>
+                            <li>Monitoring Transaksi Keluar/Masuk</li>
+                            <li>Rincian Neraca Tidak Balance</li>
+                            <li>Rincian Pendapatan Perolehan Aset Lainnya (491429)</li>
+                            <li>Rincian Saldo Neraca</li>
+                            <li>Monitoring Detail Revisi SPM</li>
+                            <li>Telaah Laporan Keuangan</li>
+                            <li>Monitoring Kepatuhan Satker</li>
+                            <li>Monitoring Pengiriman LK Tingkat UAKPA</li>
+                            <li>Monitoring Tutup Periode</li>
+                            <li>Daftar Rincian Saldo Akun</li>
+                            <li>Rincian Laporan Keuangan</li>
+                            <li>Laporan Keuangan</li>
+                            <li>List Jurnal Manual Modul GLP</li>
+                            <li>Monitoring Transfer Kas BLU</li>
+                        </ul>
+                    </details>
+                    <details class="menu-group menu-group-end" name="myintress-menu">
+                        <summary>Tematik</summary>
+                        <p class="menu-dropdown">Belum ada submenu Tematik.</p>
+                    </details>
+                    <details class="menu-group menu-group-end" name="myintress-menu">
+                        <summary>Referensi</summary>
+                        <ul class="menu-dropdown" tabindex="0" aria-label="Submenu Referensi">
+                            <li>Akun</li>
+                            <li>Bagian Anggaran</li>
+                            <li>Barang dan Masa Manfaat</li>
+                            <li>Jenis Transaksi Aset Persediaan</li>
+                            <li>Kurs Tengah BI</li>
+                            <li>Menampilkan Data Debitur Piutang</li>
+                            <li>Referensi Satker</li>
+                            <li>Referensi Hibah</li>
+                        </ul>
+                    </details>
+                    <p id="menu-empty" role="status" hidden>Menu tidak ditemukan.</p>
                 </nav>
             </div>
         </header>
@@ -565,7 +763,7 @@
                         <button type="button" aria-pressed="false" data-dipa-status="berhasil">Berhasil <b>286</b></button>
                         <button type="button" aria-pressed="false" data-dipa-status="ditolak">Ditolak <b>24</b></button>
                     </div>
-                    <div class="dipa-results" aria-live="polite">
+                    <div class="dipa-results" role="region" aria-label="Daftar revisi DIPA" tabindex="0" aria-live="polite">
                         <article class="dipa-entry" data-status="proses">
                             <h3>Satker : 689177</h3>
                             <p><strong>No. DIPA</strong><br>DIPA-054.01.2.689177/2026</p>
@@ -619,6 +817,130 @@
                                 <h3>Satker : 426029</h3>
                                 <mark class="dipa-rejected">Ditolak <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i></mark>
                             </div>
+                        </article>
+                        <article class="dipa-entry" data-status="proses">
+                            <h3>Satker : 414191</h3>
+                            <p>Kantor UPBU Tampa Padang</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-414191/2026</span></p>
+                                <mark>Verifikasi Dokumen</mark>
+                            </div>
+                            <p><strong>Revisi ke: 1</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 3.167.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="proses">
+                            <h3>Satker : 429052</h3>
+                            <p>BPS Kabupaten Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-429052/2026</span></p>
+                                <mark>Verifikasi Dokumen</mark>
+                            </div>
+                            <p><strong>Revisi ke: 2</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.209.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="proses">
+                            <h3>Satker : 693573</h3>
+                            <p>BPDAS Karama</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-693573/2026</span></p>
+                                <mark>Verifikasi Dokumen</mark>
+                            </div>
+                            <p><strong>Revisi ke: 3</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 5.251.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="proses">
+                            <h3>Satker : 008310</h3>
+                            <p>Kejaksaan Negeri Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-008310/2026</span></p>
+                                <mark>Verifikasi Dokumen</mark>
+                            </div>
+                            <p><strong>Revisi ke: 4</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 6.293.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 414191</h3>
+                            <p>Kantor UPBU Tampa Padang</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-414191/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui</mark>
+                            </div>
+                            <p><strong>Revisi ke: 1</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 3.167.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 429052</h3>
+                            <p>BPS Kabupaten Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-429052/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui</mark>
+                            </div>
+                            <p><strong>Revisi ke: 2</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.209.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 693573</h3>
+                            <p>BPDAS Karama</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-693573/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui</mark>
+                            </div>
+                            <p><strong>Revisi ke: 3</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 5.251.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="berhasil" hidden>
+                            <h3>Satker : 008310</h3>
+                            <p>Kejaksaan Negeri Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-008310/2026</span></p>
+                                <mark class="dipa-approved">Revisi Disetujui</mark>
+                            </div>
+                            <p><strong>Revisi ke: 4</strong> · Simulasi</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 6.293.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <h3>Satker : 414191</h3>
+                            <p>Kantor UPBU Tampa Padang</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-414191/2026</span></p>
+                                <mark class="dipa-rejected">Ditolak</mark>
+                            </div>
+                            <p><strong>Revisi ke: 1</strong> · Simulasi</p>
+                            <p class="dipa-reason">Catatan ilustratif: Lengkapi dokumen pendukung dan periksa kembali rincian usulan.</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 3.167.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <h3>Satker : 429052</h3>
+                            <p>BPS Kabupaten Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-429052/2026</span></p>
+                                <mark class="dipa-rejected">Ditolak</mark>
+                            </div>
+                            <p><strong>Revisi ke: 2</strong> · Simulasi</p>
+                            <p class="dipa-reason">Catatan ilustratif: Lengkapi dokumen pendukung dan periksa kembali rincian usulan.</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 4.209.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <h3>Satker : 693573</h3>
+                            <p>BPDAS Karama</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-693573/2026</span></p>
+                                <mark class="dipa-rejected">Ditolak</mark>
+                            </div>
+                            <p><strong>Revisi ke: 3</strong> · Simulasi</p>
+                            <p class="dipa-reason">Catatan ilustratif: Lengkapi dokumen pendukung dan periksa kembali rincian usulan.</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 5.251.000.000</strong></p>
+                        </article>
+                        <article class="dipa-entry" data-status="ditolak" hidden>
+                            <h3>Satker : 008310</h3>
+                            <p>Kejaksaan Negeri Mamuju</p>
+                            <div class="dipa-row">
+                                <p><strong>No. DIPA</strong><br><span class="dipa-tag">SIM-DIPA-008310/2026</span></p>
+                                <mark class="dipa-rejected">Ditolak</mark>
+                            </div>
+                            <p><strong>Revisi ke: 4</strong> · Simulasi</p>
+                            <p class="dipa-reason">Catatan ilustratif: Lengkapi dokumen pendukung dan periksa kembali rincian usulan.</p>
+                            <p class="dipa-budget"><strong>Pagu:</strong> <strong>Rp 6.293.000.000</strong></p>
                         </article>
                         <p id="dipa-empty" class="text-slate-500" hidden></p>
                     </div>
@@ -1237,17 +1559,53 @@
         const menuPanel = document.getElementById('menu-panel');
         const menuSearch = document.getElementById('menu-search');
 
+        const desktopLayout = window.matchMedia('(min-width: 64rem) and (min-aspect-ratio: 8/5)');
+
+        function syncMenuLayout() {
+            menuPanel.hidden = !desktopLayout.matches && menuToggle.getAttribute('aria-expanded') !== 'true';
+            menuSearch.placeholder = desktopLayout.matches ? 'Cari Menu, contoh: Bagian Anggaran' : 'Cari menu…';
+        }
+
+        desktopLayout.addEventListener('change', syncMenuLayout);
+        syncMenuLayout();
+
         menuToggle.addEventListener('click', () => {
             menuPanel.hidden = !menuPanel.hidden;
             menuToggle.setAttribute('aria-expanded', !menuPanel.hidden);
             if (!menuPanel.hidden) menuSearch.focus();
         });
 
+        const menuGroups = menuPanel.querySelectorAll('.menu-group');
+        const menuEmpty = document.getElementById('menu-empty');
+
         menuSearch.addEventListener('input', () => {
             const query = menuSearch.value.trim().toLowerCase();
-            menuPanel.querySelectorAll('a').forEach((link) => {
-                link.hidden = !link.textContent.toLowerCase().includes(query);
+            let firstMatch;
+            menuGroups.forEach((group) => {
+                const categoryMatches = group.querySelector('summary').textContent.toLowerCase().includes(query);
+                let hasMatchingItem = false;
+                group.querySelectorAll('li').forEach((item) => {
+                    item.hidden = !categoryMatches && !item.textContent.toLowerCase().includes(query);
+                    if (!item.hidden) hasMatchingItem = true;
+                });
+                group.hidden = !categoryMatches && !hasMatchingItem;
+                group.open = false;
+                if (!group.hidden && !firstMatch) firstMatch = group;
             });
+            menuEmpty.hidden = Boolean(firstMatch);
+            if (query && firstMatch) firstMatch.open = true;
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menuPanel.contains(event.target)) menuGroups.forEach((group) => { group.open = false; });
+        });
+        menuPanel.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            const openGroup = menuPanel.querySelector('.menu-group[open]');
+            if (openGroup) {
+                openGroup.open = false;
+                openGroup.querySelector('summary').focus();
+            }
         });
 
         const todoTabs = document.querySelectorAll('[data-category]');
