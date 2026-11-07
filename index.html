@@ -260,6 +260,10 @@
         #ews-modal-content { box-shadow: 0 0 1.8rem #418ade55, 0 .9rem 2.2rem #12356988; }
         .ews-modal-accent { height: .375rem; flex-shrink: 0; background: linear-gradient(90deg, #12366e, #2975bd 54%, #57a5e4); }
         .ews-risk-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .32rem; font-size: .75rem; font-weight: 700; }
+        .ews-risk.medium { --risk-accent: #4b82bc; --risk-bg: #e5effa; --risk-ink: #234b74; }
+        .ews-risk.routine { --risk-accent: #668295; --risk-bg: #eaf0f3; --risk-ink: #3f596a; }
+        .ews-risk .ews-priority-reason { margin-top: .5rem; line-height: 1.4; }
+        .ews-disclaimer { padding: .12rem .8rem .45rem; color: #536480; font-size: .68rem; }
         .ews-level, .ews-fa-code { padding: .19rem .65rem; border-radius: 2rem; background: var(--risk-bg); color: var(--risk-ink); white-space: nowrap; }
         .ews-fa-code { border-radius: .5rem; }
         .critical .ews-level { background: #bf4338; color: white; }
@@ -284,7 +288,7 @@
                     <img src="./myintress-logo.svg" alt="MyIntress">
                     <span>Kementerian Keuangan RI</span>
                 </a>
-                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS Financial Advisor KPPN Mamuju, 6 satker perlu tindak lanjut" aria-haspopup="dialog" aria-controls="ews-modal">
+                <button type="button" class="header-action ews-bell" data-ews-trigger aria-label="Buka EWS Financial Advisor KPPN Mamuju, 6 satker dipantau" aria-haspopup="dialog" aria-controls="ews-modal">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21a2 2 0 0 0 4 0"/>
                     </svg>
@@ -505,7 +509,7 @@
                     </svg>
                 </span>
                 <div class="ews-alert-copy">
-                    <h2 id="ews-alert-title" class="ews-alert-title">EWS FA — KPPN Mamuju <span class="ews-count">6 Satker Perlu Tindak Lanjut</span></h2>
+                    <h2 id="ews-alert-title" class="ews-alert-title">EWS FA — KPPN Mamuju <span class="ews-count">6 Satker Dipantau</span></h2>
                     <p>Prediksi penyerapan, deviasi Hal III DIPA, risiko IKPA, dan milestone FA</p>
                 </div>
                 <div class="ews-alert-actions">
@@ -981,6 +985,7 @@
                 <button type="button" class="ews-tab" data-ews-tab aria-controls="ews-ikpa" aria-pressed="false">Prediksi IKPA</button>
             </div>
 
+            <p class="ews-disclaimer shrink-0">Klasifikasi ilustratif. Menunggu validasi pemilik proses bisnis.</p>
             <div class="ews-satker-filter shrink-0">
                 <label for="ews-satker" class="font-semibold">Filter Satker</label>
                 <select id="ews-satker" class="control"></select>
@@ -1001,9 +1006,10 @@
                         <div><dt>Cakupan target</dt><dd>75,6%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Pekerjaan utama terhambat menjelang penutupan tahun. Jika terverifikasi, pimpinan perlu segera memutuskan prioritas penanganan.</p>
                 </article>
-                <article class="ews-risk critical" data-ews-satker="693573">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                <article class="ews-risk high" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 693573</span><span class="ews-level">Tinggi</span></div>
                     <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
                         <div><dt>Realisasi (Proyeksi)</dt><dd>74,5%</dd></div>
@@ -1011,9 +1017,10 @@
                         <div><dt>Cakupan target</dt><dd>82,8%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Keterlambatan tagihan berulang berpotensi mengganggu penyelesaian kegiatan. Perlu pembinaan terarah sebelum penutupan tahun.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="429052">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk high" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 429052</span><span class="ews-level">Tinggi</span></div>
                     <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Realisasi (Proyeksi)</dt><dd>81,5%</dd></div>
@@ -1021,9 +1028,10 @@
                         <div><dt>Cakupan target</dt><dd>90,6%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Jadwal pembayaran mendekati tenggat dan sebagian tagihan masih perlu diklarifikasi bersama satker.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="690692">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 690692</span><span class="ews-level">Sedang</span></div>
                     <h4>BPS Kabupaten Mamuju Tengah</h4>
                     <dl class="ews-metrics">
                         <div><dt>Realisasi (Proyeksi)</dt><dd>84,0%</dd></div>
@@ -1031,9 +1039,10 @@
                         <div><dt>Cakupan target</dt><dd>93,3%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Tagihan masih disiapkan dan tersedia waktu untuk pemutakhiran proyeksi serta pengingat berkala.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="008310">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 008310</span><span class="ews-level">Sedang</span></div>
                     <h4>Kejaksaan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Realisasi (Proyeksi)</dt><dd>86,0%</dd></div>
@@ -1041,9 +1050,10 @@
                         <div><dt>Cakupan target</dt><dd>95,6%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Dokumen pembayaran sedang dilengkapi dan jadwal masih memberi waktu untuk tindak lanjut.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="099638">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk routine" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-02 · Satker 099638</span><span class="ews-level">Pemantauan rutin</span></div>
                     <h4>Pengadilan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Realisasi (Proyeksi)</dt><dd>87,0%</dd></div>
@@ -1051,6 +1061,7 @@
                         <div><dt>Cakupan target</dt><dd>96,7%</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proyeksi masih di bawah target. Verifikasi hambatan pelaksanaan atau pembayaran bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Sisa pembayaran sudah terjadwal dan cukup dipantau melalui rekap periodik pada skenario ini.</p>
                 </article>
             </section>
 
@@ -1064,60 +1075,66 @@
                     <h4>Kantor UPBU Tampa Padang</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>7,1%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perubahan jadwal pembayaran menjelang penutupan periode berpotensi menghambat kegiatan. Verifikasi segera untuk menentukan arahan pimpinan.</p>
                 </article>
-                <article class="ews-risk critical" data-ews-satker="693573">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                <article class="ews-risk high" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 693573</span><span class="ews-level">Tinggi</span></div>
                     <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>6,0%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perubahan jadwal penarikan dana berulang dan perlu klarifikasi terarah sebelum periode berakhir.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="429052">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 429052</span><span class="ews-level">Sedang</span></div>
                     <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>4,2%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perbedaan jadwal perlu diklarifikasi, dengan waktu yang masih memadai untuk tindak lanjut.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="690692">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 690692</span><span class="ews-level">Sedang</span></div>
                     <h4>BPS Kabupaten Mamuju Tengah</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>3,6%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Jadwal penarikan perlu diperiksa kembali sebelum pemantauan berikutnya.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="008310">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 008310</span><span class="ews-level">Sedang</span></div>
                     <h4>Kejaksaan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>3,3%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Pergeseran jadwal pembayaran masih bisa ditangani melalui pemantauan berkala.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="099638">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk routine" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-01 · Satker 099638</span><span class="ews-level">Pemantauan rutin</span></div>
                     <h4>Pengadilan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Deviasi tertimbang</dt><dd>3,1%</dd></div>
-                        <div><dt>Batas normal</dt><dd>&lt;3%</dd></div>
+                        <div><dt>Acuan simulasi</dt><dd>&lt;3%</dd></div>
                         <div><dt>Periode</dt><dd>Triwulan IV</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tinjau jadwal penarikan dana dan penyebab deviasi bersama satker.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perbedaan jadwal sudah tercatat dalam pemantauan periodik dan belum memerlukan eskalasi pada skenario ini.</p>
                 </article>
             </section>
 
@@ -1135,9 +1152,10 @@
                         <div><dt>Perubahan</dt><dd>−9 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Beberapa komponen diproyeksikan turun menjelang akhir periode. Jika terverifikasi, pimpinan perlu segera menetapkan fokus pembinaan.</p>
                 </article>
-                <article class="ews-risk critical" data-ews-satker="693573">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 693573</span><span class="ews-level">Kritis</span></div>
+                <article class="ews-risk high" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 693573</span><span class="ews-level">Tinggi</span></div>
                     <h4>BPDAS Karama</h4>
                     <dl class="ews-metrics">
                         <div><dt>Baseline</dt><dd>95</dd></div>
@@ -1145,9 +1163,10 @@
                         <div><dt>Perubahan</dt><dd>−7 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Penurunan proksi berulang pada pemantauan ilustratif. Perlu pembinaan terarah pada komponen penyumbang.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="429052">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 429052</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="429052">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 429052</span><span class="ews-level">Sedang</span></div>
                     <h4>BPS Kabupaten Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Baseline</dt><dd>96</dd></div>
@@ -1155,9 +1174,10 @@
                         <div><dt>Perubahan</dt><dd>−4 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perubahan proksi masih perlu ditelaah dan tersedia waktu untuk memverifikasi komponen penyumbang.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="690692">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 690692</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="690692">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 690692</span><span class="ews-level">Sedang</span></div>
                     <h4>BPS Kabupaten Mamuju Tengah</h4>
                     <dl class="ews-metrics">
                         <div><dt>Baseline</dt><dd>97</dd></div>
@@ -1165,9 +1185,10 @@
                         <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Perubahan proksi perlu ditinjau pada siklus pembinaan berikutnya.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="008310">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 008310</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="008310">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 008310</span><span class="ews-level">Sedang</span></div>
                     <h4>Kejaksaan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Baseline</dt><dd>96</dd></div>
@@ -1175,9 +1196,10 @@
                         <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Komponen penyumbang perlu dikonfirmasi dengan satker melalui pemantauan berkala.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="099638">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 099638</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk medium" data-ews-satker="099638">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-08 · Satker 099638</span><span class="ews-level">Sedang</span></div>
                     <h4>Pengadilan Negeri Mamuju</h4>
                     <dl class="ews-metrics">
                         <div><dt>Baseline</dt><dd>97</dd></div>
@@ -1185,12 +1207,13 @@
                         <div><dt>Perubahan</dt><dd>−3 poin</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Proksi menunjukkan potensi penurunan. Telaah komponen IKPA penyumbang perubahan.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Proyeksi perlu dikonfirmasi pada pemutakhiran berikutnya tanpa keputusan pimpinan segera.</p>
                 </article>
             </section>
 
             <section id="ews-milestones" class="ews-pane" aria-label="Milestone Financial Advisor" hidden>
-                <article class="ews-risk" data-ews-satker="414191">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-04</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk high" data-ews-satker="414191">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-04</span><span class="ews-level">Tinggi</span></div>
                     <h4>Kantor UPBU Tampa Padang</h4>
                     <p>Satker 414191 · Keterlambatan belanja modal</p>
                     <dl class="ews-metrics ews-milestone">
@@ -1198,6 +1221,7 @@
                         <div><dt>Milestone / output</dt><dd>Penyelesaian fasilitas transportasi udara</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Penyelesaian pekerjaan diproyeksikan 14 hari setelah tenggat kontrak.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Tenggat kontrak mendekat dan proyeksi keterlambatan mengganggu jadwal penyerahan. Bahas rencana pemulihan dengan KPA atau PPK.</p>
                 </article>
                 <article class="ews-risk critical" data-ews-satker="693573">
                     <div class="ews-risk-head"><span class="ews-fa-code">FA-05</span><span class="ews-level">Kritis</span></div>
@@ -1208,9 +1232,10 @@
                         <div><dt>Milestone / output</dt><dd>Capaian output kegiatan</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Realisasi belanja 72% dan capaian output 40% pada contoh output yang sebanding.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Serah terima keluaran segera dievaluasi. Jika selisih terverifikasi, pimpinan perlu segera menentukan tindak lanjut pembinaan.</p>
                 </article>
-                <article class="ews-risk" data-ews-satker="693573">
-                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06</span><span class="ews-level">Waspada</span></div>
+                <article class="ews-risk high" data-ews-satker="693573">
+                    <div class="ews-risk-head"><span class="ews-fa-code">FA-06</span><span class="ews-level">Tinggi</span></div>
                     <h4>BPDAS Karama</h4>
                     <p>Satker 693573 · Keterlambatan program prioritas</p>
                     <dl class="ews-metrics ews-milestone">
@@ -1218,6 +1243,7 @@
                         <div><dt>Milestone / output</dt><dd>Milestone rehabilitasi DAS</dd></div>
                     </dl>
                     <p class="ews-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Milestone program prioritas diproyeksikan tercapai 7 hari setelah tanggal rencana.</p>
+                    <p class="ews-priority-reason"><strong>Alasan prioritas.</strong> Milestone yang mendekat berpotensi menggeser kegiatan berikutnya. Koordinasikan jadwal pemulihan dengan satker dan pengampu program.</p>
                 </article>
             </section>
 
