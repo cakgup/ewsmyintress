@@ -403,6 +403,37 @@
  .process-card-body { padding:.3rem .75rem .8rem; }
 }
 @media print { .process-card > .process-card-body { display:block!important; } }
+
+.layout { grid-template-columns:minmax(0,1fr); max-width:76rem; }
+.layout .study-navigation {
+ position:sticky; top:var(--topbar-height,4rem); z-index:4;
+ display:flex; align-items:center; justify-content:space-between;
+ flex-wrap:wrap; gap:.45rem 1.25rem; padding:.7rem 1rem;
+ border-radius:.75rem; box-shadow:0 .25rem .7rem #17345f20;
+}
+.study-picker { display:flex; align-items:center; flex:1 1 22rem; gap:.65rem; min-width:0; }
+.study-picker label { flex:none; font-size:.8rem; font-weight:600; color:#dbe7fc; }
+.study-picker select {
+ flex:1; min-width:0; width:100%; min-height:2.35rem;
+ border:1px solid #c6d7f0; border-radius:.5rem; padding:.35rem .6rem;
+ background:white; color:#17345f; font:600 .88rem/1.4 "Segoe UI",Arial,sans-serif;
+}
+.study-picker select:focus-visible { outline:3px solid #a7c8fc; outline-offset:3px; }
+.study-completion { flex:0 1 12rem; min-width:8rem; }
+.study-navigation .study-completion p { margin:0; font-size:.72rem; }
+.study-completion progress { display:block; margin-top:.3rem; }
+.reader, .chapter :is(h1,h2,h3,h4,h5,h6) {
+ scroll-margin-top:calc(var(--topbar-height,4rem) + var(--study-nav-height,5rem) + 1rem);
+}
+@media(max-width:600px) {
+ .layout .study-navigation { gap:.4rem; padding:.6rem .75rem; }
+ .study-picker { flex-basis:100%; }
+ .study-picker label { font-size:.72rem; }
+ .study-picker select { font-size:.8rem; }
+ .study-completion { display:flex; align-items:center; gap:.7rem; flex-basis:100%; }
+ .study-navigation .study-completion p { white-space:nowrap; }
+ .study-completion progress { margin:0; flex:1; min-width:0; }
+}
 </style>
 </head>
 
@@ -413,23 +444,19 @@
 </header>
 
 <div class="layout">
-<aside class="sidebar">
-<div class="eyebrow">Ruang belajar</div><h2>Bekal asesmen</h2>
-<details id="contents" open>
+<aside class="sidebar study-navigation" aria-label="Navigasi materi">
+<div class="study-picker"><label for="chapter-picker">Pilih materi belajar</label>
+<select id="chapter-picker" aria-controls="current"><option value="" hidden>Bagian hasil pencarian</option><option value="2">0 · Resume ringkas makalah</option><option value="3">1 · Peran Treasurer dan FA</option><option value="4">2 · Proses bisnis KPPN</option><option value="5">3 · Delapan indikator EWS</option><option value="6">4 · Bank soal</option><option value="7">5 · Simulasi dan in-basket</option><option value="8">6 · Pertanyaan penguji</option><option value="9">7 · Evaluasi dan presentasi</option><option value="10">Referensi dan bacaan</option></select></div>
+<div class="study-completion"><p id="progress-label"></p><progress id="progress" max="9" value="0" aria-label="Kemajuan belajar"></progress></div>
+<div hidden><details id="contents" open>
 <summary>Daftar isi materi</summary>
 <nav aria-label="Bagian materi">
-<button type="button" data-part="0" hidden>Mulai belajar<span aria-hidden="true"></span></button><button type="button" data-part="1" hidden>Peta belajar<span aria-hidden="true"></span></button><button type="button" data-part="2">0 · Cerita besar makalah<span aria-hidden="true"></span></button><button type="button" data-part="3">1 · Peran Treasurer dan FA<span aria-hidden="true"></span></button><button type="button" data-part="4">2 · Proses bisnis KPPN<span aria-hidden="true"></span></button><button type="button" data-part="5">3 · Delapan indikator EWS<span aria-hidden="true"></span></button><button type="button" data-part="6">4 · Bank soal<span aria-hidden="true"></span></button><button type="button" data-part="7">5 · Simulasi dan in-basket<span aria-hidden="true"></span></button><button type="button" data-part="8">6 · Pertanyaan penguji<span aria-hidden="true"></span></button><button type="button" data-part="9">7 · Evaluasi dan presentasi<span aria-hidden="true"></span></button><button type="button" data-part="10">Referensi dan bacaan<span aria-hidden="true"></span></button>
+<button type="button" data-part="0" hidden>Mulai belajar<span aria-hidden="true"></span></button><button type="button" data-part="1" hidden>Peta belajar<span aria-hidden="true"></span></button><button type="button" data-part="2">0 · Resume ringkas makalah<span aria-hidden="true"></span></button><button type="button" data-part="3">1 · Peran Treasurer dan FA<span aria-hidden="true"></span></button><button type="button" data-part="4">2 · Proses bisnis KPPN<span aria-hidden="true"></span></button><button type="button" data-part="5">3 · Delapan indikator EWS<span aria-hidden="true"></span></button><button type="button" data-part="6">4 · Bank soal<span aria-hidden="true"></span></button><button type="button" data-part="7">5 · Simulasi dan in-basket<span aria-hidden="true"></span></button><button type="button" data-part="8">6 · Pertanyaan penguji<span aria-hidden="true"></span></button><button type="button" data-part="9">7 · Evaluasi dan presentasi<span aria-hidden="true"></span></button><button type="button" data-part="10">Referensi dan bacaan<span aria-hidden="true"></span></button>
 </nav>
 
-</details>
-<p id="progress-label"></p><progress id="progress" max="11" value="0" aria-label="Kemajuan belajar"></progress>
-</aside>
+</details></div></aside>
 
 <main class="main">
-
-<section class="hero">
-<div class="eyebrow">EWS FA MyIntress · KPPN Mamuju</div><h1>Belajar dari kasus.<br>Siapkan keputusan Anda.</h1><p>Pahami makalah, telusuri delapan indikator EWS, dan latih pengambilan keputusan sebagai Kepala KPPN.</p><div class="tags"><span>8 modul belajar</span><span>30 studi kasus</span><span>Simulasi dan in-basket</span></div>
-</section>
 
 <div class="search"><label for="search">Cari topik, kode kasus, atau istilah</label><div class="search-row"><input id="search" type="search" placeholder="Misalnya K-14, FA-01, atau RPATA" autocomplete="off" aria-controls="results" aria-expanded="false"><button id="clear" type="button" aria-label="Bersihkan pencarian">×</button></div><div id="results" hidden></div><p id="search-status" role="status"></p></div>
 
@@ -535,8 +562,8 @@
 </section>
 
 <section class="chapter" data-index="2" hidden>
-<h1 id="topik-5">MODUL 0 — CERITA BESAR MAKALAH (WAJIB DAPAT DIUCAPKAN)</h1>
-<h2 id="topik-6">M0.1 Tesis makalah [MAKALAH]</h2>
+<h1 id="topik-5">RESUME RINGKAS MAKALAH</h1>
+<h2 id="topik-6">M0.1 Ringkas makalah</h2>
 <p><strong>MyIntress sudah mempunyai EWS/To Do List.</strong> Makalah mengusulkan <em>penguatan penggunaan informasi risiko sebagai bahan keputusan Kepala KPPN</em> agar sinyal operasional dapat diprioritaskan, disampaikan kepada penerima sah, diverifikasi, ditugaskan untuk pembinaan satker, serta diukur hasilnya. <strong>Bukan</strong> membangun aplikasi EWS baru.</p>
 <ul>
 <li><strong>Masalah inti:</strong> belum ada bukti yang cukup bahwa informasi EWS terdokumentasi telah optimal memenuhi kebutuhan keputusan Kepala KPPN; kesenjangan aktual harus diverifikasi.</li>
@@ -3959,27 +3986,42 @@
 <div class="pager"><button id="prev" type="button">← Sebelumnya</button><span id="position"></span><button id="next" type="button">Berikutnya →</button></div>
 </article>
 
-<p class="footer">Materi utama dari Bekal_Ujian.md edisi 7 November 2026. Bagian 2 menggunakan Panduan Mendalam Proses Bisnis KPPN versi 1.0. Bagian 4 menggunakan Bank 30 Kasus KPPN FA Treasurer Jawaban Lengkap V4. Progres belajar disimpan di browser ini.</p>
+
 </main>
 </div><script>
 const chapters=[...document.querySelectorAll('.chapter')];
 const links=[...document.querySelectorAll('[data-part]')];
+const picker = document.getElementById('chapter-picker');
+const visibleParts = links.map((link, index) => index).filter(index => index >= 2);
+function measureNavigation() {
+ document.documentElement.style.setProperty('--topbar-height', document.querySelector('.top').getBoundingClientRect().height + 'px');
+ document.documentElement.style.setProperty('--study-nav-height', document.querySelector('.study-navigation').getBoundingClientRect().height + 'px');
+}
+const navigationObserver = new ResizeObserver(measureNavigation);
+navigationObserver.observe(document.querySelector('.top'));
+navigationObserver.observe(document.querySelector('.study-navigation'));
+measureNavigation();
+picker.addEventListener('change', () => links[Number(picker.value)].click());
+
 const done=document.getElementById('done'),search=document.getElementById('search'),results=document.getElementById('results'),status=document.getElementById('search-status');
 let active=0,completed=new Set();
 const key='myintress.study.progress';
 try{const saved=JSON.parse(localStorage.getItem(key));if(Array.isArray(saved))completed=new Set(saved.filter(i=>Number.isInteger(i)&&i>=0&&i<chapters.length));}catch{}
 function progress(){
- document.getElementById('progress').value=completed.size;
- document.getElementById('progress-label').textContent=completed.size+' dari '+chapters.length+' bagian selesai';
+ const count = visibleParts.filter(index => completed.has(index)).length;
+ document.getElementById('progress').value = count;
+ document.getElementById('progress-label').textContent = count + ' dari ' + visibleParts.length + ' bagian selesai';
  links.forEach((link,i)=>link.querySelector('span').textContent=completed.has(i)?'✓':'');
  done.checked=completed.has(active);
 }
 function show(i,scroll=true){
- active=i;chapters.forEach((c,n)=>c.hidden=n!==i);
+ active=i;
+ picker.value = visibleParts.includes(i) ? String(i) : '';
+ chapters.forEach((c,n)=>c.hidden=n!==i);
  links.forEach((l,n)=>{if(n===i)l.setAttribute('aria-current','page');else l.removeAttribute('aria-current')});
  document.getElementById('current').textContent=links[i].childNodes[0].textContent;
- document.getElementById('position').textContent=(i+1)+' / '+chapters.length;
- document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===chapters.length-1;
+ document.getElementById('position').textContent = visibleParts.includes(i) ? (visibleParts.indexOf(i) + 1) + ' / ' + visibleParts.length : '';
+ document.getElementById('prev').disabled=i<=2;document.getElementById('next').disabled=i===chapters.length-1;
  progress();if(scroll)document.querySelector('.reader').scrollIntoView({block:'start'});
 }
 function closeResults(){results.hidden=true;search.setAttribute('aria-expanded','false')}
