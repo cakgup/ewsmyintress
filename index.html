@@ -84,6 +84,10 @@
             .menu-group-end .menu-dropdown { right: 0; left: auto; }
         }
         .control { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid #cbd0da; border-radius: .5rem; background: white; }
+        .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; padding: .85rem clamp(.85rem, 3vw, 1.5rem); border-top: 1px solid var(--line); background: white; color: #536480; font-size: .75rem; }
+        .materials-link { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .85rem; border: 1px solid #cbd5e9; border-radius: .6rem; background: #edf3fc; color: #1e427c; font-weight: 700; text-decoration: none; }
+        .materials-link:hover { background: #dce8fa; border-color: #789ccf; }
+        .materials-link:focus-visible { outline: 2px solid #245ba8; outline-offset: 3px; }
         .dashboard-main { padding: 1rem clamp(.65rem, 3vw, 1.1rem); display: grid; gap: 1rem; }
         .ews-alert { display: flex; align-items: center; gap: .55rem; padding: .7rem; border: 1px solid #f4c8c6; border-radius: 1rem; background: linear-gradient(105deg, #fce8e7, #faf0df 55%, #f7f7fa); }
         .ews-alert-icon { display: grid; place-items: center; flex: none; width: 2rem; aspect-ratio: 1; border-radius: .75rem; color: white; background: #be3432; }
@@ -952,6 +956,12 @@
                 </section>
             </div>
         </main>
+        <footer class="site-footer">
+            <span>EWS FA MyIntress · KPPN Mamuju</span>
+            <a class="materials-link" href="./materi.html">
+                <i class="fa-solid fa-book-open" aria-hidden="true"></i> Materi
+            </a>
+        </footer>
     </div>
 
     <div id="ews-modal" role="dialog" aria-modal="true" aria-labelledby="ews-title" inert class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
