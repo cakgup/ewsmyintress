@@ -1,17 +1,6 @@
 # MODUL PENGUASAAN MATERI & PERSIAPAN UJIAN MAKALAH
 ## Penguatan Early Warning System (EWS) MyIntress Berbasis Risiko untuk Mendukung Peran KPPN sebagai Financial Advisor dalam Pembinaan Satuan Kerja
 
-**Sasaran:** kandidat Pejabat Administrator/Eselon III — perspektif Kepala KPPN  
-**Konteks simulasi:** KPPN Mamuju; angka dan permasalahan satker dalam prototipe **ilustratif, bukan kondisi aktual**.  
-**Edisi:** 7 November 2026 · Modul belajar dan *defense guide*, bukan peraturan, hasil audit, atau dokumen implementasi produksi.  
-**Bahan utama:** makalah final yang diunggah (32 halaman, BAB I–IV + Lampiran A–B), *Business Rule Catalog* EWS FA KPPN versi rancangan, enam modul pembelajaran DJPb 2025, serta referensi resmi terbaru yang dicantumkan di akhir.
-
-> **PERINGATAN SUMBER / CARA MEMBACA**  
-> **[MAKALAH]** = dinyatakan dalam makalah unggahan; **[KATALOG]** = rancangan aturan bisnis yang dibuat dalam pembahasan sebelumnya; **[MODUL]** = materi pendukung modul DJPb 2025; **[RESMI]** = informasi yang dibandingkan dengan sumber DJPb/JDIH; **[ANALISIS]** = pengayaan, contoh, penalaran, dan rekomendasi untuk menjawab penguji.  
-> Ketentuan, nomenklatur organisasi, target, atau tanggal yang berubah harus dicek ulang pada sistem/peraturan berlaku. **Jangan mengutip threshold rancangan sebagai norma resmi.**
-
----
-
 ## DAFTAR ISI — NAVIGASI BELAJAR
 
 > Gunakan **Ctrl+F / ⌘F** dan cari `BAGIAN 15` atau nama topik. Struktur sengaja dibagi menjadi 26 bagian agar bisa dipelajari bertahap.
