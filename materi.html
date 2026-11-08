@@ -434,6 +434,30 @@
  .study-navigation .study-completion p { white-space:nowrap; }
  .study-completion progress { margin:0; flex:1; min-width:0; }
 }
+
+.process-code-link {
+    display: inline-block;
+    padding: .12rem .3rem;
+    border-radius: .3rem;
+    color: #2457a8;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: .18em;
+}
+.process-code-link:hover { background: #e5edfb; }
+ .return-reading {
+    flex: 0 1 auto;
+    border: 1px solid #b8ccec;
+    border-radius: .5rem;
+    padding: .4rem .65rem;
+    background: #edf4ff;
+    color: #17345f;
+    font: 600 .78rem/1.4 "Segoe UI", Arial, sans-serif;
+}
+.return-reading:hover { background: white; }
+@media (max-width: 600px) {
+    .return-reading { order: 3; width: 100%; text-align: left; }
+}
 </style>
 </head>
 
@@ -447,6 +471,7 @@
 <aside class="sidebar study-navigation" aria-label="Navigasi materi">
 <div class="study-picker"><label for="chapter-picker">Pilih materi belajar</label>
 <select id="chapter-picker" aria-controls="current"><option value="" hidden>Bagian hasil pencarian</option><option value="2">0 · Resume ringkas makalah</option><option value="3">1 · Peran Treasurer dan FA</option><option value="4">2 · Proses bisnis KPPN</option><option value="5">3 · Delapan indikator EWS</option><option value="6">4 · Bank soal</option><option value="7">5 · Simulasi dan in-basket</option><option value="8">6 · Pertanyaan penguji</option><option value="9">7 · Evaluasi dan presentasi</option><option value="10">Referensi dan bacaan</option></select></div>
+<button id="return-reading" class="return-reading" type="button" hidden>← Kembali ke bacaan sebelumnya</button>
 <div class="study-completion"><p id="progress-label"></p><progress id="progress" max="9" value="0" aria-label="Kemajuan belajar"></progress></div>
 <div hidden><details id="contents" open>
 <summary>Daftar isi materi</summary>
@@ -927,166 +952,166 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>PB-01</td>
+<td><a href="#proses-kppn-pb-01--penerimaan-dipa-dan-kesiapan-awal-tahun-anggaran" class="process-code-link">PB-01</a></td>
 <td>DIPA dan kesiapan awal tahun</td>
 <td>Satker–MSKI–PD</td>
-<td>CM-01</td>
+<td><a href="#proses-kppn-cm-01--awal-tahun-satker-sudah-punya-pagu-tetapi-belum-siap-pejabatakses" class="process-code-link">CM-01</a></td>
 </tr>
 <tr>
-<td>PB-02</td>
+<td><a href="#proses-kppn-pb-02--revisi-dipa-pagu-minus-dan-blokir" class="process-code-link">PB-02</a></td>
 <td>Revisi DIPA, blokir, pagu minus</td>
 <td>Satker–pengelola anggaran–PD/MSKI</td>
-<td>CM-02, CM-05</td>
+<td><a href="#proses-kppn-cm-02--dipa-terblokir-tetapi-kontrak-direncanakan-mulai-minggu-depan" class="process-code-link">CM-02</a>, <a href="#proses-kppn-cm-05--revisi-dipa-berulang-pada-satker-yang-sama" class="process-code-link">CM-05</a></td>
 </tr>
 <tr>
-<td>PB-03</td>
+<td><a href="#proses-kppn-pb-03--penatausahaan-data-supplierpenerima-pembayaran" class="process-code-link">PB-03</a></td>
 <td>Supplier/rekening penerima</td>
 <td>Satker–PD–Bank</td>
-<td>CM-09, CM-11</td>
+<td><a href="#proses-kppn-cm-09--spm-berulang-ditolak-karena-salah-akun-dan-supplier" class="process-code-link">CM-09</a>, <a href="#proses-kppn-cm-11--retur-sp2d-terjadi-dua-kali-untuk-satu-supplier" class="process-code-link">CM-11</a></td>
 </tr>
 <tr>
-<td>PB-04</td>
+<td><a href="#proses-kppn-pb-04--pendaftaran-data-kontrak-dan-adendum" class="process-code-link">PB-04</a></td>
 <td>Pendaftaran kontrak/adendum</td>
 <td>PPK–PD</td>
-<td>CM-06</td>
+<td><a href="#proses-kppn-cm-06--pendaftaran-kontrak-terlambat-tetapi-pekerjaan-sudah-berjalan" class="process-code-link">CM-06</a></td>
 </tr>
 <tr>
-<td>PB-05</td>
+<td><a href="#proses-kppn-pb-05--pengajuan-tagihan-spp-dan-pemeriksaan-ppspm" class="process-code-link">PB-05</a></td>
 <td>Hak tagih, SPP, PPSPM</td>
 <td>PPK–PPSPM satker</td>
-<td>CM-07, CM-08</td>
+<td><a href="#proses-kppn-cm-07--bast-tidak-mencerminkan-progres-pekerjaan-yang-diketahui" class="process-code-link">CM-07</a>, <a href="#proses-kppn-cm-08--ppk-menilai-tagihan-sah-ppspm-menemukan-dokumen-belum-lengkap" class="process-code-link">CM-08</a></td>
 </tr>
 <tr>
-<td>PB-06</td>
+<td><a href="#proses-kppn-pb-06--penelitianpengujian-spm-di-kppn-span-penerbitan-sp2d" class="process-code-link">PB-06</a></td>
 <td>Pengujian SPM dan SP2D</td>
 <td>PD–Bank</td>
-<td>CM-09, CM-10</td>
+<td><a href="#proses-kppn-cm-09--spm-berulang-ditolak-karena-salah-akun-dan-supplier" class="process-code-link">CM-09</a>, <a href="#proses-kppn-cm-10--backlog-spm-saat-batas-layanan-akhir-bulan" class="process-code-link">CM-10</a></td>
 </tr>
 <tr>
-<td>PB-07</td>
+<td><a href="#proses-kppn-pb-07--pembayaran-belanja-pegawai-dan-gaji" class="process-code-link">PB-07</a></td>
 <td>Pembayaran gaji</td>
 <td>Satker–PD–Bank</td>
-<td>IB-01</td>
+<td><a href="#proses-kppn-ib-01--pukul-0815-span-lambat-antrean-spm-dan-dokumen-prioritas" class="process-code-link">IB-01</a></td>
 </tr>
 <tr>
-<td>PB-08</td>
+<td><a href="#proses-kppn-pb-08--pembayaran-ls-dan-pengelolaan-uptup-gup-ptup-kkp" class="process-code-link">PB-08</a></td>
 <td>LS, UP/TUP, GUP/PTUP, KKP</td>
 <td>Satker–PD/Bank–MSKI</td>
-<td>CM-13</td>
+<td><a href="#proses-kppn-cm-13--tup-belum-dipertanggungjawabkan-bendahara-baru-menjabat" class="process-code-link">CM-13</a></td>
 </tr>
 <tr>
-<td>PB-09</td>
+<td><a href="#proses-kppn-pb-09--rpd-halaman-iii-dipa-rpd-harian-dan-proyeksi-kas" class="process-code-link">PB-09</a></td>
 <td>RPD dan rencana kas</td>
 <td>Satker–MSKI–pengelola kas</td>
-<td>CM-03, CM-12</td>
+<td><a href="#proses-kppn-cm-03--rpd-terlalu-tinggi-karena-agenda-kegiatan-berubah" class="process-code-link">CM-03</a>, <a href="#proses-kppn-cm-12--rpd-harian-jauh-dari-pembayaran-aktual" class="process-code-link">CM-12</a></td>
 </tr>
 <tr>
-<td>PB-10</td>
+<td><a href="#proses-kppn-pb-10--kas-negara-tsa-rkun-bank-operasional-dan-penyediaan-dana" class="process-code-link">PB-10</a></td>
 <td>TSA/RKUN/bank operasional</td>
 <td>Bank–unit PKN</td>
-<td>CM-10, CM-12</td>
+<td><a href="#proses-kppn-cm-10--backlog-spm-saat-batas-layanan-akhir-bulan" class="process-code-link">CM-10</a>, <a href="#proses-kppn-cm-12--rpd-harian-jauh-dari-pembayaran-aktual" class="process-code-link">CM-12</a></td>
 </tr>
 <tr>
-<td>PB-11</td>
+<td><a href="#proses-kppn-pb-11--retur-sp2d-dan-pembetulan-data-rekening" class="process-code-link">PB-11</a></td>
 <td>Retur SP2D</td>
 <td>Bank–satker</td>
-<td>CM-11</td>
+<td><a href="#proses-kppn-cm-11--retur-sp2d-terjadi-dua-kali-untuk-satu-supplier" class="process-code-link">CM-11</a></td>
 </tr>
 <tr>
-<td>PB-12</td>
+<td><a href="#proses-kppn-pb-12--penerimaan-negara-billing-bankpos-persepsi-mpn-ntpn" class="process-code-link">PB-12</a></td>
 <td>MPN/penerimaan/NTPN</td>
 <td>Bank–satker–penerimaan</td>
-<td>CM-14</td>
+<td><a href="#proses-kppn-cm-14--transaksi-setoran-tidak-muncul-pada-monitoring-penerimaan" class="process-code-link">CM-14</a></td>
 </tr>
 <tr>
-<td>PB-13</td>
+<td><a href="#proses-kppn-pb-13--koreksi-konfirmasi-dan-pengembalian-penerimaan-negara" class="process-code-link">PB-13</a></td>
 <td>Koreksi/pengembalian penerimaan</td>
 <td>Bank/VerA–pemilik kebijakan</td>
-<td>CM-14</td>
+<td><a href="#proses-kppn-cm-14--transaksi-setoran-tidak-muncul-pada-monitoring-penerimaan" class="process-code-link">CM-14</a></td>
 </tr>
 <tr>
-<td>PB-14</td>
+<td><a href="#proses-kppn-pb-14--pnbp-dan-maksimum-pencairan-pnbp-mp-pnbp" class="process-code-link">PB-14</a></td>
 <td>PNBP dan MP PNBP</td>
 <td>Satker–Bank–PD</td>
-<td>CM-15, CM-16</td>
+<td><a href="#proses-kppn-cm-15--pnbp-diperkirakan-70-target-karena-kebijakan-tarif-berubah" class="process-code-link">CM-15</a>, <a href="#proses-kppn-cm-16--mp-pnbp-belum-memadai-untuk-pembayaran-yang-telah-jatuh-tempo" class="process-code-link">CM-16</a></td>
 </tr>
 <tr>
-<td>PB-15</td>
+<td><a href="#proses-kppn-pb-15--satker-blu-dan-pengelolaan-keuanganlayanan" class="process-code-link">PB-15</a></td>
 <td>BLU</td>
 <td>BLU–pembina–KPPN</td>
-<td>CM-17</td>
+<td><a href="#proses-kppn-cm-17--kas-blu-tinggi-tetapi-waktu-tunggu-pasien-meningkat" class="process-code-link">CM-17</a></td>
 </tr>
 <tr>
-<td>PB-16</td>
+<td><a href="#proses-kppn-pb-16--hibah-langsung-uang-dan-barangjasasurat-berharga" class="process-code-link">PB-16</a></td>
 <td>Hibah</td>
 <td>Satker–VerA–unit terkait</td>
-<td>CM-18</td>
+<td><a href="#proses-kppn-cm-18--hibah-barang-sudah-diterima-tetapi-belum-masuk-pembukuan" class="process-code-link">CM-18</a></td>
 </tr>
 <tr>
-<td>PB-17</td>
+<td><a href="#proses-kppn-pb-17--rekonsiliasi-internaleksternal-tdk-shr" class="process-code-link">PB-17</a></td>
 <td>TDK/rekonsiliasi/SHR</td>
 <td>Satker–VerA</td>
-<td>CM-19</td>
+<td><a href="#proses-kppn-cm-19--ratusan-tdk-muncul-mendekati-batas-rekonsiliasi" class="process-code-link">CM-19</a></td>
 </tr>
 <tr>
-<td>PB-18</td>
+<td><a href="#proses-kppn-pb-18--penyusunan-laporan-kuasa-bun-daerah-dan-analisis-akuntabilitas" class="process-code-link">PB-18</a></td>
 <td>Laporan UAKBUN-Daerah</td>
 <td>VerA–Kepala KPPN</td>
-<td>CM-19</td>
+<td><a href="#proses-kppn-cm-19--ratusan-tdk-muncul-mendekati-batas-rekonsiliasi" class="process-code-link">CM-19</a></td>
 </tr>
 <tr>
-<td>PB-19</td>
+<td><a href="#proses-kppn-pb-19--rekening-pemerintah-rekening-bendahara-dan-pengendalian-saldo" class="process-code-link">PB-19</a></td>
 <td>Rekening dan saldo</td>
 <td>Bank–VerA–satker</td>
-<td>CM-20</td>
+<td><a href="#proses-kppn-cm-20--rekening-bendahara-memiliki-saldo-besar-tanpa-penjelasan-awal" class="process-code-link">CM-20</a></td>
 </tr>
 <tr>
-<td>PB-20</td>
+<td><a href="#proses-kppn-pb-20--penyaluran-tkd-posisi-kppn-sebagai-kpa-bun-penyaluran-sesuai-penetapan" class="process-code-link">PB-20</a></td>
 <td>Penyaluran TKD</td>
 <td>KPA BUN penyaluran–pengelola TKD</td>
-<td>CM-21, CM-22</td>
+<td><a href="#proses-kppn-cm-21--dak-fisik-mendekati-deadline-dokumen-pemda-belum-valid" class="process-code-link">CM-21</a>, <a href="#proses-kppn-cm-22--banyak-desa-belum-memenuhi-syarat-salur" class="process-code-link">CM-22</a></td>
 </tr>
 <tr>
-<td>PB-21</td>
+<td><a href="#proses-kppn-pb-21--dak-fisik-persyaratan-verifikasi-penyaluran-dan-risiko-terlambat-salur" class="process-code-link">PB-21</a></td>
 <td>DAK Fisik</td>
 <td>KPPN–Pemda/BPKAD/OPD</td>
-<td>CM-21</td>
+<td><a href="#proses-kppn-cm-21--dak-fisik-mendekati-deadline-dokumen-pemda-belum-valid" class="process-code-link">CM-21</a></td>
 </tr>
 <tr>
-<td>PB-22</td>
+<td><a href="#proses-kppn-pb-22--dana-desa-tahapan-salur-dokumen-pemda-rkudrkd" class="process-code-link">PB-22</a></td>
 <td>Dana Desa</td>
 <td>KPPN–Pemda/desa</td>
-<td>CM-22</td>
+<td><a href="#proses-kppn-cm-22--banyak-desa-belum-memenuhi-syarat-salur" class="process-code-link">CM-22</a></td>
 </tr>
 <tr>
-<td>PB-23</td>
+<td><a href="#proses-kppn-pb-23--dbh-dan-dau-alokasi-penyaluran-dan-advis-pemda" class="process-code-link">PB-23</a></td>
 <td>DBH dan DAU</td>
 <td>Pengelola TKD–KPPN–Pemda</td>
-<td>IB-03</td>
+<td><a href="#proses-kppn-ib-03--akhir-tahun-kontrak-macet-permintaan-rpata-dana-pnbp-rendah" class="process-code-link">IB-03</a></td>
 </tr>
 <tr>
-<td>PB-24</td>
+<td><a href="#proses-kppn-pb-24--rpata-penampungan-pembayaran-penihilan-pekerjaan-melewati-akhir-tahun" class="process-code-link">PB-24</a></td>
 <td>RPATA</td>
 <td>Satker–PD–Bank–VerA</td>
-<td>CM-23</td>
+<td><a href="#proses-kppn-cm-23--kontrak-belum-selesai-31-desember-satker-meminta-semua-saldo-ditempatkan-ke-rpata" class="process-code-link">CM-23</a></td>
 </tr>
 <tr>
-<td>PB-25</td>
+<td><a href="#proses-kppn-pb-25--ikpa-evaluasi-pelaksanaan-anggaran-dan-spending-review" class="process-code-link">PB-25</a></td>
 <td>IKPA dan Spending Review</td>
 <td>MSKI–pengampu pelaksanaan</td>
-<td>CM-03–CM-05</td>
+<td><a href="#proses-kppn-cm-03--rpd-terlalu-tinggi-karena-agenda-kegiatan-berubah" class="process-code-link">CM-03</a>–<a href="#proses-kppn-cm-05--revisi-dipa-berulang-pada-satker-yang-sama" class="process-code-link">CM-05</a></td>
 </tr>
 <tr>
-<td>PB-26</td>
+<td><a href="#proses-kppn-pb-26--special-mission-kredit-program-umikur-dan-hubungan-penyalur" class="process-code-link">PB-26</a></td>
 <td>UMi/KUR</td>
 <td>KPPN–pengelola program–penyalur</td>
-<td>IB-02 (analogi prioritas)</td>
+<td><a href="#proses-kppn-ib-02--dua-satker-kritis-satu-nominal-besar-satu-berdampak-ke-layanan-publik" class="process-code-link">IB-02</a> (analogi prioritas)</td>
 </tr>
 <tr>
-<td>PB-27</td>
+<td><a href="#proses-kppn-pb-27--pelayanan-satker-gangguan-spansakti-kepatuhan-internal-ews-dan-tindak-lanjut" class="process-code-link">PB-27</a></td>
 <td>Layanan, SPAN/SAKTI, EWS, KI</td>
 <td>MSKI–PD–Bank–VerA–SITP</td>
-<td>CM-24, IB-05</td>
+<td><a href="#proses-kppn-cm-24--kpa-menuntut-menghapus-peringatan-ews-critical" class="process-code-link">CM-24</a>, <a href="#proses-kppn-ib-05--ews-keliru-memberi-status-hijau-dan-mengirim-data-ke-pejabat-lama" class="process-code-link">IB-05</a></td>
 </tr>
 </tbody></table></div>
 <h2 id="proses-kppn-4b-keterkaitan-delapan-rule-ews-financial-advisor-dengan-proses-riil">5. Keterkaitan delapan rule EWS Financial Advisor dengan proses riil</h2>
@@ -3992,6 +4017,8 @@
 const chapters=[...document.querySelectorAll('.chapter')];
 const links=[...document.querySelectorAll('[data-part]')];
 const picker = document.getElementById('chapter-picker');
+const returnReading = document.getElementById('return-reading');
+history.scrollRestoration = 'manual';
 const visibleParts = links.map((link, index) => index).filter(index => index >= 2);
 function measureNavigation() {
  document.documentElement.style.setProperty('--topbar-height', document.querySelector('.top').getBoundingClientRect().height + 'px');
@@ -4032,7 +4059,39 @@ function openTopic(id){
  while(folded){if(folded.tagName==='DETAILS')folded.open=true;folded=folded.parentElement;}
  el.scrollIntoView({block:'start'});
 }
+function navigateToTopic(id) {
+    const heading = document.getElementById(id);
+    if (!heading || !heading.closest('.chapter')) return;
+    history.replaceState({
+        ...history.state,
+        readingPosition: { chapter: active, y: window.scrollY }
+    }, '', location.href);
+    history.pushState({ canReturnToReading: true }, '', '#' + id);
+    returnReading.hidden = false;
+    measureNavigation();
+    openTopic(id);
+    heading.setAttribute('tabindex', '-1');
+    heading.focus({ preventScroll: true });
+}
+
+function restoreReadingPosition() {
+    returnReading.hidden = !history.state?.canReturnToReading;
+    measureNavigation();
+    const position = history.state?.readingPosition;
+    if (position && Number.isInteger(position.chapter) && chapters[position.chapter]) {
+        show(position.chapter, false);
+        requestAnimationFrame(() => window.scrollTo({ top: position.y, behavior: 'instant' }));
+    } else if (location.hash) {
+        openTopic(decodeURIComponent(location.hash.slice(1)));
+    }
+}
+
+returnReading.addEventListener('click', () => history.back());
+window.addEventListener('popstate', restoreReadingPosition);
+
 links.forEach((link,i)=>link.addEventListener('click',()=>{
+ returnReading.hidden = true;
+ measureNavigation();
  show(i);history.replaceState(null,'','#'+chapters[i].querySelector('h1').id);
  if(matchMedia('(max-width:800px)').matches)document.getElementById('contents').open=false;
 }));
@@ -4059,7 +4118,7 @@ search.addEventListener('input',()=>{
  for(const item of found.slice(0,30)){
   const button=document.createElement('button'),title=document.createElement('strong'),text=document.createElement('span');
   button.type='button';title.textContent=links[item.part].childNodes[0].textContent;text.textContent=item.title;
-  button.append(title,text);button.addEventListener('click',()=>{history.replaceState(null,'','#'+item.heading);openTopic(item.heading);closeResults()});results.append(button);
+  button.append(title,text);button.addEventListener('click',()=>{navigateToTopic(item.heading);closeResults()});results.append(button);
  }
  status.textContent=found.length?found.length+' topik ditemukan'+(found.length>30?', 30 ditampilkan.':'.'):'Topik tidak ditemukan. Coba istilah lain.';
  results.hidden=!found.length;search.setAttribute('aria-expanded',String(!results.hidden));
@@ -4067,8 +4126,17 @@ search.addEventListener('input',()=>{
 document.getElementById('clear').addEventListener('click',()=>{search.value='';search.dispatchEvent(new Event('input'));search.focus()});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))closeResults()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeResults()});
-window.addEventListener('hashchange',()=>openTopic(location.hash.slice(1)));
-show(2,false);if(location.hash)openTopic(location.hash.slice(1));
+document.addEventListener('click', event => {
+    const link = event.target.closest('.chapter a[href^="#"]');
+    if (!link || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const id = decodeURIComponent(link.getAttribute('href').slice(1));
+    if (!document.getElementById(id)) return;
+    event.preventDefault();
+    navigateToTopic(id);
+});
+window.addEventListener('hashchange', restoreReadingPosition);
+show(2,false);
+if (history.state?.readingPosition || location.hash) restoreReadingPosition();
 </script>
 </body>
 
